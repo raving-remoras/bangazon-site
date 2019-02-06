@@ -2,33 +2,18 @@
 
 This web application is the source code for the Bangazon e-commerce web site. It is powered by Python and Django.
 
-Students, you are inheriting a basic implementation that provides the following features:
+## Installation
+- Create an empty directory to house your new project
+- run `virtualenv env` to create a virtual environment within that directory
+- run `source env/bin/activate` to initialize a virtual environment (`deactivate` to exit environment)
+- run `git clone [repository id]`
+- run `cd bangazon-workflow`
+- run `pip install -r requirements.txt`
 
-1. User registration 
-1. User login 
-1. User logout 
-1. Adding a product 
-1. Listing products
-
-Please consult the backlog of issues and work with your product owner to implement the top priority tickets for your sprints.
-
-## To begin work
-
-1. The team lead should clone this repository, then push it to your team's Github repo.
-1. Alert your manager when this is complete and all backlog issues will be imported into your project.
-1. Each teammate should clone the repository.
-1. In the `djangazon` directory that gets created, run the migrations with `python manage.py migrate`
-
-## Helpful Resources
-
-### Django Models and Migrations
-
-Using the requirements above create a [model](https://docs.djangoproject.com/en/1.10/topics/db/models/) for each resource, and use [migrations](https://docs.djangoproject.com/en/1.10/topics/migrations/) to ensure your database structure is up to date.
-
-### Templates
-
-[Django template language](https://docs.djangoproject.com/en/1.10/ref/templates/language/)
-
-### Form Helpers
-
-Django has many built-in [helper tags and filters](https://docs.djangoproject.com/en/1.10/ref/templates/builtins/) when building the site templates. We strongly recommend reading this documentation while building your templates.
+## Seed a Starter Database
+- Run `python manage.py makemigrations website`
+- Run `python manage.py migrate`
+- If you want some data to play with, run `python manage.py seeder`
+- Then run `python manage.py training_seeder`
+- Initialize the project using the command line by typing `python manage.py runserver` in the main directory.
+- Access the application in a browser at `http://localhost:8000/website`.

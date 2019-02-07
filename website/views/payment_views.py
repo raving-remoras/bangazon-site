@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.db import connection
 from django.contrib.auth.decorators import login_required
 from website.models import *
+from website.forms import *
 
 
 @login_required
@@ -21,5 +22,6 @@ def add_payment(request):
 
     if request.method == "GET":
         customer = request.user
-        context = {"customer":customer}
-        return render(request, "website/payment_form.html", context)
+        form = PaymentForm()
+        context = {"customer":customer, "form":form}
+        return render(request, "payment_form.html", context)

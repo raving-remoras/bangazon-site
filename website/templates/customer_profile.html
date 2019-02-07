@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+   {% block content %}
+
+        <h1>{{user}}'s User Settings</h1>
+            <ul>
+                <li>{{user.first_name}} {{user.last_name}}</li>
+                <li>{{user.customer.street_address}} <br> {{user.customer.city}}, {{user.customer.state}} {{user.customer.zipcode}}</li>
+
+                <li>{{user.phone_number}}</li>
+            </ul>
+
+        <h2>Payment Types</h2>
+            <ul>
+                {% for payment_type in user.customer.paymenttype_set.all %}
+                    <li>{{payment_type.name}}</li>
+                {% endfor %}
+
+            </ul>
+
+
+        <h2>Order History</h2>
+            <ul>
+                {% for order in user.customer.order_set.all %}
+                    <li>{{order.id}}</li>
+                {% endfor %}
+
+            </ul>
+
+
+
+    {% endblock content %}

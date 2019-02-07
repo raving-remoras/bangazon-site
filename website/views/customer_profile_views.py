@@ -11,7 +11,7 @@ from website.models import Product
 
 @login_required
 def customer_profile(request):
-    print(request.user.id)
+    user = request.user
     context = {"user": request.user}
     return render(request, 'customer_profile.html', context)
 

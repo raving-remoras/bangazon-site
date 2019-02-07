@@ -1,19 +1,50 @@
-{% load staticfiles %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Bangazon</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>{% block title %}Bangazon{% endblock title %}</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <h1>Welcome to Bangazon!</h1>
-    {% if user.is_authenticated %}
-    <h1>Bangazon says... hello {{ user.username }}!</h1>
-    <a href="{% url 'website:logout' %}">Logout</a>
-    {% else %}
-    <h1>Bangazon says...</h1>
-    <div><a href="{% url 'website:register' %}">Register</a></div>
-    <div><a href="{% url 'website:login' %}">Login</a></div>
-    {% endif %}
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+     <a class="navbar-brand" href="{% url 'website:index' %}">Bangazon, LLC</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'website:list_products' %}">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Add Product</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">User Settings</a></li>
+      </ul>
+    </nav>
+    <br />
+    <div class="container">
+    {% block content %}
+
+      <h1>Welcome to Bangazon!</h1>
+      {% if user.is_authenticated %}
+      <h1>Bangazon says... hello {{ user.username }}!</h1>
+      <a href="{% url 'website:logout' %}">Logout</a>
+      {% else %}
+      <h1>Bangazon says...</h1>
+
+      <div class="mt-4">
+        <a class="btn btn-primary mr-2" href="{% url 'website:register' %}">Register</a>
+        <a class="btn btn-primary" href="{% url 'website:login' %}">Login</a>
+      </div>
+      {% endif %}
+
+    {% endblock content %}
+    </div>
   </body>
 </html>

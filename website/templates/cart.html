@@ -1,8 +1,14 @@
-{% extends "agileHR/index.html" %}
+{% extends "index.html" %}
 
 
 {% block content %}
 
-<div> {{order.id}}</div>
+{% if order %}
+  <h1>{{request.user}}'s cart</h1>
+  <div> Order Number: A30165B{{order.id}} </div>
+  <hr />
+{% else %}
+  <div>You don't have an open order, but there's always something nice to buy!</div>
+{% endif %}
 
 {% endblock content %}

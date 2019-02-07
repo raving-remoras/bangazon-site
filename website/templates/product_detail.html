@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+
+<div>
+  <h2>{{product_details.title}}</h2>
+  <p>{{product_details.description}}</p>
+  <p>Qty: {{quantity}}</p>
+  <p>{{product_details.price}}</p>
+  <div>Add to order button</div>
+
+</div>
+
+{% endblock content %}

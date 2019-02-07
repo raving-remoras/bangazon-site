@@ -4,7 +4,7 @@
 
     <ol>
     {% for product in products %}
-        <li>{{ product.title }}</li>
+        <li><a href="{% url 'website:product_details' product.id %}">{{ product.title }}</a></li>
     {% endfor %}
     </ol>
 {% endblock content %}

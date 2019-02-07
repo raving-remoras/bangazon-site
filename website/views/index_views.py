@@ -70,7 +70,7 @@ def login_user(request):
         # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/website/')
 
         else:
             # Bad login details were provided. So we can't log the user in.
@@ -88,7 +88,7 @@ def user_logout(request):
 
     # Take the user back to the homepage. Is there a way to not hard code
     # in the URL in redirects?????
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/website/')
 
 
 def sell_product(request):

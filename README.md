@@ -13,7 +13,6 @@ This web application is the source code for the Bangazon e-commerce web site. It
 ## Seed a Starter Database
 - Run `python manage.py makemigrations website`
 - Run `python manage.py migrate`
-- If you want some data to play with, run `python manage.py seeder`
-- Then run `python manage.py training_seeder`
+- If you want some data to play with, run `python manage.py loaddata db.json`
 - Initialize the project using the command line by typing `python manage.py runserver` in the main directory.
 - Access the application in a browser at `http://localhost:8000/website`.

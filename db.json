@@ -1,0 +1,1992 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "9r1pas0dl1rlkx6n1l12e9d8fehrd2a5",
+  "fields": {
+    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
+    "expire_date": "2019-02-21T17:04:01.067"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "lilnf1xrwoluc0jnkwag17v6uba090t2",
+  "fields": {
+    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
+    "expire_date": "2019-02-21T17:04:13.397"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "makak53y08ofyrrcv43fu5yvcdfhz70u",
+  "fields": {
+    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
+    "expire_date": "2019-02-21T17:03:45.737"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "qewrylqxchlfp7pfh90m1rg4pzr6ix32",
+  "fields": {
+    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
+    "expire_date": "2019-02-21T17:04:08.173"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "z0xlaxs42yods54aasqa7wvrh8th6plv",
+  "fields": {
+    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
+    "expire_date": "2019-02-21T17:04:57.838"
+  }
+},
+{
+  "model": "website.producttype",
+  "pk": 1,
+  "fields": {
+    "name": "Electronics"
+  }
+},
+{
+  "model": "website.producttype",
+  "pk": 2,
+  "fields": {
+    "name": "Home Decor"
+  }
+},
+{
+  "model": "website.producttype",
+  "pk": 3,
+  "fields": {
+    "name": "Pet Accessories"
+  }
+},
+{
+  "model": "website.producttype",
+  "pk": 4,
+  "fields": {
+    "name": "Guitars"
+  }
+},
+{
+  "model": "website.producttype",
+  "pk": 5,
+  "fields": {
+    "name": "Apparel"
+  }
+},
+{
+  "model": "website.producttype",
+  "pk": 6,
+  "fields": {
+    "name": "Pets"
+  }
+},
+{
+  "model": "website.product",
+  "pk": 1,
+  "fields": {
+    "seller": 3,
+    "product_type": 2,
+    "title": "Cat Painting",
+    "description": "Terrifying painting of a cat on a hot tin roof. Great for rumpus rooms.",
+    "price": 1000,
+    "quantity": 1,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 2,
+  "fields": {
+    "seller": 1,
+    "product_type": 3,
+    "title": "Catman Costume",
+    "description": "Bruce Wayne edition, only two ever made",
+    "price": 6500,
+    "quantity": 2,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 3,
+  "fields": {
+    "seller": 2,
+    "product_type": 1,
+    "title": "iPad",
+    "description": "The thinnest iPad ever!",
+    "price": 795,
+    "quantity": 5,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 4,
+  "fields": {
+    "seller": 2,
+    "product_type": 1,
+    "title": "Potato IsThingOn",
+    "description": "The slowest computer imaginable. It might not even turn on.",
+    "price": 125,
+    "quantity": 15,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 5,
+  "fields": {
+    "seller": 5,
+    "product_type": 4,
+    "title": "Stratocaster",
+    "description": "It sounds so good.",
+    "price": 1000,
+    "quantity": 2,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 6,
+  "fields": {
+    "seller": 2,
+    "product_type": 5,
+    "title": "Cool shoes",
+    "description": "These shoes are the best, you'll look great in them!",
+    "price": 50,
+    "quantity": 12,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 7,
+  "fields": {
+    "seller": 5,
+    "product_type": 6,
+    "title": "Cat",
+    "description": "It's so cute yet so mean.",
+    "price": 1,
+    "quantity": 47,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 8,
+  "fields": {
+    "seller": 1,
+    "product_type": 3,
+    "title": "itty bitty booties",
+    "description": "Cats hate them, but Instagram followers love them!",
+    "price": 129,
+    "quantity": 4,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 1,
+  "fields": {
+    "name": "Rachel's Visa",
+    "account_number": 7289128481,
+    "customer": 3,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 2,
+  "fields": {
+    "name": "Dave Ramsey Credit Card",
+    "account_number": 123456789,
+    "customer": 1,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 3,
+  "fields": {
+    "name": "KellyMorin_AMEX",
+    "account_number": 111122223333,
+    "customer": 4,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 4,
+  "fields": {
+    "name": "Bob's Visa",
+    "account_number": 123221232292,
+    "customer": 5,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 5,
+  "fields": {
+    "name": "Sebastian's Discover Card",
+    "account_number": 1234123477659001,
+    "customer": 2,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.order",
+  "pk": 1,
+  "fields": {
+    "customer": 3,
+    "payment_type": 1
+  }
+},
+{
+  "model": "website.order",
+  "pk": 3,
+  "fields": {
+    "customer": 4,
+    "payment_type": 3
+  }
+},
+{
+  "model": "website.order",
+  "pk": 4,
+  "fields": {
+    "customer": 1,
+    "payment_type": 2
+  }
+},
+{
+  "model": "website.order",
+  "pk": 5,
+  "fields": {
+    "customer": 2,
+    "payment_type": 5
+  }
+},
+{
+  "model": "website.order",
+  "pk": 6,
+  "fields": {
+    "customer": 5,
+    "payment_type": 4
+  }
+},
+{
+  "model": "website.order",
+  "pk": 7,
+  "fields": {
+    "customer": 4,
+    "payment_type": null
+  }
+},
+{
+  "model": "website.order",
+  "pk": 8,
+  "fields": {
+    "customer": 2,
+    "payment_type": null
+  }
+},
+{
+  "model": "website.order",
+  "pk": 9,
+  "fields": {
+    "customer": 3,
+    "payment_type": null
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 1,
+  "fields": {
+    "product": 4,
+    "order": 1
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 2,
+  "fields": {
+    "product": 6,
+    "order": 3
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 3,
+  "fields": {
+    "product": 7,
+    "order": 1
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 4,
+  "fields": {
+    "product": 2,
+    "order": 6
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 5,
+  "fields": {
+    "product": 4,
+    "order": 7
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 6,
+  "fields": {
+    "product": 4,
+    "order": 6
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 7,
+  "fields": {
+    "product": 3,
+    "order": 6
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 8,
+  "fields": {
+    "product": 2,
+    "order": 5
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 9,
+  "fields": {
+    "product": 6,
+    "order": 6
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 10,
+  "fields": {
+    "product": 7,
+    "order": 1
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 11,
+  "fields": {
+    "product": 7,
+    "order": 5
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 12,
+  "fields": {
+    "product": 1,
+    "order": 4
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 13,
+  "fields": {
+    "product": 7,
+    "order": 7
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 14,
+  "fields": {
+    "product": 8,
+    "order": 1
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 15,
+  "fields": {
+    "product": 8,
+    "order": 8
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 16,
+  "fields": {
+    "product": 4,
+    "order": 9
+  }
+},
+{
+  "model": "website.orderproduct",
+  "pk": 17,
+  "fields": {
+    "product": 8,
+    "order": 7
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add customer",
+    "content_type": 7,
+    "codename": "add_customer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change customer",
+    "content_type": 7,
+    "codename": "change_customer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete customer",
+    "content_type": 7,
+    "codename": "delete_customer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view customer",
+    "content_type": 7,
+    "codename": "view_customer"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add order",
+    "content_type": 8,
+    "codename": "add_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change order",
+    "content_type": 8,
+    "codename": "change_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete order",
+    "content_type": 8,
+    "codename": "delete_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view order",
+    "content_type": 8,
+    "codename": "view_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add order product",
+    "content_type": 9,
+    "codename": "add_orderproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change order product",
+    "content_type": 9,
+    "codename": "change_orderproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete order product",
+    "content_type": 9,
+    "codename": "delete_orderproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view order product",
+    "content_type": 9,
+    "codename": "view_orderproduct"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add payment type",
+    "content_type": 10,
+    "codename": "add_paymenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change payment type",
+    "content_type": 10,
+    "codename": "change_paymenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete payment type",
+    "content_type": 10,
+    "codename": "delete_paymenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view payment type",
+    "content_type": 10,
+    "codename": "view_paymenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add product",
+    "content_type": 11,
+    "codename": "add_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change product",
+    "content_type": 11,
+    "codename": "change_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete product",
+    "content_type": 11,
+    "codename": "delete_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view product",
+    "content_type": 11,
+    "codename": "view_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add product type",
+    "content_type": 12,
+    "codename": "add_producttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change product type",
+    "content_type": 12,
+    "codename": "change_producttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete product type",
+    "content_type": 12,
+    "codename": "delete_producttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view product type",
+    "content_type": 12,
+    "codename": "view_producttype"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$120000$wpPbUSpJZykv$MRxQGL0eDQd7hJ199hlzjoGPakfG+FFr5W5tpTBgYEo=",
+    "last_login": "2019-02-07T17:04:57.835",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@bangazon.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2019-02-07T17:03:12.466",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$120000$cK8fzm26R50x$XFsnH4Ct97zyzuthmcXEU5dl+8R19FYcr70NyPNX9rM=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "scivarolo",
+    "first_name": "Sebastian",
+    "last_name": "Civarolo",
+    "email": "scivarolo@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-02-07T17:05:37",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$120000$yFM08gloncnC$DnrdoMLopGFbDQMdcn1cmMpZ7uRomtpHOZA9sYwjOS8=",
+    "last_login": "2019-02-07T17:06:01",
+    "is_superuser": false,
+    "username": "kmorin",
+    "first_name": "Kelly",
+    "last_name": "Morin",
+    "email": "kmorin06@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-02-07T17:05:42",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$120000$2xsqMs5R4mSk$zga5nltFJrPVO0+IKLh3DHdHdc8B8bFvaTtVFWO85Ho=",
+    "last_login": "2019-02-07T17:06:51",
+    "is_superuser": false,
+    "username": "rdaniel",
+    "first_name": "Rachel",
+    "last_name": "Daniel",
+    "email": "rachdaniel88@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-02-07T17:05:53",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$120000$CQc03tghQT5E$cfTO34UtgPg4314ckM19z2RZlDY/qQ2K9BpKiFzNaA4=",
+    "last_login": "2019-02-07T17:06:43",
+    "is_superuser": false,
+    "username": "mrBob",
+    "first_name": "Bob",
+    "last_name": "Bobby",
+    "email": "bob@bobby.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-02-07T17:05:58",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$120000$38bCkXX4JFFj$FOkToYubSPJPD3ShAg1VJlZFygDvbRqxi9qmF/wZKYQ=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "bdan",
+    "first_name": "Brendan",
+    "last_name": "McCray",
+    "email": "brendan@brendan.brendan",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2019-02-07T17:06:36",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "website.customer",
+  "pk": 1,
+  "fields": {
+    "user": 6,
+    "street_address": "123 Where am I",
+    "city": "Lexvegas",
+    "state": "KY",
+    "zipcode": "40509",
+    "phone_number": 9501234567,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.customer",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "street_address": "1234 Raving Ramora St.",
+    "city": "Nashville",
+    "state": "TN",
+    "zipcode": "37209",
+    "phone_number": 2815551234,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.customer",
+  "pk": 3,
+  "fields": {
+    "user": 4,
+    "street_address": "2301 Christmas Tree Ln",
+    "city": "Nashville",
+    "state": "TN",
+    "zipcode": "39999",
+    "phone_number": 6155558891,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.customer",
+  "pk": 4,
+  "fields": {
+    "user": 3,
+    "street_address": "9017 Chardonnay Trace",
+    "city": "Franklin",
+    "state": "TN",
+    "zipcode": "37067",
+    "phone_number": 6158389644,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.customer",
+  "pk": 5,
+  "fields": {
+    "user": 5,
+    "street_address": "123 Bob's Castle",
+    "city": "Castle",
+    "state": "FL",
+    "zipcode": "38721",
+    "phone_number": 123123123,
+    "delete_date": null
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2019-02-07T17:05:37.700",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "scivarolo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2019-02-07T17:05:42.287",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "3",
+    "object_repr": "kmorin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2019-02-07T17:05:53.495",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "4",
+    "object_repr": "rdaniel",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2019-02-07T17:05:55.909",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "2",
+    "object_repr": "scivarolo",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2019-02-07T17:05:58.281",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "5",
+    "object_repr": "mrBob",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2019-02-07T17:06:06.708",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "3",
+    "object_repr": "kmorin",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\", \"last_login\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2019-02-07T17:06:11.379",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "3",
+    "object_repr": "kmorin",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2019-02-07T17:06:36.963",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "6",
+    "object_repr": "bdan",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2019-02-07T17:06:47.566",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "5",
+    "object_repr": "mrBob",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\", \"last_login\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2019-02-07T17:06:52.888",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "4",
+    "object_repr": "rdaniel",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\", \"last_login\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2019-02-07T17:08:00.429",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "User: bdan Address:123 Where am I Phone: 9501234567",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2019-02-07T17:08:05.998",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "User: bdan Address:123 Where am I Phone: 9501234567",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2019-02-07T17:08:10.230",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "User: scivarolo Address:1234 Raving Ramora St. Phone: 2815551234",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2019-02-07T17:08:14.189",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "User: rdaniel Address:2301 Christmas Tree Ln Phone: 6155558891",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2019-02-07T17:08:18.819",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "User: rdaniel Address:2301 Christmas Tree Ln Phone: 6155558891",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2019-02-07T17:08:27.961",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "4",
+    "object_repr": "User: kmorin Address:9017 Chardonnay Trace Phone: 6158389644",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2019-02-07T17:08:58.233",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "1",
+    "object_repr": "Electronics",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2019-02-07T17:09:03.373",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "2",
+    "object_repr": "Home Decor",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2019-02-07T17:09:08.930",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "User: mrBob Address:123 Bob's Castle Phone: 123123123",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2019-02-07T17:09:35.056",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "3",
+    "object_repr": "Pet Accessories",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2019-02-07T17:10:28.586",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Title: Cat Painting Description:Terrifying painting of a cat on a hot tin roof. Great for rumpus rooms. Price:1000 Qty:1",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2019-02-07T17:10:43.431",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "2",
+    "object_repr": "Title: Catman Costume Description:Bruce Wayne edition, only two ever made Price:6500 Qty:2",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2019-02-07T17:10:51.181",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "3",
+    "object_repr": "Title: iPad Description:The thinnest iPad ever! Price:795 Qty:5",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2019-02-07T17:11:12.961",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "3",
+    "object_repr": "Title: iPad Description:The thinnest iPad ever! Price:795 Qty:5",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2019-02-07T17:11:15.641",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "1",
+    "object_repr": "Title: Cat Painting Description:Terrifying painting of a cat on a hot tin roof. Great for rumpus rooms. Price:1000 Qty:1",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"seller\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2019-02-07T17:11:20.135",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "4",
+    "object_repr": "Guitars",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2019-02-07T17:11:20.513",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "5",
+    "object_repr": "Apparel",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 28,
+  "fields": {
+    "action_time": "2019-02-07T17:11:45.505",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "4",
+    "object_repr": "Title: Potato IsThingOn Description:The slowest computer imaginable. It might not even turn on. Price:125 Qty:15",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 29,
+  "fields": {
+    "action_time": "2019-02-07T17:11:47.947",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "Title: Stratocaster Description:It sounds so good. Price:1000 Qty:2",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 30,
+  "fields": {
+    "action_time": "2019-02-07T17:11:50.402",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "Title: Stratocaster Description:It sounds so good. Price:1000 Qty:2",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 31,
+  "fields": {
+    "action_time": "2019-02-07T17:11:54.497",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "6",
+    "object_repr": "Title: Cool shoes Description:These shoes are the best, you'll look great in them! Price:50 Qty:12",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 32,
+  "fields": {
+    "action_time": "2019-02-07T17:12:00.490",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Visa",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 33,
+  "fields": {
+    "action_time": "2019-02-07T17:12:04.180",
+    "user": 1,
+    "content_type": 12,
+    "object_id": "6",
+    "object_repr": "Pets",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 34,
+  "fields": {
+    "action_time": "2019-02-07T17:12:06.967",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "2",
+    "object_repr": "Dave Ramsey Credit Card",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 35,
+  "fields": {
+    "action_time": "2019-02-07T17:12:31.896",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "7",
+    "object_repr": "Title: Cat Description:It's so cute yet so mean. Price:1 Qty:47",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 36,
+  "fields": {
+    "action_time": "2019-02-07T17:14:15.879",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "Customer Name: Rachel Daniel",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 37,
+  "fields": {
+    "action_time": "2019-02-07T17:14:19.228",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "1",
+    "object_repr": "Product: Title: Potato IsThingOn Description:The slowest computer imaginable. It might not even turn on. Price:125 Qty:15 Order:Customer Name: Rachel Daniel",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 38,
+  "fields": {
+    "action_time": "2019-02-07T17:14:40.728",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "3",
+    "object_repr": "KellyMorin_AMEX",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 39,
+  "fields": {
+    "action_time": "2019-02-07T17:14:45.100",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "1",
+    "object_repr": "Rachel's Visa",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 40,
+  "fields": {
+    "action_time": "2019-02-07T17:15:19.746",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Customer Name:  ",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 41,
+  "fields": {
+    "action_time": "2019-02-07T17:15:24.934",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Customer Name:  ",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 42,
+  "fields": {
+    "action_time": "2019-02-07T17:15:32.827",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Customer Name:  ",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 43,
+  "fields": {
+    "action_time": "2019-02-07T17:15:33.849",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "4",
+    "object_repr": "Bob's Visa",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 44,
+  "fields": {
+    "action_time": "2019-02-07T17:15:35.818",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "3",
+    "object_repr": "Customer Name: Kelly Morin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 45,
+  "fields": {
+    "action_time": "2019-02-07T17:15:38.895",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "2",
+    "object_repr": "Product: Title: Cool shoes Description:These shoes are the best, you'll look great in them! Price:50 Qty:12 Order:Customer Name: Kelly Morin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 46,
+  "fields": {
+    "action_time": "2019-02-07T17:15:39.356",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "3",
+    "object_repr": "Product: Title: Cat Description:It's so cute yet so mean. Price:1 Qty:47 Order:Customer Name: Rachel Daniel",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 47,
+  "fields": {
+    "action_time": "2019-02-07T17:15:43.683",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "4",
+    "object_repr": "Customer Name:  ",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 48,
+  "fields": {
+    "action_time": "2019-02-07T17:15:43.936",
+    "user": 1,
+    "content_type": 10,
+    "object_id": "5",
+    "object_repr": "Sebastian's Discover Card",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 49,
+  "fields": {
+    "action_time": "2019-02-07T17:15:46.974",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "5",
+    "object_repr": "Customer Name: Sebastian Civarolo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 50,
+  "fields": {
+    "action_time": "2019-02-07T17:16:04.190",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "6",
+    "object_repr": "Customer Name: Bob Bobby",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 51,
+  "fields": {
+    "action_time": "2019-02-07T17:16:12.652",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "7",
+    "object_repr": "Customer Name: Kelly Morin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 52,
+  "fields": {
+    "action_time": "2019-02-07T17:16:13.950",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "4",
+    "object_repr": "Product: Title: Catman Costume Description:Bruce Wayne edition, only two ever made Price:6500 Qty:2 Order:Customer Name: Bob Bobby",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 53,
+  "fields": {
+    "action_time": "2019-02-07T17:16:16.208",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "5",
+    "object_repr": "Product: Title: Potato IsThingOn Description:The slowest computer imaginable. It might not even turn on. Price:125 Qty:15 Order:Customer Name: Kelly Morin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 54,
+  "fields": {
+    "action_time": "2019-02-07T17:16:23.734",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "6",
+    "object_repr": "bdan",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"first_name\", \"last_name\", \"email\", \"is_superuser\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 55,
+  "fields": {
+    "action_time": "2019-02-07T17:16:28.898",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "6",
+    "object_repr": "Product: Title: Potato IsThingOn Description:The slowest computer imaginable. It might not even turn on. Price:125 Qty:15 Order:Customer Name: Bob Bobby",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 56,
+  "fields": {
+    "action_time": "2019-02-07T17:16:30.636",
+    "user": 1,
+    "content_type": 4,
+    "object_id": "6",
+    "object_repr": "bdan",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"is_staff\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 57,
+  "fields": {
+    "action_time": "2019-02-07T17:16:44.451",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "7",
+    "object_repr": "Product: Title: iPad Description:The thinnest iPad ever! Price:795 Qty:5 Order:Customer Name: Bob Bobby",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 58,
+  "fields": {
+    "action_time": "2019-02-07T17:16:55.786",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "8",
+    "object_repr": "Product: Title: Cool shoes Description:These shoes are the best, you'll look great in them! Price:50 Qty:12 Order:Customer Name: Sebastian Civarolo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 59,
+  "fields": {
+    "action_time": "2019-02-07T17:16:57.806",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "9",
+    "object_repr": "Product: Title: Cool shoes Description:These shoes are the best, you'll look great in them! Price:50 Qty:12 Order:Customer Name: Bob Bobby",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 60,
+  "fields": {
+    "action_time": "2019-02-07T17:17:08.773",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "10",
+    "object_repr": "Product: Title: Cat Description:It's so cute yet so mean. Price:1 Qty:47 Order:Customer Name: Rachel Daniel",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 61,
+  "fields": {
+    "action_time": "2019-02-07T17:17:19.657",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "11",
+    "object_repr": "Product: Title: Cat Description:It's so cute yet so mean. Price:1 Qty:47 Order:Customer Name: Sebastian Civarolo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 62,
+  "fields": {
+    "action_time": "2019-02-07T17:17:35.174",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "8",
+    "object_repr": "Product: Title: Catman Costume Description:Bruce Wayne edition, only two ever made Price:6500 Qty:2 Order:Customer Name: Sebastian Civarolo",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"product\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 63,
+  "fields": {
+    "action_time": "2019-02-07T17:17:59.057",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "12",
+    "object_repr": "Product: Title: Cat Painting Description:Terrifying painting of a cat on a hot tin roof. Great for rumpus rooms. Price:1000 Qty:1 Order:Customer Name: Brendan McCray",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 64,
+  "fields": {
+    "action_time": "2019-02-07T17:18:09.101",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "13",
+    "object_repr": "Product: Title: Cat Description:It's so cute yet so mean. Price:1 Qty:47 Order:Customer Name: Kelly Morin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 65,
+  "fields": {
+    "action_time": "2019-02-07T17:18:13.958",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "8",
+    "object_repr": "Customer Name: Sebastian Civarolo",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 66,
+  "fields": {
+    "action_time": "2019-02-07T17:19:23.242",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "8",
+    "object_repr": "Title: itty bitty booties Description:Cats hate them, but Instagram followers love them! Price:129 Qty:4",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 67,
+  "fields": {
+    "action_time": "2019-02-07T17:20:14.751",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "14",
+    "object_repr": "Product: Title: itty bitty booties Description:Cats hate them, but Instagram followers love them! Price:129 Qty:4 Order:Order: 1, Customer Name: Rachel Daniel, Payment Type: Rachel's Visa",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 68,
+  "fields": {
+    "action_time": "2019-02-07T17:21:28.619",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "9",
+    "object_repr": "Order: 9, Customer Name: Rachel Daniel, Payment Type: Rachel's Visa",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 69,
+  "fields": {
+    "action_time": "2019-02-07T17:21:31.249",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "15",
+    "object_repr": "Product: Title: itty bitty booties Description:Cats hate them, but Instagram followers love them! Price:129 Qty:4 Order:Order: 8, Customer Name: Sebastian Civarolo, Payment Type: None",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 70,
+  "fields": {
+    "action_time": "2019-02-07T17:21:57.441",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "13",
+    "object_repr": "Product: Title: Cat Description:It's so cute yet so mean. Price:1 Qty:47 Order:Order: 7, Customer Name: Kelly Morin, Payment Type: None",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"order\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 71,
+  "fields": {
+    "action_time": "2019-02-07T17:22:03.831",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "16",
+    "object_repr": "Product: Title: Potato IsThingOn Description:The slowest computer imaginable. It might not even turn on. Price:125 Qty:15 Order:Order: 9, Customer Name: Rachel Daniel, Payment Type: Rachel's Visa",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 72,
+  "fields": {
+    "action_time": "2019-02-07T17:22:09.186",
+    "user": 1,
+    "content_type": 9,
+    "object_id": "17",
+    "object_repr": "Product: Title: itty bitty booties Description:Cats hate them, but Instagram followers love them! Price:129 Qty:4 Order:Order: 7, Customer Name: Kelly Morin, Payment Type: None",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 73,
+  "fields": {
+    "action_time": "2019-02-07T17:22:18.132",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "9",
+    "object_repr": "Order: 9, Customer Name: Rachel Daniel, Payment Type: None",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"payment_type\"]}}]"
+  }
+}
+]

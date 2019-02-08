@@ -9,7 +9,7 @@ from website.models import *
 from website.forms import *
 
 
-@login_required
+@login_required(login_url="/website/login")
 def add_payment(request):
     """This method gets customer from user in cookies, renders payment_form.html, and adds a new payment method to the database for the current customer upon submit
 

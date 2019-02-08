@@ -19,7 +19,7 @@
   <div class="list-group-item bg-light">Order total: <strong>${{total|intcomma}}</strong></div>
   <hr />
     <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
-    <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>
+    <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
 {% else %}
   <div>
     <strong>You don't have an open order...</strong>
@@ -27,7 +27,7 @@
     but there's always something you deserve.
   </div>
   <br />
-  <a href="{% url 'website:list_products' %}" class="btn btn-primary">Take a Look</a>
+  <a href="{% url 'website:products' %}" class="btn btn-primary">Take a Look</a>
 {% endif %}
 
 {% endblock content %}

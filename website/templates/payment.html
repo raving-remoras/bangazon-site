@@ -20,7 +20,7 @@
       <hr />
       <button class="btn btn-primary">Done</button>
       <a href="{% url 'website:cart' %}" class="btn btn-outline-secondary">Go to Cart</a>
-      <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>
+      <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
     </form>
   {% else %}
       <a href="{}" class="btn btn-primary">Add a Payment Method to Complete this Order</a>
@@ -32,7 +32,7 @@
     but there's always something you deserve.
   </div>
   <br />
-  <a href="{% url 'website:list_products' %}" class="btn btn-primary">Take a Look</a>
+  <a href="{% url 'website:products' %}" class="btn btn-primary">Take a Look</a>
 {% endif %}
 
 

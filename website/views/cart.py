@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from website.models import *
-import random
+
 
 @login_required(login_url="/website/login")
 def cart(request):
@@ -35,7 +35,7 @@ def cart(request):
             for product in order:
                 total += product.price
 
-            context = {"order_id": order[0].id, "order": order, "products":     products, "total":total}
+            context = {"order_id": order[0].id, "order": order, "products": products, "total":total}
             return render(request, "cart.html", context)
     except:
         context = {}

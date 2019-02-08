@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'django.contrib.humanize'
+    'crispy_forms',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -120,3 +122,5 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

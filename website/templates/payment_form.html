@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% load crispy_forms_tags %}
+
+{% comment %}
+Template for Add Payment Type form
+
+Author: Rachel Daniel
+{% endcomment %}
+
+{% block content %}
+<h2>Add a Payment Type</h2>
+{% block form %}
+    <form action="{% url 'website:add_payment' %}" method="POST">
+    {% csrf_token %}
+        {{ form|crispy }}
+    <input class="btn btn-primary" type="submit" value="submit">
+  </form>
+{% endblock form %}
+{% endblock content %}

@@ -21,9 +21,9 @@ def cart(request):
     """
 
     if request.method == "GET":
-        user_id = request.user.customer.id
+        customer_id = request.user.customer.id
         # get user's open order information. If there's no open order, then the context is effectively empty, and logic within the template responds accordingly
-        order = Order.objects.raw(sql, [user_id])
+        order = Order.objects.raw(sql, [customer_id])
 
         # get products from queryset to provide the template with a morobvious context variable
         products = list()

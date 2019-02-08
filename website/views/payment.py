@@ -17,17 +17,26 @@ def payment(request):
         WHERE customer_id = %s AND website_order.payment_type_id IS NULL
     """
 
+    # PaymentType (get payment options where the card/account hasn't been deleted)
+    sql_payment = """SELECT id, name, substr(account_number, -4, 4) as last_4
+        FROM website_paymenttype
+        WHERE customer_id = %s AND delete_date IS NULL
+    """
+
     if request.method == "GET":
-        user_id = request.user.customer.id
+        customer_id = request.user.customer.id
         # get user's open order information. If there's no open order, then the context is effectively empty, and logic within the template responds accordingly
-        order = Order.objects.raw(sql, [user_id])
+        order = Order.objects.raw(sql, [customer_id])
 
         # calculate total cost of products in open order
         total = 0
         for product in order:
             total += product.price
 
-        context = {"order_id": order[0].id, "order": order,"total": total}
+        # query database for all of user's saved - and non-deleted - payment options
+        payment_options = PaymentType.objects.raw(sql_payment, [customer_id])
+
+        context = {"order_id": order[0].id, "order": order, "total": total, "payment_options": payment_options}
         return render(request, "payment.html", context)
 
     if request.method == "POST":

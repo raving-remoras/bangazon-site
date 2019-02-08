@@ -7,7 +7,15 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, render
 from website.models import Product, OrderProduct, Order
 
+
 def list_products(request):
+    """Displays a list of all products that have not been created by the user
+
+    Author: Kelly Morin
+
+    Returns:
+        render -- returns the product_list.html template
+    """
     if not request.user.is_authenticated:
         all_products = Product.objects.raw(f"""
             SELECT * FROM website_product
@@ -26,8 +34,7 @@ def list_products(request):
             "products": all_products
         }
 
-    template_name = 'product_list.html'
-    return render(request, template_name, context)
+    return render(request, 'product_list.html', context)
 
 def product_details(request, product_id):
     product_details = Product.objects.raw(f"""
@@ -68,7 +75,15 @@ def product_details(request, product_id):
     }
     return render(request, "product_detail.html", context)
 
+
 def add_to_cart(request, product_id):
+    """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
+
+    Author: Kelly Morin
+
+    Returns:
+        render -- renders the product_list.html template
+    """
     if not request.user.is_authenticated:
         product_details = Product.objects.raw(f"""
             SELECT * FROM website_product
@@ -130,8 +145,8 @@ def add_to_cart(request, product_id):
                     )
                 """, data)
 
+            messages.success(request,"This product has been added to your cart!")
             return HttpResponseRedirect(reverse('website:products'))
-            # TODO: Need to figure out how to add success message
         except:
             customer = request.user.customer.id
             data = [customer]
@@ -158,4 +173,6 @@ def add_to_cart(request, product_id):
                         %s, %s
                     )
                 """, relationship_data)
+
+            messages.success(request,"This product has been added to your cart!")
             return HttpResponseRedirect(reverse('website:products'))

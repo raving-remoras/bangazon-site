@@ -16,7 +16,7 @@ class AddProductTests(TestCase):
     """
 
     def test_add_view(self):
-        """ Test loading the add product view. """
+        """ Test loading the add product view with and without a logged in user. """
         user = User.objects.create_user(username="test_user", password="password")
         customer = Customer.objects.create(
             user=user,
@@ -26,6 +26,10 @@ class AddProductTests(TestCase):
             zipcode="37209",
             phone_number="5555555555"
         )
+
+        not_logged_in_response = self.client.get(reverse('website:sell'))
+        self.assertEqual(not_logged_in_response.status_code, 302)
+
         self.client.login(username="test_user", password="password")
 
         response = self.client.get(reverse('website:sell'))

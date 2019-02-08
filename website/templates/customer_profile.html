@@ -39,7 +39,9 @@
         <h2>Order History</h2>
             <ul class="list-group">
                 {% for order in user.customer.order_set.all %}
-                    <li class="list-group-item">{{order.id}}</li>
+                    {% if order.payment_type_id%}
+                        <li class="list-group-item">{{order.id}}</li>
+                    {% endif %}
                 {% endfor %}
 
             </ul>

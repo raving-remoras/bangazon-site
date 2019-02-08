@@ -20,3 +20,4 @@ class PaymentForm(forms.ModelForm):
     class Meta:
         model = PaymentType
         fields = ('name', 'account_number')
+        labels = {'name': ('Payment Type Name')}

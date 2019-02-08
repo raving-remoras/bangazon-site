@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from website.models import Product
+from website.models import *
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -14,3 +14,11 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('title', 'description', 'product_type', 'price', 'quantity',)
+
+class PaymentForm(forms.ModelForm):
+
+    class Meta:
+        model = PaymentType
+        fields = ('name', 'account_number')
+        labels = {'name': ('Payment Type Name')}
+

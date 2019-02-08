@@ -1,2 +1,7 @@
-from .index_views import *
 from .customer_profile_views import *
+from .index_views import *
+from .product_views import *
+from .payment_views import *
+from .sell_views import *
+from .auth_views import *
+

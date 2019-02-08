@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'website',
     'crispy_forms',
-    'website'
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,4 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 LOGIN_URL='/website/login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+{% block content %}
+    <h1>Products</h1>
+
+    <div class="row">
+      {% for product in products %}
+      <div class="col-sm-4">
+        <div class="card mb-3" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{product.title}}</h5>
+              <a href="{% url 'website:product_details' product.id %}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+
+{% endblock content %}
+
+

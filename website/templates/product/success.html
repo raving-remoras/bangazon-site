@@ -1,15 +1,12 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Bangazon</title>
-  </head>
-  <body>
+{% extends 'index.html' %}
 
-    <h1>Product Added</h1>
+{% block content %}
+    <h1>{{title}} Added</h1>
+    {% comment %}
+    TODO: Uncomment once the product_detail view is implemented
+    <a class="btn btn-primary" href="{% url 'website:list_products' %}">All Products</a>
+    {% endcomment %}
+    <a href="{% url 'website:product_details' product_id %}" class="btn btn-primary">View Detail Page</a>
 
-    <a href="{% url 'website:list_products' %}">List Products</a>
-  </body>
-</html>
+{% endblock content %}
 

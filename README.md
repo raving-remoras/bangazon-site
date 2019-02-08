@@ -16,3 +16,7 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - If you want some data to play with, run `python manage.py loaddata db.json`
 - Initialize the project using the command line by typing `python manage.py runserver` in the main directory.
 - Access the application in a browser at `http://localhost:8000/website`.
+
+## Products
+- From the homepage, if you select <em>Shop</em> you will be taken to a list of all products
+- If you select <em>View Details</em> on any product listing, you will then be taken to a view of all product details and be given the option to add the product to your cart.

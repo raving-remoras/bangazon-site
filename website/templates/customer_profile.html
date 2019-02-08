@@ -1,7 +1,6 @@
 {% extends 'index.html' %}
 
    {% block content %}
-
         <h1>{{user}}'s User Settings</h1>
             <ul>
                 <li>{{user.first_name}} {{user.last_name}}</li>
@@ -9,6 +8,7 @@
 
                 <li>{{user.phone_number}}</li>
             </ul>
+            {{form}}
 
         <h2>Payment Types</h2>
             <ul>

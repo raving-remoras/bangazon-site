@@ -9,7 +9,7 @@
     <form action="{% url 'website:sell' %}" method="post">
       {% csrf_token %}
       {{ product_form|crispy }}
-      <input type="submit" value="Sell It" />
+      <input class="btn btn-primary" type="submit" value="Sell It" />
     </form>
 
 {% endblock content %}

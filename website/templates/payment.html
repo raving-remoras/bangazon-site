@@ -10,7 +10,7 @@
   {% if payment_options %}
     <form method="POST" action="{% url 'website:payment' %}">
       {% csrf_token %}
-      <select class="custom-select" id="payment_method">
+      <select class="custom-select" name="payment_method">
         {% for option in payment_options %}
           <option value="{{option.id}}">{{option.name}}</h6> [{{option.last_4}}]</option>
         {% endfor %}

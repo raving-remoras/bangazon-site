@@ -4,11 +4,11 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 from website.models import *
-from django.db.models.fields import BLANK_CHOICE_DASH
-
+from django.db import connection
 
 @login_required
 def payment(request):
+    customer_id = request.user.customer.id
 
     # Order (get order ID where customer id is current user's customer ID) -> OrderProduct (for product IDs on open order) -> Product (get product data)
     sql = """SELECT *
@@ -25,7 +25,6 @@ def payment(request):
     """
 
     if request.method == "GET":
-        customer_id = request.user.customer.id
         # get user's open order information. If there's no open order, then the context is effectively empty, and logic within the template responds accordingly
         order = Order.objects.raw(sql, [customer_id])
 
@@ -41,6 +40,10 @@ def payment(request):
         return render(request, "payment.html", context)
 
     if request.method == "POST":
+        payment_id = request.POST["payment_method"]
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE website_order SET payment_type_id = %s WHERE customer_id = %s AND payment_type_id IS NULL", [payment_id, customer_id])
+
         context = {}
         return render(request, "cart.html", context)
     else:

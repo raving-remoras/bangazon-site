@@ -72,27 +72,27 @@ class CustomerProfileTest(TestCase):
         response= self.client.post(reverse('website:customer_profile'),{"edit": "edit"})
 
         self.assertIn(
-            '<input type="text" name="last_name" value="Bobber" maxlength="150" class="textinput textInput" id="id_last_name">'.encode(), response.content
+            '<input type="text" name="last_name" value="Bobber" '.encode(), response.content
         )
         self.assertIn(
-            '<input type="number" name="phone_number" value="1233211232" class="numberinput" required id="id_phone_number">'.encode(), response.content
+            '<input type="number" name="phone_number" value="1233211232" '.encode(), response.content
         )
         self.assertIn(
-            '<input type="text" name="street_address" value="123 South" maxlength="200" class="textinput textInput" required id="id_street_address">'.encode(), response.content
+            '<input type="text" name="street_address" value="123 South" '.encode(), response.content
         )
         self.assertIn(
-            '<input type="text" name="city" value="Bobville" maxlength="100" class="textinput textInput" required id="id_city">'.encode(), response.content
+            '<input type="text" name="city" value="Bobville" maxlength="100" '.encode(), response.content
         )
         self.assertIn(
-            '<input type="text" name="state" maxlength="100" class="textinput textInput" required id="id_state">'.encode(), response.content
+            '<input type="text" name="state" maxlength="100" '.encode(), response.content
         )
         self.assertIn(
-            '<input type="text" name="zipcode" value="12343" maxlength="20" class="textinput textInput" required id="id_zipcode">'.encode(), response.content
+            '<input type="text" name="zipcode" value="12343" '.encode(), response.content
         )
 
     def test_edit(self):
 
-         """Tests that the view can edit the user and customer information.
+        """Tests that the view can edit the user and customer information.
 
             Model: User, Customer
 

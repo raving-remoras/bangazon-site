@@ -1,12 +1,14 @@
 {% extends 'index.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
     <h1>Sell Product</h1>
 
     <form action="{% url 'website:sell' %}" method="post">
       {% csrf_token %}
-      {{ product_form.as_p }}
+      {{ product_form|crispy }}
       <input type="submit" value="Sell It" />
     </form>
 

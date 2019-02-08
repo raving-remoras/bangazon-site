@@ -6,7 +6,7 @@ from django.contrib import messages
 from website.models import *
 from django.db import connection
 
-@login_required
+@login_required(login_url="/website/login")
 def payment(request):
     customer_id = request.user.customer.id
 
@@ -40,12 +40,13 @@ def payment(request):
         return render(request, "payment.html", context)
 
     if request.method == "POST":
+        # Update payment_type_id in Order table to "close" the open order
         payment_id = request.POST["payment_method"]
         with connection.cursor() as cursor:
             cursor.execute("UPDATE website_order SET payment_type_id = %s WHERE customer_id = %s AND payment_type_id IS NULL", [payment_id, customer_id])
-
-        context = {}
-        return render(request, "cart.html", context)
+        # provide confirmation to user on redirect
+        messages.success(request,"Thank you for placing your order!")
+        return HttpResponseRedirect(reverse('website:list_products'))
     else:
         context = {}
         return render(request, "cart.html", context)

@@ -11,7 +11,7 @@ from website.forms import *
 from website.forms import UserForm, ProductForm
 from website.models import Product
 
-@login_required
+@login_required(login_url="/website/login")
 def customer_profile(request):
     if request.method == "GET":
         user = request.user

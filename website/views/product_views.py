@@ -2,7 +2,17 @@ from django.shortcuts import get_object_or_404, render
 from website.models import Product, OrderProduct, Order
 
 def list_products(request):
-    all_products = Product.objects.all()
+    if not request.user.is_authenticated:
+        all_products = Product.objects.raw(f"""
+            SELECT * FROM website_product
+        """)
+    else:
+        user_id = request.user.customer.id
+        all_products = Product.objects.raw(f"""
+            SELECT * FROM website_product
+            WHERE website_product.seller_id IS NOT {user_id}
+        """)
+
     template_name = 'product_list.html'
     return render(request, template_name, {'products': all_products})
 

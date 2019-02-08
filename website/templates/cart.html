@@ -5,10 +5,26 @@
 
 {% if order %}
   <h1>{{request.user}}'s cart</h1>
-  <div> Order Number: A30165B{{order.id}} </div>
+  <div>Order Number: BA14793NG-{{order.id}}</div>
   <hr />
+  {% for product in products %}
+    <div>{{product}}</div>
+  {% endfor %}
+  <hr />
+  <form>
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Complete Order</button>
+    <a href="{% url 'website:list_products' %}" class="btn btn-secondary">View More Products</a>
+    <a href="{% url 'website:index' %}" class="btn btn-outline-secondary">Go Back</a>
+  </form>
 {% else %}
-  <div>You don't have an open order, but there's always something nice to buy!</div>
+  <div>
+    <strong>You don't have an open order...</strong>
+    <br />
+    but there's always something you deserve.
+  </div>
+  <br />
+  <a href="{% url 'website:list_products' %}" class="btn btn-primary">Take a Look</a>
 {% endif %}
 
 {% endblock content %}

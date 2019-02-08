@@ -8,7 +8,7 @@ from django.db import connection
 from website.forms import ProductForm
 from website.models import *
 
-@login_required
+@login_required(login_url="/website/login")
 def sell_product(request):
     """Loads the view for creating a product to sell and saves it to the database.
 

@@ -12,6 +12,33 @@
       <input class="btn btn-primary" type="submit" value="Sell It" />
     </form>
 
+    <script type="text/javascript">
+      $(document).ready(function() {
+
+        if ($('#id_local_delivery').is(':checked')) {
+            $("#div_id_delivery_city").show();
+            $("#div_id_delivery_state").show();
+        }
+        else {
+            $("#div_id_delivery_city").hide();
+            $("#div_id_delivery_state").hide();
+        }
+
+        $('#id_local_delivery').click(function() {
+          console.log("CLICKED")
+          if ($('#id_local_delivery').is(':checked')) {
+            $("#div_id_delivery_city").show();
+            $("#div_id_delivery_state").show();
+          }
+          else {
+              $("#div_id_delivery_city").hide();
+              $("#div_id_delivery_state").hide();
+          }
+        })
+
+      })
+    </script>
+
 {% endblock content %}
 
 

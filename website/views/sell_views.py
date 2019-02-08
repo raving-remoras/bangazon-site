@@ -9,6 +9,11 @@ from website.forms import ProductForm
 from website.models import *
 
 def sell_product(request):
+    """Loads the view for creating a product to sell and saves it to the database.
+
+        Author: Sebastian Civarolo
+
+    """
     if request.method == 'GET':
         product_form = ProductForm()
         template_name = 'product/create.html'
@@ -19,46 +24,42 @@ def sell_product(request):
 
     elif request.method == 'POST':
         form_data = request.POST
+        product_form = ProductForm(form_data)
 
-        # p = Product(
-        #     seller = request.user.customer,
-        #     title = form_data['title'],
-        #     description = form_data['description'],
-        #     product_type = ProductType.objects.get(pk=form_data['product_type']),
-        #     price = form_data['price'],
-        #     quantity = form_data['quantity'],
-        # )
-        # p.save()
+        if product_form.is_valid():
 
-        seller = request.user.customer.id
-        title = form_data['title']
-        description = form_data['description']
-        product_type = form_data['product_type']
-        price = form_data['price']
-        quantity = form_data['quantity']
-        # print("form data", form_data)
-        data = [
-            seller, title, description, product_type, price, quantity
-        ]
+            seller = request.user.customer.id
+            title = form_data['title']
+            description = form_data['description']
+            product_type = form_data['product_type']
+            price = form_data['price']
+            quantity = form_data['quantity']
 
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                INSERT INTO website_product
-                (
-                    seller_id,
-                    title,
-                    description,
-                    product_type_id,
-                    price,
-                    quantity
-                )
-                VALUES(
-                    %s, %s, %s, %s, %s, %s
-                )
-            """, data)
+            data = [
+                seller, title, description, product_type, price, quantity
+            ]
+
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO website_product
+                    (
+                        seller_id,
+                        title,
+                        description,
+                        product_type_id,
+                        price,
+                        quantity
+                    )
+                    VALUES(
+                        %s, %s, %s, %s, %s, %s
+                    )
+                """, data)
+                new_product = cursor.lastrowid
 
 
-
-
-        template_name = 'product/success.html'
-        return render(request, template_name, {})
+            template_name = 'product/success.html'
+            context = {
+                "title": title,
+                "product_id": new_product
+            }
+            return render(request, template_name, context)

@@ -46,41 +46,14 @@ def cart(request):
                 product = Product.objects.raw(sql_3, [row.product_id])[0]
                 products.append(product)
 
-            context = {"order": order, "products": products}
+            # calculate total cost of products
+            total = 0
+            for product in products:
+                total += product.price
+
+            context = {"order": order, "products": products, "total":total}
         # If there is no order, then pass no context to the cart template
         except IndexError:
             context = {}
 
         return render(request, "cart.html", context)
-
-#             sql_2 = """SELECT *
-#         FROM website_orderproduct
-#         WHERE order_id = %s
-#     """
-
-#     sql_3 = """SELECT *
-#         FROM website_product
-#         WHERE id = %s
-#     """
-
-#     if request.method == "GET":
-#         user_id = request.user.customer.id
-#         try:
-#             # get order ID of user's open order. The try/except Index error is based on the order variable's raw SQL (note: [0]). If there's no open order, there's an index error because there is no index [0] in the list!
-#             order = Order.objects.raw(sql, [user_id])[0]
-
-#             # get IDs of products in the open order
-#             product_ids = OrderProduct.objects.raw(sql_2, [order.id])
-
-#             # get products from product IDs
-#             products = list()
-#             for row in product_ids:
-#                 product = Product.objects.raw(sql_3, [row.product_id])[0]
-#                 products.append(product)
-
-#             context = {"order": order, "products": products}
-#         # If there is no order, then pass no context to the cart template
-#         except IndexError:
-#             context = {}
-
-#         return render(request, "cart.html", context)

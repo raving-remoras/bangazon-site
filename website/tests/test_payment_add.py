@@ -67,11 +67,6 @@ class PaymentMethodTest(TestCase):
             user = new_user
             )
 
-        #test submitting form with incomplete data
-        response = self.client.post(reverse("website:add_payment"), {"account_number": 111111111})
-
-        with self.assertIsNone
-
         #test submission with complete data
         response = self.client.post(reverse("website:add_payment"), {"name": "Test Payment Type", "account_number": 111111111, "customer_id": 1})
 

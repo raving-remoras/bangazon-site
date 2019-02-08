@@ -39,6 +39,29 @@ class Product(models.Model):
 
         Author: God
     """
+    @property
+    def get_purchased_count(self):
+        """This method gets all completed orders for a specific product and calculates the number purchased
+
+        Author: Kelly Morin; refactored by Rachel Daniel
+
+        Returns:
+            purchased_count
+        """
+        purchased_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS NOT null
+            AND website_orderproduct.product_id = {self.id}
+        """)
+
+        purchased_count = 0
+        for item in purchased_qty:
+            if item.product_id == self.id:
+                purchased_count += 1
+
+        return purchased_count
+
     seller = models.ForeignKey(Customer, on_delete=models.PROTECT)
     product_type = models.ForeignKey(ProductType, on_delete=models.PROTECT)
     title = models.CharField(max_length=255)

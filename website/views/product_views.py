@@ -99,12 +99,22 @@ def my_products(request):
 
     my_products = Product.objects.raw(sql, [customer.id])
     purchased_counts = []
+    remaining_counts = []
     cart_counts = []
     for product in my_products:
         purchased_count = get_purchased_count(product.id)
         purchased_counts.append(purchased_count)
+        remaining_count = product.quantity - purchased_count
+        remaining_counts.append(remaining_count)
         cart_count = get_cart_count(product.id)
         cart_counts.append(cart_count)
 
 
-    return render(request, "product_list.html", {'products': my_products, "purchased_counts": purchased_counts, "cart_counts": cart_counts})
+    return render(request, "my_products.html", {'products': my_products, "purchased_counts": purchased_counts, "cart_counts": cart_counts, "remaining_counts": remaining_counts})
+
+def product_item(request, product):
+    purchased_count = get_purchased_count(product.id)
+    remaining_count = product.quantity - purchased_count
+    cart_count = get_cart_count(product.id)
+
+    return render(request, "product_item.html", {"product": product, "purchased_count": purchased_count})

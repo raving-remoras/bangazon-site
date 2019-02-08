@@ -84,6 +84,7 @@ def add_to_cart(request, product_id):
     Returns:
         render -- renders the product_list.html template
     """
+    # TODO: Set up redirect to login page if user is not currently logged in, with next parameter passed through to login page so the user is automatically redirected to the product detail page they were previously on
     if not request.user.is_authenticated:
         product_details = Product.objects.raw(f"""
             SELECT * FROM website_product

@@ -13,5 +13,7 @@ urlpatterns = [
     # ex. /website/products
     path("products/", views.list_products, name='products'),
     # ex. /website/products/5
-    path("products/<int:product_id>", views.product_details, name="product_details")
+    path("products/<int:product_id>", views.product_details, name="product_details"),
+    # ex. /website/products/5/add
+    path("products/<int:product_id>/add", views.add_to_cart, name="add_to_cart")
 ]

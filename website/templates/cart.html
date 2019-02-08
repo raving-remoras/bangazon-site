@@ -8,24 +8,22 @@
   <div>Order Number: BA14793NG-{{order.id}}</div>
   <hr />
   {% for product in products %}
-    <div class="list-group-item bg-light">
+    <a class="list-group-item bg-light list-group-item-action" href="{}">
       <div class="d-flex w-100 justify-content-between"><h6>{{product.title}}</h6>${{product.price|intcomma}}</div>
-    </div>
-    <div class="list-group-item">
-        <div class="d-flex w-100 justify-content-between">
-          <p class="mb-1">{{product.description}}</p>
-        </div>
-    </div>
+      <div class="d-flex w-100 justify-content-between">
+        <p class="mb-1">{{product.description}}</p>
+      </div>
+    </a>
   {% endfor %}
   <hr />
   <div class="list-group-item bg-light">Order total: ${{total|intcomma}}</div>
   <hr />
-  <form>
+  {% comment %} <form action="{% url 'website:payment' order.id %}" method="POST"> {% endcomment %}
     {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Complete Order</button>
+    <button class="btn btn-primary" type="submit">Complete Order</button>
     <a href="{% url 'website:list_products' %}" class="btn btn-secondary">View More Products</a>
     <a href="{% url 'website:index' %}" class="btn btn-outline-secondary">Go Back</a>
-  </form>
+  {% comment %} </form> {% endcomment %}
 {% else %}
   <div>
     <strong>You don't have an open order...</strong>

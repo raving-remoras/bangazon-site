@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% load humanize %}
+
+{% block content %}
+
+{% if order %}
+  <h1>{{request.user}}'s payment options</h1>
+  <div>Order Number: BA14793NG-{{order.id}}</div>
+  <hr />
+
+{% endblock content %}

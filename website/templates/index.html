@@ -23,7 +23,9 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="nav-link" href="{% url 'website:list_products' %}">Shop</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Cart</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Add Product</a></li>
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="#">Add Product</a></li>
+        {% endif %}
         <li class="nav-item"><a class="nav-link" href="#">User Settings</a></li>
       </ul>
     </nav>

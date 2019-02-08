@@ -16,7 +16,7 @@
     </a>
   {% endfor %}
   <hr />
-  <div class="list-group-item bg-light">Order total: ${{total|intcomma}}</div>
+  <div class="list-group-item bg-light">Order total: <strong>${{total|intcomma}}</strong></div>
   <hr />
     <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
     <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>

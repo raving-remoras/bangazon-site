@@ -6,20 +6,25 @@
 {% if order %}
   <h1>Please select a payment option</h1>
   <div>Order Number: BA14793NG-{{order_id}}</div>
-  <div><strong>Order Total: ${{total|intcomma}}</strong></div>
   <hr />
-  <form method="POST" action="{% url 'website:payment' %}">
-  {% csrf_token %}
-  <select class="custom-select" id="payment_method">
-  {% for option in payment_options %}
-    <option value="{{option.id}}">{{option.name}}</h6> [{{option.last_4}}]</option>
-  {% endfor %}
-  <select>
-  <hr />
-  <button href="{% url 'website:payment' %}" class="btn btn-primary">Done</button>
-  <a href="{% url 'website:cart' %}" class="btn btn-outline-secondary">Go to Cart</a>
-  <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>
-  </form>
+  {% if payment_options %}
+    <form method="POST" action="{% url 'website:payment' %}">
+      {% csrf_token %}
+      <select class="custom-select" id="payment_method">
+        {% for option in payment_options %}
+          <option value="{{option.id}}">{{option.name}}</h6> [{{option.last_4}}]</option>
+        {% endfor %}
+      <select>
+      <hr />
+        <div class="list-group-item bg-light">Order total: <strong>${{total|intcomma}}</strong></div>
+      <hr />
+      <button class="btn btn-primary">Done</button>
+      <a href="{% url 'website:cart' %}" class="btn btn-outline-secondary">Go to Cart</a>
+      <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>
+    </form>
+  {% else %}
+      <a href="{}" class="btn btn-primary">Add a Payment Method to Complete this Order</a>
+  {% endif %}
 {% else %}
   <div>
     <strong>You don't have an open order...</strong>

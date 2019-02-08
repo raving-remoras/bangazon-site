@@ -43,7 +43,7 @@ class PaymentMethodTest(TestCase):
         response = self.client.get(reverse("website:add_payment"))
         self.assertIn('<input type="text" name="name"'.encode(), response.content)
         self.assertIn('<input type="number" name="account_number"'.encode(), response.content)
-        self.assertIn('<input type="submit" value="submit"'.encode(), response.content)
+        self.assertIn('<input class="btn btn-primary" type="submit" value="submit"'.encode(), response.content)
 
     def test_add_payment(self):
         """Tests that the add payment form performs successful post for customer"""

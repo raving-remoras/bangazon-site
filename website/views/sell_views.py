@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.template import RequestContext
 from django.db import connection
+from django.urls import reverse
 
 from website.forms import ProductForm
 from website.models import *
@@ -57,10 +58,9 @@ def sell_product(request):
                 """, data)
                 new_product = cursor.lastrowid
 
-
-            template_name = 'product/success.html'
             context = {
                 "title": title,
                 "product_id": new_product
             }
-            return render(request, template_name, context)
+
+            return HttpResponseRedirect(reverse('website:product_details', args=(new_product,)))

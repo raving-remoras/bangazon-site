@@ -22,10 +22,10 @@ def cart(request):
     try:
         if request.method == "GET":
             customer_id = request.user.customer.id
-            # get user's open order information. If there's no open order, then     the context is effectively empty, and logic within the template     responds accordingly
+            # get user's open order information. If there's no open order, then the context is effectively empty, and logic within the template responds accordingly. The order table returned (i.e. the order variable) has one row per product
             order = Order.objects.raw(sql, [customer_id])
 
-            # get products from queryset to provide the template with a     morobvious context variable
+            # get products from queryset (effectively the same rows as the order variable already has) to provide the template with a more obvious context variable
             products = list()
             for product in order:
                 products.append(product)
@@ -35,7 +35,7 @@ def cart(request):
             for product in order:
                 total += product.price
 
-            context = {"order_id": order[0].id, "order": order, "products": products, "total":total}
+            context = {"order_id": order[0].id, "order": order, "products": products, "total": total}
             return render(request, "cart.html", context)
     except:
         context = {}

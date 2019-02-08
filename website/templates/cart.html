@@ -8,7 +8,7 @@
   <div>Order Number: BA14793NG-{{order_id}}</div>
   <hr />
   {% for product in products %}
-    <a class="list-group-item bg-light list-group-item-action" href="{}">
+    <a class="list-group-item bg-light list-group-item-action" href="{% url 'website:product_details' product.product_id %}">
       <div class="d-flex w-100 justify-content-between"><h6>{{product.title}}</h6>${{product.price|intcomma}}</div>
       <div class="d-flex w-100 justify-content-between">
         <p class="mb-1">{{product.description}}</p>

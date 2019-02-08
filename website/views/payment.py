@@ -8,6 +8,13 @@ from django.db import connection
 
 @login_required(login_url="/website/login")
 def payment(request):
+    """Gets information about the user's payment types and renders a template with a select dropdown. If user specifies "Done" in template, the POST will close the logged in user's open order in the database.
+
+        Author: Brendan McCray
+        Returns:
+            1. render - payment.html if loading page
+            2. httpRedirect - products view with success message
+    """
     customer_id = request.user.customer.id
 
     # Order (get order ID where customer id is current user's customer ID) -> OrderProduct (for product IDs on open order) -> Product (get product data)
@@ -46,7 +53,7 @@ def payment(request):
             cursor.execute("UPDATE website_order SET payment_type_id = %s WHERE customer_id = %s AND payment_type_id IS NULL", [payment_id, customer_id])
         # provide confirmation to user on redirect
         messages.success(request,"Thank you for placing your order!")
-        return HttpResponseRedirect(reverse('website:list_products'))
+        return HttpResponseRedirect(reverse('website:products'))
     else:
         context = {}
         return render(request, "cart.html", context)

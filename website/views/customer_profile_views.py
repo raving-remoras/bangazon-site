@@ -15,7 +15,12 @@ from website.models import Product
 def customer_profile(request):
     if request.method == "GET":
         user = request.user
-        form = UserForm(instance = user)
+        context = {"user": request.user}
+        return render(request, 'customer_profile.html', context)
+    elif request.method == "POST" and request.POST['edit']:
+        print('edit')
+        user = request.user
+        form = {"formA": UserCustomerFormA(instance = user), "formB": UserCustomerFormB(instance = user.customer)}
         context = {"user": request.user,
                     "form": form}
         return render(request, 'customer_profile.html', context)

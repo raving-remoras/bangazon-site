@@ -1,14 +1,29 @@
 {% extends 'index.html' %}
+{% load crispy_forms_tags %}
 
    {% block content %}
         <h1>{{user}}'s User Settings</h1>
+        {% if form %}
+            <form method="post" action="{% url "website:customer_profile" %}">
+                {% csrf_token %}
+                {{form.formA|crispy}}
+                {{form.formB|crispy}}
+                <input type="submit" value="Submit">
+            </form>
+        {% else %}
             <ul>
                 <li>{{user.first_name}} {{user.last_name}}</li>
                 <li>{{user.customer.street_address}} <br> {{user.customer.city}}, {{user.customer.state}} {{user.customer.zipcode}}</li>
 
                 <li>{{user.customer.phone_number}}</li>
             </ul>
-            {{form}}
+            <form method="post" action="{% url "website:customer_profile" %}">
+                {% csrf_token %}
+                <input type="hidden" name="edit" value="edit">
+                <input class="btn" type="submit" value="Edit">
+            </form>
+
+        {% endif %}
 
         <h2>Payment Types</h2>
             <ul>

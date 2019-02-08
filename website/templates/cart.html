@@ -5,7 +5,7 @@
 
 {% if order %}
   <h1>{{request.user}}'s cart</h1>
-  <div>Order Number: BA14793NG-{{order.id}}</div>
+  <div>Order Number: BA14793NG-{{order_id}}</div>
   <hr />
   {% for product in products %}
     <a class="list-group-item bg-light list-group-item-action" href="{}">
@@ -18,12 +18,9 @@
   <hr />
   <div class="list-group-item bg-light">Order total: ${{total|intcomma}}</div>
   <hr />
-  {% comment %} <form action="{% url 'website:payment' order.id %}" method="POST"> {% endcomment %}
-    {% csrf_token %}
-    <button class="btn btn-primary" type="submit">Complete Order</button>
-    <a href="{% url 'website:list_products' %}" class="btn btn-secondary">View More Products</a>
+    <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
+    <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>
     <a href="{% url 'website:index' %}" class="btn btn-outline-secondary">Go Back</a>
-  {% comment %} </form> {% endcomment %}
 {% else %}
   <div>
     <strong>You don't have an open order...</strong>

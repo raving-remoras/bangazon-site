@@ -4,8 +4,21 @@
 {% block content %}
 
 {% if order %}
-  <h1>{{request.user}}'s payment options</h1>
-  <div>Order Number: BA14793NG-{{order.id}}</div>
+  <h1>Please select a payment option</h1>
+  <div>Order Number: BA14793NG-{{order_id}}</div>
   <hr />
+  <hr />
+  <a href="{% url 'website:cart' %}" class="btn btn-outline-secondary">Go to Cart</a>
+  <a href="{% url 'website:list_products' %}" class="btn btn-outline-secondary">View More Products</a>
+{% else %}
+  <div>
+    <strong>You don't have an open order...</strong>
+    <br />
+    but there's always something you deserve.
+  </div>
+  <br />
+  <a href="{% url 'website:list_products' %}" class="btn btn-primary">Take a Look</a>
+{% endif %}
+
 
 {% endblock content %}

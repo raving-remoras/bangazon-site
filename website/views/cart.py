@@ -12,6 +12,7 @@ def cart(request):
 
     """
 
+    # Order (get order ID where customer id is current user's customer ID) -> OrderProduct (for product IDs on open order) -> Product (get product data)
     sql = """SELECT *
         FROM website_order
         JOIN website_orderproduct ON website_orderproduct.order_id = website_order.id
@@ -29,10 +30,10 @@ def cart(request):
         for product in order:
             products.append(product)
 
-        # calculate total cost of products
+        # calculate total cost of products in open order
         total = 0
         for product in order:
             total += product.price
 
-        context = {"order": order, "products": products, "total":total}
+        context = {"order_id": order[0].id, "order": order, "products": products, "total":total}
         return render(request, "cart.html", context)

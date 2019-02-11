@@ -46,6 +46,9 @@ class Product(models.Model):
     price = models.PositiveIntegerField()
     quantity = models.IntegerField()
     delete_date = models.DateTimeField(default=None, null=True, blank=True)
+    local_delivery = models.BooleanField(default=False)
+    delivery_city = models.CharField(max_length=30, blank=True, null=True, default=None)
+    delivery_state = models.CharField(max_length=2, blank=True, null=True, default=None)
 
     def __str__(self):
         return f"Title: {self.title} Description:{self.description} Price:{self.price} Qty:{self.quantity}"

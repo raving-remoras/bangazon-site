@@ -39,22 +39,46 @@ def cart(request):
 
     customer_id = request.user.customer.id
 
-    # when user clicks delete button on a produt in their cart, remove it
+    # A delete button clicked - if it's the 'cancel order' button and the user provides confirmation, then delete all OrderProduct join tables and the open order. Otherwise, delete the specific product that was clicked.
     if request.method == "POST":
-        product_id = request.POST["product_id"]
-        order_id = request.POST["order_id"]
-        with connection.cursor() as cursor:
-            cursor.execute(sql_delete, [order_id, product_id])
 
-        # check if there are remaining items in cart. If cart is empty, delete open order
-        order = Order.objects.raw(sql, [customer_id])
-        order_size = len(order)
-        if order_size == 0:
+        try:
+            cancel_order_confirmation = request.POST["confirmed_deletion"] # if this is exists on POST, then the user has confirmed the order's deletion. else -> except
+            order_id = request.POST["order_id"]
+            products = request.POST["products"]
+
+            for product in products:
+                with connection.cursor() as cursor:
+                    cursor.execute(sql_delete, [order_id, product.product_id])
+
             with connection.cursor() as cursor:
                 cursor.execute(sql_delete_open_order, [order_id])
 
-        # redirect user back to their cart
-        return HttpResponseRedirect(reverse("website:cart"))
+            return HttpResponseRedirect(reverse("website:products"))
+
+        except:
+
+            try:
+                cancel_order = request.POST["empty_cart"] # if this exists on POST, then the user clicked the cancel all button, so prompt for confirmation
+                context = {"order_id": request.POST["order_id"], "products": request.POST["products"], "delete_confirmation": True}
+                return render(request, "cart.html", context)
+
+            except:
+                # a user clicked delete button on a specific product in their cart, so remove it
+                product_id = request.POST["product_id"]
+                order_id = request.POST["order_id"]
+                with connection.cursor() as cursor:
+                    cursor.execute(sql_delete, [order_id, product_id])
+
+                # check if there are remaining items in cart. If cart is empty, delete open order
+                order = Order.objects.raw(sql, [customer_id])
+                order_size = len(order)
+                if order_size == 0:
+                    with connection.cursor() as cursor:
+                        cursor.execute(sql_delete_open_order, [order_id])
+
+                # redirect user back to their cart
+                return HttpResponseRedirect(reverse("website:cart"))
 
     # load user's cart when clicking the link in the navbar.
     try:

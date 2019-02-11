@@ -3,10 +3,26 @@
 
 {% block content %}
 
-{% if order %}
+{% if delete_confirmation %}
   <h1>{{request.user}}'s cart</h1>
   <div>Order Number: BA14793NG-{{order_id}}</div>
   <hr />
+  Are you sure you want to cancel this order?
+  <form action="{% url 'website:cart' %}" method="POST" class="p-1">
+    {% csrf_token %}
+      <a class="btn btn-outline-secondary" href="{% url 'website:cart' %}">Go to Cart</a>
+      <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
+      <input type="hidden" value="{{ order_id }}" name="order_id">
+      <input type="hidden" value="{{ products }}" name="products">
+      <input type="hidden" value="confirmed_deletion" name="confirmed_deletion">
+      <button class="btn btn-danger">Confirm Cancellation</button>
+  </form>
+
+{% elif order %}
+  <h1>{{request.user}}'s cart</h1>
+  <div>Order Number: BA14793NG-{{order_id}}</div>
+  <hr />
+
   {% for product in products %}
     <a class="list-group-item bg-light list-group-item-action" href="{% url 'website:product_details' product.product_id %}">
       <div class="d-flex w-100">
@@ -14,9 +30,9 @@
         <div class="p-2">${{product.price|intcomma}}</div>
         <form action="{% url 'website:cart' %}" method="POST" class="p-1">
           {% csrf_token %}
-          <input type="hidden" value="{{ product.product_id }}" name="product_id">
-          <input type="hidden" value="{{ order_id }}" name="order_id">
-          <button class="btn btn-danger btn-sm">Delete</button>
+            <input type="hidden" value="{{ product.product_id }}" name="product_id">
+            <input type="hidden" value="{{ order_id }}" name="order_id">
+            <button class="btn btn-danger btn-sm">Delete</button>
         </form>
       </div>
       <div class="d-flex w-100 justify-content-between">
@@ -24,11 +40,20 @@
       </div>
     </a>
   {% endfor %}
+
   <hr />
   <div class="list-group-item bg-light">Order total: <strong>${{total|intcomma}}</strong></div>
   <hr />
-    <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
-    <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
+  <form action="{% url 'website:cart' %}" method="POST" class="p-1">
+    {% csrf_token %}
+      <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
+      <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
+      <input type="hidden" value="{{ order_id }}" name="order_id">
+      <input type="hidden" value="{{ products }}" name="products">
+      <input type="hidden" value="empty_cart" name="empty_cart">
+      <button class="btn btn-danger">Cancel Order</button>
+  </form>
+
 {% else %}
   <div>
     <strong>You don't have an open order...</strong>

@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+{% if invalid %}
+<h2>Oops, looks like you took a wrong turn!</h2>
+<div class="tenor-gif-embed" data-postid="5444854" data-share-method="host" data-width="100%" data-aspect-ratio="2.360189573459716"><a href="https://tenor.com/view/zoolander-computer-gif-5444854">Zoolander Computer GIF</a> from <a href="https://tenor.com/search/zoolander-gifs">Zoolander GIFs</a></div><script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+{% else %}
+<div>
+<p>Are you sure you want to delete the listing for {{product.title}}?</p>
+<form action="{% url 'website:delete_product' product_id %}" method="POST">
+    {% csrf_token %}
+    <a href="{% url 'website:my_products' %}" class="btn btn-danger">Cancel</a>
+    <input type="submit" class="btn btn-primary" value="Delete"/>
+</form>
+</div>
+{% endif %}
+{% endblock content %}

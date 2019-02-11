@@ -31,10 +31,12 @@
                 <h2 class="mt-5 mb-3">Payment Types</h2>
                 <ul class="list-group mb-3">
                     {% for payment_type in user.customer.paymenttype_set.all %}
+                        {% if not payment_type.delete_date %}
                         <li class="list-group-item d-flex">
-                            <h6 class="align-self-center m-0">{{payment_type.name}}</h6>
+                            <h6 class="align-self-center m-0">{{payment_type.name}} ({{payment_type.account_number|make_list|slice:"-4:"|join:""}})</h6>
                             <a href="{% url 'website:delete_payment_type' payment_type.id %}" class="btn btn-danger ml-auto">Delete</a>
                         </li>
+                        {% endif %}
                     {% endfor %}
 
                 </ul>
@@ -49,9 +51,9 @@
                     {% if order.payment_type_id%}
                         <form class="list-group-item d-flex" method="post" action="{% url "website:closed_order" %}">
                         {% csrf_token %}
-                        <label>BA14793NG-{{order.id}}</label>
+                        <label class="align-self-center mb-0">BA14793NG-{{order.id}}</label>
                         <input type="hidden" name="order_id" value = "{{ order.id }}">
-                        <input class="ml-auto btn-primary"  type="submit" value="View Order">
+                        <input class="ml-auto btn btn-primary"  type="submit" value="View Order">
                         </form>
                     {% endif %}
                 {% endfor %}

@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -37,3 +39,70 @@ def add_payment(request):
                     cursor.execute(sql, [name, account_number, customer.id])
                     # messages.success(request, 'Saved!')
                 return HttpResponseRedirect(reverse("website:index"))
+
+
+@login_required(login_url="/website/login")
+def delete_payment_type(request, payment_id):
+    """Delete a payment type if it is the current user's.
+
+        Author: Sebastian Civarolo
+
+        Params:
+            payment_id [int] - ID to query
+
+        Returns:
+            If payment_type.customer_id matches current user, confirmation page
+            If payment_type.customer_id does not match current user, redirect to user settings
+    """
+
+    if request.method == "GET":
+
+        customer_id = request.user.customer.id
+
+        # Get the payment type from the Database
+        payment_type = PaymentType.objects.raw('''
+            SELECT * FROM website_paymenttype
+            WHERE id = %s
+        ''', [payment_id])
+
+        if request.user.customer.id == payment_type[0].customer_id:
+            context = {
+                "payment_type": payment_type[0]
+            }
+            return render(request, "payment_delete.html", context)
+        else:
+            # If someone tries to manually go to delete a payment type url that is not theirs, redirect them.
+            return HttpResponseRedirect(reverse("website:customer_profile"))
+
+
+    elif request.method == "POST":
+
+        orders_sql = """
+            SELECT * FROM website_order
+            WHERE website_order.payment_type_id == %s
+        """
+
+        orders_with_payment = Order.objects.raw(orders_sql, [payment_id])
+
+        if len(orders_with_payment):
+            sql_soft_delete = """
+                UPDATE website_paymenttype
+                SET delete_date = %s
+                WHERE id = %s
+            """
+            values = [datetime.datetime.now(), payment_id]
+            with connection.cursor() as cursor:
+                cursor.execute(sql_soft_delete, values)
+
+        else:
+            sql_delete = """
+                DELETE FROM website_paymenttype
+                WHERE id = %s
+            """
+            values = [payment_id]
+            with connection.cursor() as cursor:
+                cursor.execute(sql_delete, values)
+
+
+
+        return HttpResponseRedirect(reverse("website:customer_profile"))

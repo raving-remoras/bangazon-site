@@ -93,6 +93,7 @@ class ProductTest(TestCase):
         self.assertIn(new_product.title.encode(), response.content)
 
     def product_category_view(self):
+        """Test case verifies that all product categories and their associated products are rendered when the product category affordance is selected from the navbar"""
         new_seller = Customer.objects.create(
             user = User.objects.create_user(
             username = "testuser",

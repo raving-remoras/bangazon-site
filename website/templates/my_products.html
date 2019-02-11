@@ -11,8 +11,10 @@
           <h5 class="mb-1">{{ product.title }}</h5>
         </div>
         <p class="mb-1">{{ product.description }}</p>
-        <small>Sold: {{product.get_purchased_count}}    Remaining: {{product.get_available_count}}
-        </small>
+        <span class="badge badge-success">Sold: {{product.get_purchased_count}}</span>
+        <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
+
+
         {% if product.get_available_count > 0 %}
             <a href="{% url 'website:delete_product' product.id %}" class="btn btn-danger float-right" value="Delete">Delete</a>
 

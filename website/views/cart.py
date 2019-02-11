@@ -8,10 +8,11 @@ from django.db import connection
 @login_required(login_url="/website/login")
 def cart(request):
     """1. Gets user's open order and then displays the order with list of its products. If no order exists, the template suggests that the user visit the shopping page.
-    2. Handles deletion of products from the user's cart
+    2. Handles deletion of products from the user's cart using a nested if--try/except--try/except. Comments included in file
 
     Author: Brendan McCray
     Returns:
+        1. HttpResponseRedirect - when an order is deleted in its entirety, the user is redirected to the products page (product_list.html)
         1. HttpResponseRedirect - when a product is deleted from the cart (cart.html), user is returned to their cart (i.e. cart instantly updates)
         2. render - displays user's cart when 'cart' is clicked in the navbar (cart.html)
     """
@@ -39,13 +40,12 @@ def cart(request):
 
     customer_id = request.user.customer.id
 
-    # A delete button clicked - if it's the 'cancel order' button and the user provides confirmation, then delete all OrderProduct join tables and the open order. Otherwise, delete the specific product that was clicked.
+    # A delete button was clicked - if it's the 'cancel order' button AND!!! the user provides confirmation, then delete all OrderProduct join tables and the open order. Otherwise, delete the specific product that was clicked.
     if request.method == "POST":
 
         try:
             cancel_order_confirmation = request.POST["confirmed_deletion"] # if this is exists on POST, then the user has confirmed the order's deletion. if not -> except
             order_id = request.POST["order_id"]
-
             products = Order.objects.raw(sql, [customer_id])
 
             for product in products:
@@ -65,7 +65,7 @@ def cart(request):
                 return render(request, "cart.html", context)
 
             except:
-                # a user clicked delete button on a specific product in their cart, so remove it
+                # last valid option that would trigger a POST: a user clicked delete button on a specific product in their cart, so remove it
                 product_id = request.POST["product_id"]
                 order_id = request.POST["order_id"]
                 with connection.cursor() as cursor:
@@ -84,7 +84,7 @@ def cart(request):
     # load user's cart when clicking the link in the navbar.
     try:
         if request.method == "GET":
-            # get user's open order information. If there's no open order, then the context is effectively empty, and except clause takes effect. The order table returned (i.e. the order variable) has one row per product
+            # get user's open order information. If there's no open order, then the context is effectively empty, and the except clause takes effect. The order table returned (i.e. the order variable) has one row per product
             order = Order.objects.raw(sql, [customer_id])
 
             # get products from queryset (effectively the same rows as the order variable already has) to provide the template with a more obvious context variable

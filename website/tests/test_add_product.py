@@ -31,13 +31,13 @@ class AddProductTests(TestCase):
         )
 
         # Redirect to login if not logged in.
-        not_logged_in_response = self.client.get(reverse('website:sell'))
+        not_logged_in_response = self.client.get(reverse("website:sell"))
         self.assertEqual(not_logged_in_response.status_code, 302)
 
         self.client.login(username="test_user", password="password")
 
         # Load the view is user is logged in.
-        response = self.client.get(reverse('website:sell'))
+        response = self.client.get(reverse("website:sell"))
         self.assertEqual(response.status_code, 200)
 
 
@@ -61,6 +61,7 @@ class AddProductTests(TestCase):
             "description": "Test description",
             "product_type": "1",
             "price": "123",
+            "local_delivery": "on",
             "quantity": "123"
         }
 
@@ -69,14 +70,15 @@ class AddProductTests(TestCase):
         if product_form.is_valid():
 
             seller = user.customer.id
-            title = form_data['title']
-            description = form_data['description']
-            product_type = form_data['product_type']
-            price = form_data['price']
-            quantity = form_data['quantity']
+            title = form_data["title"]
+            description = form_data["description"]
+            product_type = form_data["product_type"]
+            price = form_data["price"]
+            quantity = form_data["quantity"]
+            local_delivery = form_data["local_delivery"]
 
             data = [
-                seller, title, description, product_type, price, quantity
+                seller, title, description, product_type, price, quantity, local_delivery
             ]
 
             with connection.cursor() as cursor:
@@ -88,10 +90,11 @@ class AddProductTests(TestCase):
                         description,
                         product_type_id,
                         price,
-                        quantity
+                        quantity,
+                        local_delivery
                     )
                     VALUES(
-                        %s, %s, %s, %s, %s, %s
+                        %s, %s, %s, %s, %s, %s, %s
                     )
                 """, data)
                 new_product = cursor.lastrowid

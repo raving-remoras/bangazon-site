@@ -86,3 +86,53 @@ class MyProductTest(TestCase):
         #test that the product no longer has a delete button now that it's sold out
         response = self.client.get(reverse("website:my_products"))
         self.assertNotIn('class="btn btn-danger float-right" value="Delete"'.encode(), response.content)
+
+    def test_delete_product(self):
+        """Tests that the delete product form submission performs successful post for customer"""
+
+        new_user= User.objects.create_user(
+            username = "testuser",
+            first_name = "Test",
+            last_name = "User",
+            email = "test@test.com",
+            password = "secret"
+            )
+
+        self.client.login(username="testuser", password="secret")
+
+        customer = Customer.objects.create(
+            street_address = "123 Test LN",
+            city = "Testas",
+            state =  "TS",
+            zipcode = "11111",
+            phone_number = "1111111111",
+            user = new_user
+            )
+
+        product_type = ProductType.objects.create(
+            name = "Test Type"
+        )
+
+        product = Product.objects.create(
+            seller = customer,
+            product_type = product_type,
+            title = "Test Product",
+            description = "Not a real product",
+            price = 10,
+            quantity = 1,
+            delete_date = None
+        )
+
+        order = Order.objects.create(
+            customer = customer,
+            payment_type = None
+        )
+
+        OrderProduct.objects.create(
+            order = order,
+            product = product
+        )
+
+        response = self.client.post(reverse("website:delete_product", args=(1,)))
+
+        self.assertEqual(response.status_code, 302)

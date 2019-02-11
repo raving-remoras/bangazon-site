@@ -158,7 +158,6 @@ def my_products(request):
 
     Returns:
         render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
-        HttpResponseRedirect -- TODO: loads the customer profile if add was successful
     """
     customer = request.user.customer
     sql = """
@@ -173,7 +172,7 @@ def my_products(request):
     return render(request, "my_products.html", {'products': my_products})
 
 
-@login_required()
+@login_required(login_url="/website/login")
 def delete_product(request, product_id):
     """This method gets product from the id passed into the url and renders the delete_product.html template
 

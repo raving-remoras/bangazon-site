@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load humanize %}
+
+
+   {% block content %}
+       <h1>Order Number: {{ order.id }}</h1>
+       <ul class="list-group">
+            {% for productRel in order_products %}
+
+                <li class="list-group-item d-flex">
+                    <p>{{ productRel.product.title }}</p>
+                    <p class="ml-auto">${{ productRel.product.price|intcomma }}</p>
+                </li>
+
+
+            {% endfor %}
+
+       </ul>
+       <div class="d-flex justify-content-end">
+       <h4 class="">Total: ${{ total|intcomma }}</h4>
+       </div>
+
+       <h4>Payment Type</h4>
+       <p>Payment Name: {{ order.payment_type.name }}</p>
+       <p>Account Number: {{ order.payment_type.account_number }}</p>
+
+   {% endblock content %}

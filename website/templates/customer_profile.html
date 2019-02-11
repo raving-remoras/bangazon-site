@@ -40,7 +40,12 @@
             <ul class="list-group">
                 {% for order in user.customer.order_set.all %}
                     {% if order.payment_type_id%}
-                        <li class="list-group-item">{{order.id}}</li>
+                        <form class="list-group-item d-flex" method="post" action="{% url "website:closed_order" %}">
+                        {% csrf_token %}
+                        <label>{{order.id}}</label>
+                        <input type="hidden" name="order_id" value = "{{ order.id }}">
+                        <input class="ml-auto"  type="submit" value="View Order">
+                        </form>
                     {% endif %}
                 {% endfor %}
 

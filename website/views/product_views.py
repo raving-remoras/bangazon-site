@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.db import connection
 from django.urls import reverse
+import datetime
 from django.shortcuts import get_object_or_404, render
 from website.models import Product, OrderProduct, Order
 
@@ -115,23 +116,19 @@ def list_products(request):
     return render(request, template_name, context)
 
 
-def product_details(request, product_id):
-    product_details = Product.objects.raw(f"""
-        SELECT * FROM website_product
-        WHERE website_product.id == {product_id}
-    """)[0]
 
+def get_purchased_count(product_id):
+    """This method gets all completed orders for a specific product and calculates the number purchased
+
+    Author: Kelly Morin; refactored by Rachel Daniel
+
+    Returns:
+        purchased_count
+    """
     purchased_qty = OrderProduct.objects.raw(f"""
         SELECT * FROM website_orderproduct
         LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
         WHERE website_order.payment_type_id IS NOT null
-        AND website_orderproduct.product_id = {product_id}
-    """)
-
-    cart_qty = OrderProduct.objects.raw(f"""
-        SELECT * FROM website_orderproduct
-        LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-        WHERE website_order.payment_type_id IS null
         AND website_orderproduct.product_id = {product_id}
     """)
 
@@ -140,11 +137,39 @@ def product_details(request, product_id):
         if item.product_id == product_id:
             purchased_count += 1
 
+    return purchased_count
+
+def get_cart_count(product_id):
+    """This method gets all incomplete orders for a specific product and calculates the number currently in the carts of all users
+
+    Author: Kelly Morin; refactored by Rachel Daniel
+
+    Returns:
+        cart_count
+    """
+
+    cart_qty = OrderProduct.objects.raw(f"""
+        SELECT * FROM website_orderproduct
+        LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+        WHERE website_order.payment_type_id IS null
+        AND website_orderproduct.product_id = {product_id}
+    """)
+
     cart_count = 0
     for item in cart_qty:
         if item.product_id == product_id:
             cart_count +=1
 
+    return cart_count
+
+def product_details(request, product_id):
+    product_details = Product.objects.raw(f"""
+        SELECT * FROM website_product
+        WHERE website_product.id == {product_id}
+    """)[0]
+
+    purchased_count = get_purchased_count(product_id)
+    cart_count = get_cart_count(product_id)
     available_qty = product_details.quantity - purchased_count
 
     context = {
@@ -154,6 +179,7 @@ def product_details(request, product_id):
     }
     return render(request, "product_detail.html", context)
 
+<<<<<<< HEAD
 
 def add_to_cart(request, product_id):
     """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
@@ -256,3 +282,62 @@ def add_to_cart(request, product_id):
 
             messages.success(request,"This product has been added to your cart!")
             return HttpResponseRedirect(reverse('website:products'))
+=======
+@login_required(login_url="/website/login")
+def my_products(request):
+    """This method gets customer from user in cookies and renders my_products.html
+
+    Author: Rachel Daniel
+
+    Returns:
+        render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
+    """
+    customer = request.user.customer
+    sql = """
+            SELECT * FROM website_product P
+            JOIN website_producttype PT ON PT.id = P.product_type_id
+            WHERE P.seller_id = %s
+			AND P.delete_date is null
+        """
+
+    my_products = Product.objects.raw(sql, [customer.id])
+
+    return render(request, "my_products.html", {'products': my_products})
+
+
+@login_required(login_url="/website/login")
+def delete_product(request, product_id):
+    """This method gets product from the id passed into the url and renders the delete_product.html template
+
+    Author: Rachel Daniel
+
+    Returns:
+        render -- loads delete_product.html template for GET request
+        HttpResponseRedirect -- after successful POST, redirects to my_products.html
+    """
+    sql = """
+            SELECT * FROM website_product
+            WHERE id = %s
+        """
+    product = Product.objects.raw(sql, [product_id])
+    if request.method == "GET":
+        #protect against users typing ids into url for products on which they are not sellers
+        if request.user.customer.id == product[0].seller_id:
+            return render(request, "delete_product.html", {'product_id': product_id, "product": product[0]})
+        else:
+            return render(request, "delete_product.html", {"invalid": "invalid"})
+
+    if request.method == "POST":
+        now = datetime.datetime.now()
+        update_prod_sql = """
+            UPDATE website_product SET delete_date = %s WHERE id = %s
+        """
+        delete_joins_sql = """
+            DELETE FROM website_orderproduct WHERE product_id = %s
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(update_prod_sql, [now, product_id])
+        with connection.cursor() as cursor:
+            cursor.execute(delete_joins_sql, [product_id])
+        return HttpResponseRedirect(reverse("website:my_products"))
+>>>>>>> master

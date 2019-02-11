@@ -1,4 +1,3 @@
-import datetime
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -9,7 +8,7 @@ from website.models import *
 from website.forms import *
 
 
-@login_required
+@login_required(login_url="/website/login")
 def add_payment(request):
     """This method gets customer from user in cookies, renders payment_form.html, and adds a new payment method to the database for the current customer upon submit
 
@@ -36,5 +35,5 @@ def add_payment(request):
 
                 with connection.cursor() as cursor:
                     cursor.execute(sql, [name, account_number, customer.id])
-                    messages.success(request, 'Saved!')
+                    # messages.success(request, 'Saved!')
                 return HttpResponseRedirect(reverse("website:index"))

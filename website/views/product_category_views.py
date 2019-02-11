@@ -1,9 +1,6 @@
 from website.models import Product, ProductType
 from django.shortcuts import render
 
-
-# TODO: Update this function so that if there are no products available currently, the product does not display, waiting on refactor from Rachel
-# FIXME: This may not show product categories with no associated products
 def product_categories(request):
     """Returns all product categories and their associated products when a user selects the product categories view
 
@@ -30,11 +27,12 @@ def product_categories(request):
     product_per_category = dict()
 
     for product in product_by_category:
-        try:
-            product_per_category[product.name].append(product)
-        except KeyError:
-            product_per_category[product.name] = list()
-            product_per_category[product.name].append(product)
+        if product.get_available_count != 0:
+            try:
+                product_per_category[product.name].append(product)
+            except KeyError:
+                product_per_category[product.name] = list()
+                product_per_category[product.name].append(product)
 
     context = {"product_per_category": product_per_category}
 

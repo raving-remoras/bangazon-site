@@ -155,6 +155,7 @@ class ProductTest(TestCase):
         self.assertIn(new_product_2.title.encode(), response.content)
         self.assertIn(new_product_type.name.encode(), response.content)
         self.assertIn(new_product_type_2.name.encode(), response.content)
+
     def test_add_to_cart(self):
         """Test case verifies that a product is added to the database on an open order when a user selects the add to cart button from the product detail page"""
 

@@ -44,7 +44,7 @@
                         {% csrf_token %}
                         <label>{{order.id}}</label>
                         <input type="hidden" name="order_id" value = "{{ order.id }}">
-                        <input class="ml-auto"  type="submit" value="View Order">
+                        <input class="ml-auto btn-primary"  type="submit" value="View Order">
                         </form>
                     {% endif %}
                 {% endfor %}

@@ -26,18 +26,18 @@
 
         {% endif %}
 
-        <h2>Payment Types</h2>
+        <h2 class="mt-4">Payment Types</h2>
             <ul class="list-group" >
                 {% for payment_type in user.customer.paymenttype_set.all %}
                     <li class="list-group-item">{{payment_type.name}}</li>
                 {% endfor %}
 
             </ul>
-            <a class="btn btn-primary" href="{% url "website:add_payment"%}">Add Payment Type</a>
+            <a class="btn btn-primary mt-2 " href="{% url "website:add_payment"%}">Add Payment Type</a>
 
 
-        <h2>Order History</h2>
-            <ul class="list-group">
+        <h2 class="mt-4">Order History</h2>
+            <ul class="list-group mb-4">
                 {% for order in user.customer.order_set.all %}
                     {% if order.payment_type_id%}
                         <form class="list-group-item d-flex" method="post" action="{% url "website:closed_order" %}">

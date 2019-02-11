@@ -8,7 +8,7 @@
             {% for productRel in order_products %}
 
                 <li class="list-group-item d-flex">
-                    <p>{{ productRel.product.title }}</p>
+                    <a href="{% url 'website:product_details' productRel.product.id %}">{{ productRel.product.title }}</a>
                     <p class="ml-auto">${{ productRel.product.price|intcomma }}</p>
                 </li>
 

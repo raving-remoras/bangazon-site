@@ -43,9 +43,10 @@ def cart(request):
     if request.method == "POST":
 
         try:
-            cancel_order_confirmation = request.POST["confirmed_deletion"] # if this is exists on POST, then the user has confirmed the order's deletion. else -> except
+            cancel_order_confirmation = request.POST["confirmed_deletion"] # if this is exists on POST, then the user has confirmed the order's deletion. if not -> except
             order_id = request.POST["order_id"]
-            products = request.POST["products"]
+
+            products = Order.objects.raw(sql, [customer_id])
 
             for product in products:
                 with connection.cursor() as cursor:
@@ -59,8 +60,8 @@ def cart(request):
         except:
 
             try:
-                cancel_order = request.POST["empty_cart"] # if this exists on POST, then the user clicked the cancel all button, so prompt for confirmation
-                context = {"order_id": request.POST["order_id"], "products": request.POST["products"], "delete_confirmation": True}
+                cancel_order = request.POST["empty_cart"] # if this exists on POST, then the user clicked the cancel all button, so prompt for confirmation. if not -> except
+                context = {"order_id": request.POST["order_id"], "delete_confirmation": True}
                 return render(request, "cart.html", context)
 
             except:

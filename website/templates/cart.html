@@ -13,7 +13,6 @@
       <a class="btn btn-outline-secondary" href="{% url 'website:cart' %}">Go to Cart</a>
       <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
       <input type="hidden" value="{{ order_id }}" name="order_id">
-      <input type="hidden" value="{{ products }}" name="products">
       <input type="hidden" value="confirmed_deletion" name="confirmed_deletion">
       <button class="btn btn-danger">Confirm Cancellation</button>
   </form>
@@ -49,7 +48,6 @@
       <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
       <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
       <input type="hidden" value="{{ order_id }}" name="order_id">
-      <input type="hidden" value="{{ products }}" name="products">
       <input type="hidden" value="empty_cart" name="empty_cart">
       <button class="btn btn-danger">Cancel Order</button>
   </form>

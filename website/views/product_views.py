@@ -88,6 +88,7 @@ def list_local_results(request):
 
 
 def product_details(request, product_id):
+    # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
     product_details = Product.objects.raw(f"""
         SELECT * FROM website_product
         WHERE website_product.id == {product_id}

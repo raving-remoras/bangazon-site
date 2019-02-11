@@ -25,6 +25,7 @@
      <a class="navbar-brand" href="{% url 'website:index' %}">Bangazon, LLC</a>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a class="nav-link" href="{% url 'website:products' %}">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'website:product_categories' %}">Product Categories</a></li>
         {% if user.is_authenticated %}
           <li class="nav-item"><a class="nav-link" href="{% url 'website:sell' %}">Add Product</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'website:my_products' %}">My Products</a></li>
@@ -34,7 +35,7 @@
       </ul>
     </nav>
     <br />
-    <div class="container">
+    <div class="container pb-5">
     {% block content %}
 
       <h1>Welcome to Bangazon!</h1>

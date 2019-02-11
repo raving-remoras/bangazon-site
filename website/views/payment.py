@@ -6,7 +6,7 @@ from django.contrib import messages
 from website.models import *
 from django.db import connection
 
-@login_required(login_url="/website/login")
+@login_required
 def payment(request):
     """Gets information about the user's payment types and renders a template with a select dropdown. If user specifies "Done" in template, the POST will close the logged in user's open order in the database.
 

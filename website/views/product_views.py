@@ -89,10 +89,32 @@ def list_local_results(request):
 
 def product_details(request, product_id):
     # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
-    product_details = Product.objects.raw(f"""
-        SELECT * FROM website_product
-        WHERE website_product.id == {product_id}
-    """)[0]
+    if not request.user.is_authenticated:
+        product_details = Product.objects.raw(f"""
+            SELECT * FROM website_product
+            WHERE website_product.id == {product_id}
+        """)[0]
+
+        cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+        """)
+
+    else:
+        user_id = request.user.customer.id
+        product_details = Product.objects.raw(f"""
+            SELECT * FROM website_product
+            WHERE website_product.id == {product_id}
+        """)[0]
+
+        cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+        """)
 
     context = {
         "product_details": product_details
@@ -167,7 +189,7 @@ def add_to_cart(request, product_id):
             return HttpResponseRedirect(reverse('website:products'))
 
 
-@login_required(login_url="/website/login")
+@login_required
 def my_products(request):
     """This method gets customer from user in cookies and renders my_products.html
 
@@ -189,7 +211,7 @@ def my_products(request):
     return render(request, "my_products.html", {'products': my_products})
 
 
-@login_required(login_url="/website/login")
+@login_required
 def delete_product(request, product_id):
     """This method gets product from the id passed into the url and renders the delete_product.html template
 

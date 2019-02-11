@@ -3,27 +3,21 @@
 
 {% block content %}
 
-  {% if error_message %}
-    <div class="alert alert-danger" role="alert">
-        <a href="{% url 'website:login' %}">{{error_message}}</a>
-    </div>
-  {% endif %}
-
     <div class="row">
       <div class="col-sm-6 my-4">
         <img class="mx-auto d-block" src="https://via.placeholder.com/350" alt="Placeholder for product image"/>
       </div>
       <div class="col-sm-6 my-4">
         <h3>{{product_details.title}}</h3>
-        {% if quantity == 0 %}
+        {% if product_details.get_available_count == 0 %}
         <p class="badge badge-secondary">Sold out!</p>
-        {% elif quantity < 5 %}
+        {% elif product_details.get_available_count < 5 %}
         <p class="badge badge-secondary">Almost sold out!</p>
         {% endif %}
-          <p>Qty: {{quantity}}</p>
+          <p>Qty: {{product_details.get_available_count}}</p>
           <p>Price: ${{product_details.price|intcomma}}</p>
         <p>{{product_details.description}}</p>
-        {% if quantity == 0 %}
+        {% if product_details.get_available_count == 0 %}
           <button class="btn btn-primary btn-block mb-4" disabled>
               <i class="fas fa-cart-plus"></i>
               Add to Cart
@@ -34,16 +28,16 @@
               Add to Cart
           </a>
         {% endif %}
-        {% if cart_count > 0 %}
-          {% if cart_count == 1 %}
+        {% if product_details.get_cart_count > 0 %}
+          {% if product_details.get_cart_count == 1 %}
             <div>
               <i class="fas fa-shopping-cart"></i>
-              <strong>Other people want this.</strong> {{cart_count}} person has this in their cart right now.
+              <strong>Other people want this.</strong> {{product_details.get_cart_count}} person has this in their cart right now.
             </div>
-          {% elif cart_count > 1 %}
+          {% elif product_details.get_cart_count > 1 %}
             <div>
               <i class="fas fa-shopping-cart"></i>
-              <strong>Other people want this.</strong> {{cart_count}} people have this in their cart right now.
+              <strong>Other people want this.</strong> {{product_details.get_cart_count}} people have this in their cart right now.
             </div>
           {% endif %}
 

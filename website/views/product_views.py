@@ -10,32 +10,43 @@ from website.models import Product, OrderProduct, Order
 
 
 def list_products(request):
-    """Displays a list of all products that have not been created by the user
+    """ Handles the main product list view.
 
-    Author: Kelly Morin
+        Authors: Kelly Morin, Sebastian Civarolo
 
-    Returns:
-        render -- returns the product_list.html template
     """
     if not request.user.is_authenticated:
-        all_products = Product.objects.raw(f"""
-            SELECT * FROM website_product
-        """)
-        context = {
-            "products": all_products
-        }
+        if request.method == "POST":
+            context = list_local_results(request)
 
+        else:
+            all_products = Product.objects.raw(f"""
+                SELECT * FROM website_product
+            """)
+            context = {
+                "products": all_products
+            }
     else:
-        user_id = request.user.customer.id
-        all_products = Product.objects.raw(f"""
-            SELECT * FROM website_product
-            WHERE website_product.seller_id IS NOT {user_id}
-        """)
-        context = {
-            "products": all_products
-        }
 
-    return render(request, 'product_list.html', context)
+        if request.method == "POST":
+            context = list_local_results(request)
+
+        elif request.method == "GET":
+
+            user_id = request.user.customer.id
+            all_products = Product.objects.raw(f"""
+                SELECT * FROM website_product
+                WHERE website_product.seller_id IS NOT {user_id}
+            """)
+
+            context = {
+                "products": all_products
+            }
+
+    template_name = "product_list.html"
+    return render(request, template_name, context)
+
+
 def list_local_results(request):
     """Process the POST request to list_products to display search results.
 
@@ -76,110 +87,17 @@ def list_local_results(request):
     return context
 
 
-
-def list_products(request):
-    """ Handles the main product list view.
-
-        Authors: Kelly Morin, Sebastian Civarolo
-
-    """
-
-    if not request.user.is_authenticated:
-        if request.method == "POST":
-            context = list_local_results(request)
-
-        else:
-            all_products = Product.objects.raw(f"""
-                SELECT * FROM website_product
-            """)
-            context = {
-                "products": all_products
-            }
-    else:
-
-        if request.method == "POST":
-            context = list_local_results(request)
-
-        elif request.method == "GET":
-
-            user_id = request.user.customer.id
-            all_products = Product.objects.raw(f"""
-                SELECT * FROM website_product
-                WHERE website_product.seller_id IS NOT {user_id}
-            """)
-
-            context = {
-                "products": all_products
-            }
-
-    template_name = "product_list.html"
-    return render(request, template_name, context)
-
-
-
-def get_purchased_count(product_id):
-    """This method gets all completed orders for a specific product and calculates the number purchased
-
-    Author: Kelly Morin; refactored by Rachel Daniel
-
-    Returns:
-        purchased_count
-    """
-    purchased_qty = OrderProduct.objects.raw(f"""
-        SELECT * FROM website_orderproduct
-        LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-        WHERE website_order.payment_type_id IS NOT null
-        AND website_orderproduct.product_id = {product_id}
-    """)
-
-    purchased_count = 0
-    for item in purchased_qty:
-        if item.product_id == product_id:
-            purchased_count += 1
-
-    return purchased_count
-
-def get_cart_count(product_id):
-    """This method gets all incomplete orders for a specific product and calculates the number currently in the carts of all users
-
-    Author: Kelly Morin; refactored by Rachel Daniel
-
-    Returns:
-        cart_count
-    """
-
-    cart_qty = OrderProduct.objects.raw(f"""
-        SELECT * FROM website_orderproduct
-        LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-        WHERE website_order.payment_type_id IS null
-        AND website_orderproduct.product_id = {product_id}
-    """)
-
-    cart_count = 0
-    for item in cart_qty:
-        if item.product_id == product_id:
-            cart_count +=1
-
-    return cart_count
-
 def product_details(request, product_id):
     product_details = Product.objects.raw(f"""
         SELECT * FROM website_product
         WHERE website_product.id == {product_id}
     """)[0]
 
-    purchased_count = get_purchased_count(product_id)
-    cart_count = get_cart_count(product_id)
-    available_qty = product_details.quantity - purchased_count
-
     context = {
-        "product_details": product_details,
-        "quantity": available_qty,
-        "cart_count": cart_count
+        "product_details": product_details
     }
     return render(request, "product_detail.html", context)
 
-<<<<<<< HEAD
 
 def add_to_cart(request, product_id):
     """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
@@ -191,44 +109,8 @@ def add_to_cart(request, product_id):
     """
     # TODO: Set up redirect to login page if user is not currently logged in, with next parameter passed through to login page so the user is automatically redirected to the product detail page they were previously on
     if not request.user.is_authenticated:
-        product_details = Product.objects.raw(f"""
-            SELECT * FROM website_product
-            WHERE website_product.id == {product_id}
-        """)[0]
-
-        purchased_qty = OrderProduct.objects.raw(f"""
-            SELECT * FROM website_orderproduct
-            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-            WHERE website_order.payment_type_id IS NOT null
-            AND website_orderproduct.product_id = {product_id}
-        """)
-
-        cart_qty = OrderProduct.objects.raw(f"""
-            SELECT * FROM website_orderproduct
-            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-            WHERE website_order.payment_type_id IS null
-            AND website_orderproduct.product_id = {product_id}
-        """)
-
-        purchased_count = 0
-        for item in purchased_qty:
-            if item.product_id == product_id:
-                purchased_count += 1
-
-        cart_count = 0
-        for item in cart_qty:
-            if item.product_id == product_id:
-                cart_count +=1
-
-        available_qty = product_details.quantity - purchased_count
-
-        context = {
-            "product_details": product_details,
-            "quantity": available_qty,
-            "cart_count": cart_count,
-            "error_message": "Please login to continue"
-        }
-        return render(request, "product_detail.html", context)
+        messages.error(request, "Please log in to continue")
+        return HttpResponseRedirect(reverse('website:login'))
     else:
         try:
             open_order = Order.objects.raw(f"""
@@ -282,7 +164,8 @@ def add_to_cart(request, product_id):
 
             messages.success(request,"This product has been added to your cart!")
             return HttpResponseRedirect(reverse('website:products'))
-=======
+
+
 @login_required(login_url="/website/login")
 def my_products(request):
     """This method gets customer from user in cookies and renders my_products.html
@@ -340,4 +223,3 @@ def delete_product(request, product_id):
         with connection.cursor() as cursor:
             cursor.execute(delete_joins_sql, [product_id])
         return HttpResponseRedirect(reverse("website:my_products"))
->>>>>>> master

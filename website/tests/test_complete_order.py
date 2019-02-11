@@ -70,7 +70,7 @@ class CompleteOrderTest(TestCase):
         response = self.client.get(reverse("website:cart"))
 
         # test that product title appears on page
-        self.assertIn('<h6>Item 1</h6>'.encode(), response.content)
+        self.assertIn('<h6 class="mr-auto p-2">Item 1</h6>'.encode(), response.content)
 
     def test_payment(self):
         """Tests that the payment form performs successful update to open order"""

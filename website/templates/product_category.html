@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="card mx-auto" style="width: 50rem;">
+  {% for key, value in product_per_category.items %}
+  <div class="card-body">
+    <h4 class="card-title">{{ key }} ({{value|length}})</h4>
+    <div class="list-group">
+      {% for product in value|slice:":3" %}
+        <a href="{% url 'website:product_details' product.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{product.title}}</h6>
+            </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock content %}

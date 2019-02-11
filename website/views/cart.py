@@ -1,7 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from website.models import *
-
+from django.db import connection
 
 @login_required(login_url="/website/login")
 def cart(request):
@@ -12,6 +14,19 @@ def cart(request):
 
     """
 
+    customer_id = request.user.customer.id
+
+    sql_delete = """DELETE FROM website_orderproduct
+        WHERE order_id = %s AND product_id = %s
+    """
+
+    if request.method == "POST":
+        product_id = request.POST["product_id"]
+        order_id = request.POST["order_id"]
+        with connection.cursor() as cursor:
+            cursor.execute(sql_delete, [order_id, product_id])
+        return HttpResponseRedirect(reverse("website:cart"))
+
     # Order (get order ID where customer id is current user's customer ID) -> OrderProduct (for product IDs on open order) -> Product (get product data)
     sql = """SELECT *
         FROM website_order
@@ -19,9 +34,9 @@ def cart(request):
         JOIN website_product ON website_product.id = website_orderproduct.product_id
         WHERE customer_id = %s AND website_order.payment_type_id IS NULL
     """
+
     try:
         if request.method == "GET":
-            customer_id = request.user.customer.id
             # get user's open order information. If there's no open order, then the context is effectively empty, and logic within the template responds accordingly. The order table returned (i.e. the order variable) has one row per product
             order = Order.objects.raw(sql, [customer_id])
 

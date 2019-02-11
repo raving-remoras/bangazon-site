@@ -1,4 +1,9 @@
+import datetime
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.db import connection
+from django.contrib.auth.decorators import login_required
 from website.models import Product, OrderProduct, Order
 
 def list_products(request):
@@ -79,9 +84,9 @@ def product_details(request, product_id):
     }
     return render(request, "product_detail.html", context)
 
-
+@login_required(login_url="/website/login")
 def my_products(request):
-    """This method gets customer from user in cookies, renders payment_form.html, and adds a new payment method to the database for the current customer upon submit
+    """This method gets customer from user in cookies and renders my_products.html
 
     Author: Rachel Daniel
 
@@ -100,3 +105,40 @@ def my_products(request):
     my_products = Product.objects.raw(sql, [customer.id])
 
     return render(request, "my_products.html", {'products': my_products})
+
+
+@login_required()
+def delete_product(request, product_id):
+    """This method gets product from the id passed into the url and renders the delete_product.html template
+
+    Author: Rachel Daniel
+
+    Returns:
+        render -- loads delete_product.html template for GET request
+        HttpResponseRedirect -- after successful POST, redirects to my_products.html
+    """
+    sql = """
+            SELECT * FROM website_product
+            WHERE id = %s
+        """
+    product = Product.objects.raw(sql, [product_id])
+    if request.method == "GET":
+        #protect against users typing ids into url for products on which they are not sellers
+        if request.user.customer.id == product[0].seller_id:
+            return render(request, "delete_product.html", {'product_id': product_id, "product": product[0]})
+        else:
+            return render(request, "delete_product.html", {"invalid": "invalid"})
+
+    if request.method == "POST":
+        now = datetime.datetime.now()
+        update_prod_sql = """
+            UPDATE website_product SET delete_date = %s WHERE id = %s
+        """
+        delete_joins_sql = """
+            DELETE FROM website_orderproduct WHERE product_id = %s
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(update_prod_sql, [now, product_id])
+        with connection.cursor() as cursor:
+            cursor.execute(delete_joins_sql, [product_id])
+        return HttpResponseRedirect(reverse("website:my_products"))

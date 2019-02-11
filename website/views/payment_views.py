@@ -1,4 +1,3 @@
-import datetime
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -36,5 +35,5 @@ def add_payment(request):
 
                 with connection.cursor() as cursor:
                     cursor.execute(sql, [name, account_number, customer.id])
-                    messages.success(request, 'Saved!')
+                    # messages.success(request, 'Saved!')
                 return HttpResponseRedirect(reverse("website:index"))

@@ -10,8 +10,12 @@
           <small>3 days ago</small>
         </div>
         <p class="mb-1">{{ product.description }}</p>
-        <small>Purchased: {{product.get_purchased_count}}    Available: {{product.get_available_count}}
+        <small>Sold: {{product.get_purchased_count}}    Remaining: {{product.get_available_count}}
         </small>
+        {% if product.get_available_count > 0 %}
+            <a href="{% url 'website:delete_product' product.id %}" class="btn btn-danger float-right" value="Delete">Delete</a>
+
+        {% endif %}
       </div>
 {% endfor %}
 

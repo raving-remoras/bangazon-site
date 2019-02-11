@@ -22,6 +22,6 @@
 
        <h4>Payment Type</h4>
        <p>Payment Name: {{ order.payment_type.name }}</p>
-       <p>Account Number: {{ order.payment_type.account_number }}</p>
+       <p>Account Number (last 4 digits): {{ order.payment_type.account_number|make_list|slice:"-4:"|join:"" }}</p>
 
    {% endblock content %}

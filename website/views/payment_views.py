@@ -66,6 +66,7 @@ def delete_payment_type(request, payment_id):
         ''', [payment_id])
 
         if request.user.customer.id == payment_type[0].customer_id:
+            # Load the confirmation page if current user owns this payment type
             context = {
                 "payment_type": payment_type[0]
             }
@@ -85,6 +86,7 @@ def delete_payment_type(request, payment_id):
         orders_with_payment = Order.objects.raw(orders_sql, [payment_id])
 
         if len(orders_with_payment):
+            # Soft delete if this payment type has been used to complete an order.
             sql_soft_delete = """
                 UPDATE website_paymenttype
                 SET delete_date = %s
@@ -95,6 +97,7 @@ def delete_payment_type(request, payment_id):
                 cursor.execute(sql_soft_delete, values)
 
         else:
+            # If this payment type has never been used, hard delete.
             sql_delete = """
                 DELETE FROM website_paymenttype
                 WHERE id = %s
@@ -102,7 +105,5 @@ def delete_payment_type(request, payment_id):
             values = [payment_id]
             with connection.cursor() as cursor:
                 cursor.execute(sql_delete, values)
-
-
 
         return HttpResponseRedirect(reverse("website:customer_profile"))

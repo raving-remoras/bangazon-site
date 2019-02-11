@@ -44,7 +44,7 @@ class MyProductTest(TestCase):
         #test that page now loads but has only a notification of having no products
         response = self.client.get(reverse("website:my_products"))
         self.assertIn("<h4>You haven't listed any Products yet".encode(), response.content)
-        self.assertNotIn('<div class="list-group-item list-group-item-action"'.encode(), response.content)
+        self.assertNotIn('class="list-group-item list-group-item-action"'.encode(), response.content)
 
         product_type = ProductType.objects.create(
             name = "Test Type"
@@ -63,7 +63,7 @@ class MyProductTest(TestCase):
         #test that page now shows product added and has delete btn
         response = self.client.get(reverse("website:my_products"))
         self.assertNotIn("<h4>You haven't listed any Products yet".encode(), response.content)
-        self.assertIn('<div class="list-group-item list-group-item-action"'.encode(), response.content)
+        self.assertIn('class="list-group-item list-group-item-action"'.encode(), response.content)
         self.assertIn('<h5 class="mb-1">Test Product'.encode(), response.content)
         self.assertIn('class="btn btn-danger float-right" value="Delete"'.encode(), response.content)
 

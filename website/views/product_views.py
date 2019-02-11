@@ -1,10 +1,50 @@
+from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.db import connection
+from django.urls import reverse
 import datetime
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.db import connection
-from django.contrib.auth.decorators import login_required
 from website.models import Product, OrderProduct, Order
+
+
+def list_products(request):
+    """ Handles the main product list view.
+
+        Authors: Kelly Morin, Sebastian Civarolo
+
+    """
+    if not request.user.is_authenticated:
+        if request.method == "POST":
+            context = list_local_results(request)
+
+        else:
+            all_products = Product.objects.raw(f"""
+                SELECT * FROM website_product
+            """)
+            context = {
+                "products": all_products
+            }
+    else:
+
+        if request.method == "POST":
+            context = list_local_results(request)
+
+        elif request.method == "GET":
+
+            user_id = request.user.customer.id
+            all_products = Product.objects.raw(f"""
+                SELECT * FROM website_product
+                WHERE website_product.seller_id IS NOT {user_id}
+            """)
+
+            context = {
+                "products": all_products
+            }
+
+    template_name = "product_list.html"
+    return render(request, template_name, context)
 
 
 def list_local_results(request):
@@ -47,108 +87,84 @@ def list_local_results(request):
     return context
 
 
-
-def list_products(request):
-    """ Handles the main product list view.
-
-        Authors: Kelly Morin, Sebastian Civarolo
-
-    """
-
-    if not request.user.is_authenticated:
-        if request.method == "POST":
-            context = list_local_results(request)
-
-        else:
-            all_products = Product.objects.raw(f"""
-                SELECT * FROM website_product
-            """)
-            context = {
-                "products": all_products
-            }
-    else:
-
-        if request.method == "POST":
-            context = list_local_results(request)
-
-        elif request.method == "GET":
-
-            user_id = request.user.customer.id
-            all_products = Product.objects.raw(f"""
-                SELECT * FROM website_product
-                WHERE website_product.seller_id IS NOT {user_id}
-            """)
-
-            context = {
-                "products": all_products
-            }
-
-    template_name = "product_list.html"
-    return render(request, template_name, context)
-
-
-
-def get_purchased_count(product_id):
-    """This method gets all completed orders for a specific product and calculates the number purchased
-
-    Author: Kelly Morin; refactored by Rachel Daniel
-
-    Returns:
-        purchased_count
-    """
-    purchased_qty = OrderProduct.objects.raw(f"""
-        SELECT * FROM website_orderproduct
-        LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-        WHERE website_order.payment_type_id IS NOT null
-        AND website_orderproduct.product_id = {product_id}
-    """)
-
-    purchased_count = 0
-    for item in purchased_qty:
-        if item.product_id == product_id:
-            purchased_count += 1
-
-    return purchased_count
-
-def get_cart_count(product_id):
-    """This method gets all incomplete orders for a specific product and calculates the number currently in the carts of all users
-
-    Author: Kelly Morin; refactored by Rachel Daniel
-
-    Returns:
-        cart_count
-    """
-
-    cart_qty = OrderProduct.objects.raw(f"""
-        SELECT * FROM website_orderproduct
-        LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
-        WHERE website_order.payment_type_id IS null
-        AND website_orderproduct.product_id = {product_id}
-    """)
-
-    cart_count = 0
-    for item in cart_qty:
-        if item.product_id == product_id:
-            cart_count +=1
-
-    return cart_count
-
 def product_details(request, product_id):
     product_details = Product.objects.raw(f"""
         SELECT * FROM website_product
         WHERE website_product.id == {product_id}
     """)[0]
 
-    purchased_count = get_purchased_count(product_id)
-    cart_count = get_cart_count(product_id)
-    available_qty = product_details.quantity - purchased_count
-
     context = {
-        "product_details": product_details,
-        "quantity": available_qty,
-        "cart_count": cart_count
+        "product_details": product_details
     }
     return render(request, "product_detail.html", context)
+
+
+def add_to_cart(request, product_id):
+    """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
+
+    Author: Kelly Morin
+
+    Returns:
+        render -- renders the product_list.html template
+    """
+    # TODO: Set up redirect to login page if user is not currently logged in, with next parameter passed through to login page so the user is automatically redirected to the product detail page they were previously on
+    if not request.user.is_authenticated:
+        messages.error(request, "Please log in to continue")
+        return HttpResponseRedirect(reverse('website:login'))
+    else:
+        try:
+            open_order = Order.objects.raw(f"""
+                SELECT * FROM website_order
+                WHERE website_order.customer_id == {request.user.customer.id}
+                AND website_order.payment_type_id IS null
+            """)[0]
+            order_id = open_order.id
+            product_id = product_id
+            data = [order_id, product_id]
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO website_orderproduct
+                    (
+                        order_id,
+                        product_id
+                    )
+                    VALUES(
+                        %s, %s
+                    )
+                """, data)
+
+            messages.success(request,"This product has been added to your cart!")
+            return HttpResponseRedirect(reverse('website:products'))
+        except:
+            customer = request.user.customer.id
+            data = [customer]
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    INSERT INTO website_order
+                    (
+                        customer_id
+                    )
+                    VALUES(
+                        %s
+                    )
+                """, data)
+                new_order = cursor.lastrowid
+                product_id = product_id
+                relationship_data = [new_order, product_id]
+                cursor.execute("""
+                    INSERT INTO website_orderproduct
+                    (
+                        order_id,
+                        product_id
+                    )
+                    VALUES(
+                        %s, %s
+                    )
+                """, relationship_data)
+
+            messages.success(request,"This product has been added to your cart!")
+            return HttpResponseRedirect(reverse('website:products'))
+
 
 @login_required(login_url="/website/login")
 def my_products(request):

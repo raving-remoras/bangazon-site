@@ -1,6 +1,11 @@
 {% extends 'index.html' %}
 
 {% block content %}
+
+  {% for message in messages %}
+  <div class="{{messages.tags}} alert alert-danger" role="alert">{{message}}</div>
+  {% endfor %}
+
     <h1>Login to Bangazon</h1>
 
     <form id="login_form" method="post" action="{% url 'website:login' %}">

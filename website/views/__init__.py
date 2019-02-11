@@ -1,3 +1,4 @@
+from .customer_profile_views import *
 from .index_views import *
 from .cart import *
 from .payment import *

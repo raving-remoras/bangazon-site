@@ -9,7 +9,6 @@ class ProductTest(TestCase):
     def test_list_products(self):
         """Test case verifies that the products are listed when the navbar's 'shop' link is clicked"""
 
-
         new_seller = Customer.objects.create(
             user = User.objects.create_user(
             username = "testuser",
@@ -35,7 +34,8 @@ class ProductTest(TestCase):
             title = "Test Product",
             description = "This is a product that should make your life better",
             price = 11,
-            quantity = 15
+            quantity = 15,
+            local_delivery = 0
         )
 
         # Issue a GET request
@@ -49,6 +49,7 @@ class ProductTest(TestCase):
 
         # Check that the product title appears in the rendered HTML content
         self.assertIn(new_product.title.encode(), response.content)
+
 
     def test_get_product_detail(self):
         """Test case verifies that a specific product details are rendered when a specific product is selected from the product list"""
@@ -78,6 +79,7 @@ class ProductTest(TestCase):
             title = "Test Product",
             description = "This is a product that should make your life better",
             price = 11,
+            local_delivery = 0,
             quantity = 15
         )
 

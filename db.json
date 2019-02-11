@@ -9,22 +9,6 @@
 },
 {
   "model": "sessions.session",
-  "pk": "lilnf1xrwoluc0jnkwag17v6uba090t2",
-  "fields": {
-    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
-    "expire_date": "2019-02-21T17:04:13.397"
-  }
-},
-{
-  "model": "sessions.session",
-  "pk": "makak53y08ofyrrcv43fu5yvcdfhz70u",
-  "fields": {
-    "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
-    "expire_date": "2019-02-21T17:03:45.737"
-  }
-},
-{
-  "model": "sessions.session",
   "pk": "qewrylqxchlfp7pfh90m1rg4pzr6ix32",
   "fields": {
     "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
@@ -33,10 +17,34 @@
 },
 {
   "model": "sessions.session",
+  "pk": "qmkiqaad0xmhbxz4ubxq2h1qntn2xed6",
+  "fields": {
+    "session_data": "YTVkMjc1MWQ4NjA1YWFlOWQxOTFlMmNmY2I2ZjY0YWQzNDJlNjlmZDp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NmNmNjNmMTA5YTJjMzlhZTc0YWEyODQ2OWEzNDUyMzhiMzdhOGI0In0=",
+    "expire_date": "2019-02-22T17:36:05.059"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "uti2j959gi7vdfk6gko277ts8xcb97nw",
+  "fields": {
+    "session_data": "YTVkMjc1MWQ4NjA1YWFlOWQxOTFlMmNmY2I2ZjY0YWQzNDJlNjlmZDp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI4NmNmNjNmMTA5YTJjMzlhZTc0YWEyODQ2OWEzNDUyMzhiMzdhOGI0In0=",
+    "expire_date": "2019-02-25T17:51:59.837"
+  }
+},
+{
+  "model": "sessions.session",
   "pk": "z0xlaxs42yods54aasqa7wvrh8th6plv",
   "fields": {
     "session_data": "MzRmYzNjYjBhOGJlMWM2NDIyMTZiOGM0NzBiODdjM2VhY2E5ZGI0Yzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0YTlmODI4MTUyODlhM2ExNmE2NjI2YmVkZTI2YzRmY2JmMTcwNWJmIn0=",
     "expire_date": "2019-02-21T17:04:57.838"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "zv7qh4ek4w40aqxpu29g0un2tr9nvmm6",
+  "fields": {
+    "session_data": "ZDUxNzdkZDJlYmZkMzRkNzhmYjgyMTdhMzViYjUzODkwNDk2ZmVmMDp7Il9hdXRoX3VzZXJfaWQiOiI1IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlMzYyMjc4MWU3MDVkMjE1Y2Y3NGMxMDE4NDExNjJmOTI0NmI3NGY4In0=",
+    "expire_date": "2019-02-21T17:28:22.931"
   }
 },
 {
@@ -91,7 +99,10 @@
     "description": "Terrifying painting of a cat on a hot tin roof. Great for rumpus rooms.",
     "price": 1000,
     "quantity": 1,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
   }
 },
 {
@@ -104,7 +115,10 @@
     "description": "Bruce Wayne edition, only two ever made",
     "price": 6500,
     "quantity": 2,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
   }
 },
 {
@@ -117,7 +131,10 @@
     "description": "The thinnest iPad ever!",
     "price": 795,
     "quantity": 5,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
   }
 },
 {
@@ -130,7 +147,10 @@
     "description": "The slowest computer imaginable. It might not even turn on.",
     "price": 125,
     "quantity": 15,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
   }
 },
 {
@@ -143,7 +163,10 @@
     "description": "It sounds so good.",
     "price": 1000,
     "quantity": 2,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": true,
+    "delivery_city": "Nashville",
+    "delivery_state": "TN"
   }
 },
 {
@@ -156,7 +179,10 @@
     "description": "These shoes are the best, you'll look great in them!",
     "price": 50,
     "quantity": 12,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
   }
 },
 {
@@ -169,7 +195,10 @@
     "description": "It's so cute yet so mean.",
     "price": 1,
     "quantity": 47,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
   }
 },
 {
@@ -182,7 +211,218 @@
     "description": "Cats hate them, but Instagram followers love them!",
     "price": 129,
     "quantity": 4,
-    "delete_date": null
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 9,
+  "fields": {
+    "seller": 2,
+    "product_type": 1,
+    "title": "Fancy Form",
+    "description": "This form will be fancy and magical.",
+    "price": 25,
+    "quantity": 3,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 10,
+  "fields": {
+    "seller": 2,
+    "product_type": 1,
+    "title": "SQL Statement",
+    "description": "Insert all the products into your databases!!!",
+    "price": 432,
+    "quantity": 3,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 11,
+  "fields": {
+    "seller": 2,
+    "product_type": 3,
+    "title": "test",
+    "description": "jdskalfdafd dsafdsa fdaf dsfdsfsafa",
+    "price": 4,
+    "quantity": 12,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 12,
+  "fields": {
+    "seller": 2,
+    "product_type": 2,
+    "title": "fdafdsa",
+    "description": "fdsafdsafdsafdsafa",
+    "price": 12,
+    "quantity": 12,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 13,
+  "fields": {
+    "seller": 2,
+    "product_type": 4,
+    "title": "test",
+    "description": "teaewfewafewafewa",
+    "price": 12,
+    "quantity": 12,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 14,
+  "fields": {
+    "seller": 2,
+    "product_type": 1,
+    "title": "Crispy Forms",
+    "description": "Toasted to a nice golden brown",
+    "price": 485,
+    "quantity": 40,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 15,
+  "fields": {
+    "seller": 2,
+    "product_type": 4,
+    "title": "fdsafdsa",
+    "description": "dfdasfdasfdsafdsafdsa",
+    "price": 1123,
+    "quantity": 21,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 16,
+  "fields": {
+    "seller": 2,
+    "product_type": 4,
+    "title": "fdsafdsa",
+    "description": "dfdasfdasfdsafdsafdsa",
+    "price": 1123,
+    "quantity": 21,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 17,
+  "fields": {
+    "seller": 2,
+    "product_type": 3,
+    "title": "fdsaf",
+    "description": "fdsafdasfdsafdsafd fdsa fds afds afd sf dsaf sd",
+    "price": 123,
+    "quantity": 2,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": null
+  }
+},
+{
+  "model": "website.product",
+  "pk": 18,
+  "fields": {
+    "seller": 2,
+    "product_type": 3,
+    "title": "Delivery Truck",
+    "description": "We will deliver locally!",
+    "price": 125,
+    "quantity": 3,
+    "delete_date": null,
+    "local_delivery": true,
+    "delivery_city": "Nashville",
+    "delivery_state": "TN"
+  }
+},
+{
+  "model": "website.product",
+  "pk": 19,
+  "fields": {
+    "seller": 2,
+    "product_type": 3,
+    "title": "Delivery Truck",
+    "description": "We will deliver locally!",
+    "price": 125,
+    "quantity": 3,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "Nashville",
+    "delivery_state": "TN"
+  }
+},
+{
+  "model": "website.product",
+  "pk": 20,
+  "fields": {
+    "seller": 2,
+    "product_type": 4,
+    "title": "dfsafdsa",
+    "description": "fdsafdsafdsafdsafdsf",
+    "price": 123,
+    "quantity": 12,
+    "delete_date": null,
+    "local_delivery": true,
+    "delivery_city": "Nashville",
+    "delivery_state": "TN"
+  }
+},
+{
+  "model": "website.product",
+  "pk": 21,
+  "fields": {
+    "seller": 2,
+    "product_type": 3,
+    "title": "dsfadsfdsa",
+    "description": "fdsafdsafdsaffdsa",
+    "price": 12,
+    "quantity": 2,
+    "delete_date": null,
+    "local_delivery": false,
+    "delivery_city": "",
+    "delivery_state": ""
   }
 },
 {
@@ -231,6 +471,36 @@
   "fields": {
     "name": "Sebastian's Discover Card",
     "account_number": 1234123477659001,
+    "customer": 2,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 6,
+  "fields": {
+    "name": "Negroni",
+    "account_number": 1234123412341234,
+    "customer": 2,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 7,
+  "fields": {
+    "name": "fdsafdsafdsafds",
+    "account_number": 1234123412341234,
+    "customer": 2,
+    "delete_date": null
+  }
+},
+{
+  "model": "website.paymenttype",
+  "pk": 8,
+  "fields": {
+    "name": "fsasdfdsafd",
+    "account_number": 1234123412341234,
     "customer": 2,
     "delete_date": null
   }
@@ -872,7 +1142,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$120000$wpPbUSpJZykv$MRxQGL0eDQd7hJ199hlzjoGPakfG+FFr5W5tpTBgYEo=",
-    "last_login": "2019-02-07T17:04:57.835",
+    "last_login": "2019-02-11T16:09:08.030",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -890,7 +1160,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$120000$cK8fzm26R50x$XFsnH4Ct97zyzuthmcXEU5dl+8R19FYcr70NyPNX9rM=",
-    "last_login": null,
+    "last_login": "2019-02-11T17:51:59.834",
     "is_superuser": false,
     "username": "scivarolo",
     "first_name": "Sebastian",
@@ -944,7 +1214,7 @@
   "pk": 5,
   "fields": {
     "password": "pbkdf2_sha256$120000$CQc03tghQT5E$cfTO34UtgPg4314ckM19z2RZlDY/qQ2K9BpKiFzNaA4=",
-    "last_login": "2019-02-07T17:06:43",
+    "last_login": "2019-02-07T17:28:22.928",
     "is_superuser": false,
     "username": "mrBob",
     "first_name": "Bob",
@@ -993,11 +1263,11 @@
   "pk": 2,
   "fields": {
     "user": 2,
-    "street_address": "1234 Raving Ramora St.",
+    "street_address": "1234 Raving Ramora",
     "city": "Nashville",
     "state": "TN",
     "zipcode": "37209",
-    "phone_number": 2815551234,
+    "phone_number": 2815551235,
     "delete_date": null
   }
 },
@@ -1987,6 +2257,19 @@
     "object_repr": "Order: 9, Customer Name: Rachel Daniel, Payment Type: None",
     "action_flag": 2,
     "change_message": "[{\"changed\": {\"fields\": [\"payment_type\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 74,
+  "fields": {
+    "action_time": "2019-02-11T16:09:28.790",
+    "user": 1,
+    "content_type": 11,
+    "object_id": "5",
+    "object_repr": "Title: Stratocaster Description:It sounds so good. Price:1000 Qty:2",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"local_delivery\", \"delivery_city\", \"delivery_state\"]}}]"
   }
 }
 ]

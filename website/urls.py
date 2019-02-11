@@ -15,6 +15,8 @@ urlpatterns = [
     path("sell", views.sell_product, name='sell'),
     # ex. /website/customer
     path("customer", views.customer_profile, name='customer_profile'),
+    # ex. /website/order
+    path("order", views.closed_order, name="closed_order"),
     # ex. /website/cart
     path("cart", views.cart, name='cart'),
     # ex. /website/customer/payment

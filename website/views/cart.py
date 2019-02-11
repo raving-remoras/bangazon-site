@@ -14,7 +14,6 @@ def cart(request):
     Returns:
         1. HttpResponseRedirect - when a product is deleted from the cart (cart.html), user is returned to their cart (i.e. cart instantly updates)
         2. render - displays user's cart when 'cart' is clicked in the navbar (cart.html)
-
     """
 
     # ---------------------------------------------------------------
@@ -32,6 +31,7 @@ def cart(request):
         WHERE order_id = %s AND product_id = %s
     """
 
+    # used to delete the user's open order
     sql_delete_open_order = """DELETE FROM website_order
         WHERE website_order.id = %s AND website_order.payment_type_id IS NULL
     """
@@ -59,7 +59,7 @@ def cart(request):
     # load user's cart when clicking the link in the navbar.
     try:
         if request.method == "GET":
-            # get user's open order information. If there's no open order, then the context is effectively empty, and logic within the template responds accordingly. The order table returned (i.e. the order variable) has one row per product
+            # get user's open order information. If there's no open order, then the context is effectively empty, and except clause takes effect. The order table returned (i.e. the order variable) has one row per product
             order = Order.objects.raw(sql, [customer_id])
 
             # get products from queryset (effectively the same rows as the order variable already has) to provide the template with a more obvious context variable

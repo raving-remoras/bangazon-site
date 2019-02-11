@@ -9,7 +9,7 @@ def product_categories(request):
 
     Author: Kelly Morin
     Returns:
-        1. render - product_category.html template
+        render - product_category.html template
     """
     if not request.user.is_authenticated:
         product_by_category = Product.objects.raw(f"""

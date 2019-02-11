@@ -4,7 +4,7 @@
 <div class="card mx-auto" style="width: 50rem;">
   {% for key, value in product_per_category.items %}
   <div class="card-body">
-    <h4 class="card-title">{{ key }} ({{value|length}})</h4>
+    <h4 class="card-title">{{ key }} <p class="badge badge-primary ml-2">{{value|length}}</p></h4>
     <div class="list-group">
       {% for product in value|slice:":3" %}
         <a href="{% url 'website:product_details' product.id %}" class="list-group-item list-group-item-action flex-column align-items-start">

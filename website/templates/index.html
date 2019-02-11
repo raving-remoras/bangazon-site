@@ -34,7 +34,7 @@
       </ul>
     </nav>
     <br />
-    <div class="container">
+    <div class="container pb-5">
     {% block content %}
 
       <h1>Welcome to Bangazon!</h1>
@@ -52,5 +52,14 @@
 
     {% endblock content %}
     </div>
+
+    <footer class="container-fluid">
+      <div class="navbar fixed-bottom navbar-light" style="background-color: #e3f2fd;">
+        <div class="navbar-brand">Footer</div>
+        {% for product in product_categories %}
+          <li class="nav-item">{{product.name}}</li>
+        {% endfor %}
+      </div>
+    </footer>
   </body>
 </html>

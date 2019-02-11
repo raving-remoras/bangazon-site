@@ -19,6 +19,7 @@ def list_local_results(request):
             sql = """
                 SELECT * FROM website_product
                 WHERE website_product.seller_id IS NOT %s
+                AND website_product.local_delivery IS 1
                 AND website_product.delivery_city LIKE %s
             """
             seller_id = request.user.customer.id
@@ -28,6 +29,7 @@ def list_local_results(request):
             sql = """
                 SELECT * FROM website_product
                 WHERE website_product.delivery_city LIKE %s
+                AND website_product.local_delivery IS 1
             """
             local_products = Product.objects.raw(sql, [city])
 

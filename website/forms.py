@@ -15,6 +15,18 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ('title', 'description', 'product_type', 'price', 'quantity', 'local_delivery', 'delivery_city', 'delivery_state')
 
+
+class UserCustomerFormA(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ("last_name",)
+
+class UserCustomerFormB(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ("phone_number", "street_address", "city", "state", "zipcode", )
+
 class PaymentForm(forms.ModelForm):
 
     class Meta:

@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% load humanize %}
+
+{% block content %}
+
+{% if order %}
+  <h1>{{request.user}}'s cart</h1>
+  <div>Order Number: BA14793NG-{{order_id}}</div>
+  <hr />
+  {% for product in products %}
+    <a class="list-group-item bg-light list-group-item-action" href="{% url 'website:product_details' product.product_id %}">
+      <div class="d-flex w-100 justify-content-between"><h6>{{product.title}}</h6>${{product.price|intcomma}}</div>
+      <div class="d-flex w-100 justify-content-between">
+        <p class="mb-1">{{product.description}}</p>
+      </div>
+    </a>
+  {% endfor %}
+  <hr />
+  <div class="list-group-item bg-light">Order total: <strong>${{total|intcomma}}</strong></div>
+  <hr />
+    <a class="btn btn-primary" href="{% url 'website:payment' %}">Complete Order</a>
+    <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
+{% else %}
+  <div>
+    <strong>You don't have an open order...</strong>
+    <br />
+    but there's always something you deserve.
+  </div>
+  <br />
+  <a href="{% url 'website:products' %}" class="btn btn-primary">Take a Look</a>
+{% endif %}
+
+{% endblock content %}

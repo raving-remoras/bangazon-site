@@ -70,7 +70,7 @@ class ClosedOrderTest(TestCase):
         response = self.client.post(reverse('website:closed_order'), {"order_id": 1})
 
         self.assertIn(
-            '<h1>Order Number: 1</h1>'.encode(), response.content
+            '<h1>Order Number: BA14793NG-1</h1>'.encode(), response.content
         )
         self.assertIn(
                     '<p class="ml-auto">$10</p>'.encode(), response.content

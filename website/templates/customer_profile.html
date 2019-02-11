@@ -42,7 +42,7 @@
                     {% if order.payment_type_id%}
                         <form class="list-group-item d-flex" method="post" action="{% url "website:closed_order" %}">
                         {% csrf_token %}
-                        <label>{{order.id}}</label>
+                        <label>BA14793NG-{{order.id}}</label>
                         <input type="hidden" name="order_id" value = "{{ order.id }}">
                         <input class="ml-auto btn-primary"  type="submit" value="View Order">
                         </form>

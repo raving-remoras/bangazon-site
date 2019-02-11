@@ -10,7 +10,8 @@
           <small>3 days ago</small>
         </div>
         <p class="mb-1">{{ product.description }}</p>
-        <small>Purchased: {{product.get_purchased_count}}</small>
+        <small>Purchased: {{product.get_purchased_count}}    Available: {{product.get_available_count}}
+        </small>
       </div>
 {% endfor %}
 

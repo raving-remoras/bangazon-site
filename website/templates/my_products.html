@@ -3,6 +3,8 @@
 {% block content %}
 <h2>My Products</h2>
 <div class="list-group">
+
+{% if products %}
 {% for product in products %}
 <div class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
@@ -18,6 +20,12 @@
         {% endif %}
       </div>
 {% endfor %}
+{% else %}
+
+<h4>You haven't listed any Products yet</h4>
+
+{% endif %}
+
 
 </div>
 

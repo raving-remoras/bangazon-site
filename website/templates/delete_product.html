@@ -10,7 +10,7 @@
 <p>Are you sure you want to delete the listing for {{product.title}}?</p>
 <form action="{% url 'website:delete_product' product_id %}" method="POST">
     {% csrf_token %}
-    <button type="Button" class="btn btn-danger">Cancel</button>
+    <a href="{% url 'website:my_products' %}" class="btn btn-danger">Cancel</a>
     <input type="submit" class="btn btn-primary" value="Delete"/>
 </form>
 </div>

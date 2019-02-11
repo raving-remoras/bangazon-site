@@ -39,6 +39,68 @@ class Product(models.Model):
 
         Author: God
     """
+    @property
+    def get_purchased_count(self):
+        """This method gets all completed orders for a specific product and calculates the number purchased
+
+        Author: Kelly Morin, retooled by Rachel Daniel
+
+        Returns:
+            purchased_count
+        """
+        purchased_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS NOT null
+            AND website_orderproduct.product_id = {self.id}
+        """)
+
+        purchased_count = 0
+        for item in purchased_qty:
+            if item.product_id == self.id:
+                purchased_count += 1
+
+        return purchased_count
+
+    @property
+    def get_available_count(self):
+        """This method gets count of remaining product items based on total for sale and total purchased
+
+        Author: Rachel Daniel
+
+        Returns:
+            available_count
+        """
+        purchased_count = self.get_purchased_count
+        quantity = self.quantity
+        available_count = quantity - purchased_count
+
+        return available_count
+
+    @property
+    def get_cart_count(self):
+        """This method gets all incomplete orders for a specific product and calculates the number currently in the carts of all users
+
+        Author: Kelly Morin; retooled by Rachel Daniel
+
+        Returns:
+            cart_count
+        """
+
+        cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {self.id}
+        """)
+
+        cart_count = 0
+        for item in cart_qty:
+            if item.product_id == self.id:
+                cart_count +=1
+
+        return cart_count
+
     seller = models.ForeignKey(Customer, on_delete=models.PROTECT)
     product_type = models.ForeignKey(ProductType, on_delete=models.PROTECT)
     title = models.CharField(max_length=255)

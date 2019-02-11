@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+
+{% block content %}
+<h2>My Products</h2>
+<div class="list-group">
+
+{% if products %}
+{% for product in products %}
+<div class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ product.title }}</h5>
+        </div>
+        <p class="mb-1">{{ product.description }}</p>
+        <span class="badge badge-success">Sold: {{product.get_purchased_count}}</span>
+        <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
+
+
+        {% if product.get_available_count > 0 %}
+            <a href="{% url 'website:delete_product' product.id %}" class="btn btn-danger float-right" value="Delete">Delete</a>
+
+        {% endif %}
+      </div>
+{% endfor %}
+{% else %}
+
+<h4>You haven't listed any Products yet</h4>
+
+{% endif %}
+
+
+</div>
+
+{% endblock content %}

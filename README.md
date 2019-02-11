@@ -20,6 +20,8 @@ This web application is the source code for the Bangazon e-commerce web site. It
 ## Products
 - From the homepage, if you select <em>Shop</em> you will be taken to a list of all products
 - If you select <em>View Details</em> on any product listing, you will then be taken to a view of all product details and be given the option to add the product to your cart.
+- If you add a product to your cart and are logged in, you will be redirected to the view all products page with a success message to confirm that the product was added to your cart
+- If you try to add a product to your cart and are not currently logged in, you will be redirected to the login page with a message encouraging you to login to proceed
 
 ## Sell a Product
 - When a user is logged in, there is an affordance in the navbar to Add a Product.

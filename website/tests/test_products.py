@@ -91,3 +91,64 @@ class ProductTest(TestCase):
 
         # Product title appears in HTML response content
         self.assertIn(new_product.title.encode(), response.content)
+
+    def product_category_view(self):
+        new_seller = Customer.objects.create(
+            user = User.objects.create_user(
+            username = "testuser",
+            first_name = "Test",
+            last_name = "User",
+            email = "test@test.com"
+            ),
+            street_address = "1112 Some Dr.",
+            city = "City",
+            state = "TN",
+            zipcode = "1122334",
+            phone_number = 1112233
+        )
+
+        new_product_type = ProductType.objects.create(
+            name = "Some Product",
+        )
+
+        new_product_type_2 = ProductType.objects.create(
+            name = "Some Product",
+        )
+
+        new_product = Product.objects.create(
+            seller = new_seller,
+            product_type = new_product_type,
+            title = "Test Product",
+            description = "This is a product that should make your life better",
+            price = 11,
+            quantity = 15
+        )
+
+        new_product_2 = Product.objects.create(
+            seller = new_seller,
+            product_type = new_product_type_2,
+            title = "Test Product",
+            description = "This is a product that should make your life better",
+            price = 11,
+            quantity = 15
+        )
+
+        response = self.client.get(reverse('website:product_categories'))
+
+        # Check that the response is 200 ok
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the rendered context contains 2 product types
+        self.assertEqual(len(response.context['product_categories']),2)
+
+        # Check that the product type is in the HTML response content
+        self.assertEqual(response.context['product_categories'], new_product_type)
+        self.assertEqual(response.context['product_categories'], new_product_type_2)
+        self.assertEqual(response.context['product_categories'], new_product)
+        self.assertEqual(response.context['product_categories'], new_product_2)
+
+        # Product title appears in HTML response content
+        self.assertIn(new_product.title.encode(), response.content)
+        self.assertIn(new_product_2.title.encode(), response.content)
+        self.assertIn(new_product_type.name.encode(), response.content)
+        self.assertIn(new_product_type_2.name.encode(), response.content)

@@ -20,6 +20,7 @@ def add_payment(request):
         render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
         HttpResponseRedirect -- TODO: loads the customer profile if add was successful
     """
+
     customer = request.user.customer
 
     if request.method == "GET":
@@ -38,7 +39,7 @@ def add_payment(request):
                 with connection.cursor() as cursor:
                     cursor.execute(sql, [name, account_number, customer.id])
                     # messages.success(request, 'Saved!')
-                return HttpResponseRedirect(reverse("website:index"))
+                return HttpResponseRedirect(reverse("website:customer_profile"))
 
 
 @login_required(login_url="/website/login")

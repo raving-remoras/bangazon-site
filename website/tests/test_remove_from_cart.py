@@ -67,7 +67,7 @@ class DeleteProductFromCartTest(TestCase):
         self.assertIn(product.title.encode(), response.content)
 
         # confirm that post returns a response of 302
-        response = self.client.post(reverse("website:cart"), {"product_id": 1, "order_id": 1})
+        response = self.client.post(reverse("website:cart"), {"order_product_id": 1, "order_id": 1})
         self.assertEqual(response.status_code, 302)
 
         # confirm that the open order is also deleted, since only one object was created

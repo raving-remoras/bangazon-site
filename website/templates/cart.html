@@ -29,7 +29,7 @@
         <div class="p-2">${{product.price|intcomma}}</div>
         <form action="{% url 'website:cart' %}" method="POST" class="p-1">
           {% csrf_token %}
-            <input type="hidden" value="{{ product.product_id }}" name="product_id">
+            <input type="hidden" value="{{ product.order_product_id }}" name="order_product_id">
             <input type="hidden" value="{{ order_id }}" name="order_id">
             <button class="btn btn-danger btn-sm">Delete</button>
         </form>

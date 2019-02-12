@@ -20,7 +20,7 @@ def cart(request):
     # ---------------------------------------------------------------
     # Used to load user's cart
     # Order (get order ID where customer id is current user's customer ID) -> OrderProduct (for product IDs on open order) -> Product (get product data)
-    sql = """SELECT *
+    sql = """SELECT *, website_orderproduct.id as "order_product_id"
         FROM website_order
         JOIN website_orderproduct ON website_orderproduct.order_id = website_order.id
         JOIN website_product ON website_product.id = website_orderproduct.product_id
@@ -29,7 +29,7 @@ def cart(request):
 
     # used to delete single join table
     sql_delete = """DELETE FROM website_orderproduct
-        WHERE order_id = %s AND product_id = %s
+        WHERE order_id = %s AND id = %s
     """
 
     # used to delete the user's open order
@@ -50,7 +50,7 @@ def cart(request):
 
             for product in products:
                 with connection.cursor() as cursor:
-                    cursor.execute(sql_delete, [order_id, product.product_id])
+                    cursor.execute(sql_delete, [order_id, product.order_product_id])
 
             with connection.cursor() as cursor:
                 cursor.execute(sql_delete_open_order, [order_id])
@@ -66,10 +66,10 @@ def cart(request):
 
             except:
                 # last valid option that would trigger a POST: a user clicked delete button on a specific product in their cart, so remove it
-                product_id = request.POST["product_id"]
+                order_product_id = request.POST["order_product_id"]
                 order_id = request.POST["order_id"]
                 with connection.cursor() as cursor:
-                    cursor.execute(sql_delete, [order_id, product_id])
+                    cursor.execute(sql_delete, [order_id, order_product_id])
 
                 # check if there are remaining items in cart. If cart is empty, delete open order
                 order = Order.objects.raw(sql, [customer_id])
@@ -84,7 +84,7 @@ def cart(request):
     # load user's cart when clicking the link in the navbar.
     try:
         if request.method == "GET":
-            # get user's open order information. If there's no open order, then the context is effectively empty, and the except clause takes effect. The order table returned (i.e. the order variable) has one row per product
+            # get user's open order information. If there's no open order, then the context is effectively empty, and the except clause takes effect. If an order table is returned (i.e. the order variable), then it has one row per product
             order = Order.objects.raw(sql, [customer_id])
 
             # get products from queryset (effectively the same rows as the order variable already has) to provide the template with a more obvious context variable

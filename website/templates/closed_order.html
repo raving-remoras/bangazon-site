@@ -3,13 +3,54 @@
 
 
    {% block content %}
-       <h1>Order Number: BA14793NG-{{ order.id }}</h1>
-       <ul class="list-group">
+
+        <style>
+            input:checked ~ label {
+                font-weight:bold;
+                color: red;
+            }
+            .rating-system {
+                display: flex;
+                flex-direction: row-reverse;
+            }
+        </style>
+
+        <h1>Order Number: BA14793NG-{{ order.id }}</h1>
+        <ul class="list-group">
             {% for productRel in order_products %}
 
-                <li class="list-group-item d-flex">
-                    <a href="{% url 'website:product_details' productRel.product.id %}">{{ productRel.product.title }}</a>
-                    <p class="ml-auto">${{ productRel.product.price|intcomma }}</p>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            <a href="{% url 'website:product_details' productRel.product.id %}">{{ productRel.product.title }}</a>
+                        </div>
+                        <div class="col">
+                            <form class="rating-system" action="{% url 'website:closed_order' %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn btn-sm btn-primary" type="submit">Rate</button>
+
+                                <input class="invisible" type="radio" value="5" id="rating-5-{{productRel.id}}" name="rating">
+                                <label for="rating-5-{{productRel.id}}"><i class="fas fa-star"></i></label>
+
+                                <input class="invisible" type="radio" value="4" id="rating-4-{{productRel.id}}" name="rating">
+                                <label for="rating-4-{{productRel.id}}"><i class="fas fa-star"></i></label>
+
+                                <input class="invisible" type="radio" value="3" id="rating-3-{{productRel.id}}" name="rating">
+                                <label for="rating-3-{{productRel.id}}"><i class="fas fa-star"></i></label>
+
+                                <input class="invisible" type="radio" value="2" id="rating-2-{{productRel.id}}" name="rating">
+                                <label for="rating-2-{{productRel.id}}"><i class="fas fa-star"></i></label>
+
+                                <input class="invisible" type="radio" value="1" id="rating-1-{{productRel.id}}" name="rating">
+                                <label for="rating-1-{{productRel.id}}"><i class="fas fa-star"></i></label>
+                                <input type="hidden" name="order_id" value="{{ order.id }}">
+                                <input type="hidden" name="orderproduct_id" value="{{productRel.id}}">
+                            </form>
+                        </div>
+                        <div class="col-2 text-right">
+                            <p>${{ productRel.product.price|intcomma }}</p>
+                        </div>
+                    </div>
                 </li>
 
 

@@ -8,6 +8,9 @@
 
     <form action="{% url 'website:sell' %}" method="post" enctype="multipart/form-data" >
       {% csrf_token %}
+        {% if file_Error %}
+            <p class="text-danger">Photo must be less than 5MB</p>
+        {% endif %}
       <input type="file" name="photo">
       {{ product_form|crispy }}
       <input class="btn btn-primary" type="submit" value="Sell It" />

@@ -118,7 +118,6 @@ def list_search_results(request):
 
 
 def product_details(request, product_id):
-    # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
     if not request.user.is_authenticated:
         product_details = Product.objects.raw(f"""
             SELECT * FROM website_product
@@ -132,6 +131,17 @@ def product_details(request, product_id):
             AND website_orderproduct.product_id = {product_id}
         """)
 
+        cart_detail = list()
+        for order in cart_qty:
+            cart_detail.append(order.order_id)
+        cart_count = len(set(cart_detail))
+
+        context = {
+            "product_details": product_details,
+            "other_cart_count": other_cart_count,
+            "user_cart_count": 0
+        }
+
     else:
         user_id = request.user.customer.id
         product_details = Product.objects.raw(f"""
@@ -139,7 +149,7 @@ def product_details(request, product_id):
             WHERE website_product.id == {product_id}
         """)[0]
 
-        cart_qty = OrderProduct.objects.raw(f"""
+        other_cart_qty = OrderProduct.objects.raw(f"""
             SELECT * FROM website_orderproduct
             LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
             WHERE website_order.payment_type_id IS null
@@ -147,16 +157,31 @@ def product_details(request, product_id):
             AND website_order.customer_id IS NOT {user_id}
         """)
 
-        cart_detail = list()
-        for order in cart_qty:
-            cart_detail.append(order.order_id)
+        user_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+            AND website_order.customer_id IS {user_id}
+        """)
 
-        cart_count = len(set(cart_detail))
+        other_cart_detail = list()
+        for order in other_cart_qty:
+            other_cart_detail.append(order.order_id)
 
-    context = {
-        "product_details": product_details,
-        "cart_count": cart_count
-    }
+        other_cart_count = len(set(other_cart_detail))
+
+        user_cart_detail = list()
+        for order in user_cart_qty:
+            user_cart_detail.append(order.order_id)
+
+        user_cart_count = len(user_cart_detail)
+
+        context = {
+            "product_details": product_details,
+            "other_cart_count": other_cart_count,
+            "user_cart_count": user_cart_count
+        }
     return render(request, "product_detail.html", context)
 
 

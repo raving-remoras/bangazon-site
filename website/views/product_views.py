@@ -6,7 +6,7 @@ from django.db import connection
 from django.urls import reverse
 import datetime
 from django.shortcuts import get_object_or_404, render
-from website.models import Product, OrderProduct, Order
+from website.models import Product, OrderProduct, Order, FavoriteSeller
 
 
 def list_products(request):
@@ -118,6 +118,7 @@ def list_search_results(request):
 
 
 def product_details(request, product_id):
+
     # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
     product_details = Product.objects.raw(f"""
         SELECT * FROM website_product
@@ -125,11 +126,36 @@ def product_details(request, product_id):
         WHERE website_product.id == {product_id}
     """)[0]
 
-    seller_is_favorited = None
+    # if favorite/unfavorite seller button is clicked, handle the result accordingly
+    if request.method == "POST":
+        try:
+            foo = request.POST["current_favorite"] # if this doesn't exist in the post, then the seller isn't favorited, so -> except
+            sql = "DELETE FROM website_favoriteseller WHERE user_id == %s AND seller_id == %s"
+            with connection.cursor() as cursor:
+                cursor.execute(sql, [request.user.id, product_details.seller_id])
 
-    context = {
-        "product_details": product_details
-    }
+        except: # favorite the seller in the except clause
+            sql = """INSERT INTO website_favoriteseller (user_id, seller_id) VALUES (%s, %s)"""
+            with connection.cursor() as cursor:
+                cursor.execute(sql, [request.user.id, product_details.seller_id])
+
+        return HttpResponseRedirect(reverse("website:product_details", args=(product_details.id,)))
+
+    # when loading product detail page, check to see if seller is favorited (foo sql attempt) by the logged-in user
+    try:
+        foo = FavoriteSeller.objects.raw(f"""
+            SELECT * FROM website_favoriteseller
+            WHERE user_id = {request.user.id} AND seller_id = {product_details.seller_id}
+        """)[0]
+        context = {
+            "product_details": product_details,
+            "seller_is_favorited": True
+        }
+    except:
+        context = {
+            "product_details": product_details,
+            "seller_is_favorited": False
+        }
     return render(request, "product_detail.html", context)
 
 

@@ -10,6 +10,19 @@
       <div class="col-sm-6 my-4">
         <h3>{{product_details.title}}</h3>
         <p>Sold by: {{product_details.username}}</p>
+        {% if seller_is_favorited %}
+          <form action="{% url 'website:product_details' product_details.id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="current_favorite" name="current_favorite">
+            <button class="btn btn-danger btn-sm">Unfavorite this Seller</button>
+          </form>
+        {% else %}
+          <form action="{% url 'website:product_details' product_details.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-success btn-sm">Favorite this Seller</button>
+          </form>
+        {% endif %}
+        <hr />
         {% if product_details.get_available_count == 0 %}
         <p class="badge badge-secondary">Sold out!</p>
         {% elif product_details.get_available_count < 5 %}

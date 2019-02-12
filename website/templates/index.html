@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% load staticfiles %}
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -58,6 +59,24 @@
 
     {% endblock content %}
     </div>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md">
+            <h5><a class="" href="{% url 'website:index' %}">Bangazon</a></h5>
+          </div>
+          <div class="col-6 col-md">
+            <h5>Categories</h5>
+            <ul class="list-unstyled text-small">
+              {% for category in product_categories %}
+                <li><a href="{% url 'website:product_by_category' category.id %}">{{category.name}}</a></li>
+              {% endfor%}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

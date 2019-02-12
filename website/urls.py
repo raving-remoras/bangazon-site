@@ -28,6 +28,8 @@ urlpatterns = [
     path("products/", views.list_products, name='products'),
     # ex. /products/5
     path("products/<int:product_id>", views.product_details, name="product_details"),
+    # ex. /product-categories/5
+    path("product-categories/<int:category_id>", views.product_by_category, name="product_by_category"),
     # ex. /product-categories
     path("product-categories", views.product_categories, name="product_categories"),
     # ex. /products/5/add

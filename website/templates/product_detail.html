@@ -2,10 +2,20 @@
 {% load humanize %}
 
 {% block content %}
+<style>
+    .photo{
+        max-height: 350px;
+        max-width: 350px
+    }
 
+</style>
     <div class="row">
       <div class="col-sm-6 my-4">
+        {% if product_details.photo_url %}
+        <img class="mx-auto d-block photo" src="{{ product_details.photo_url }}" alt="Placeholder for product image"/>
+        {% else %}
         <img class="mx-auto d-block" src="https://via.placeholder.com/350" alt="Placeholder for product image"/>
+        {% endif %}
       </div>
       <div class="col-sm-6 my-4">
         <h3>{{product_details.title}}</h3>

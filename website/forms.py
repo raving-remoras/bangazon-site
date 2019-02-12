@@ -34,3 +34,5 @@ class PaymentForm(forms.ModelForm):
         fields = ('name', 'account_number')
         labels = {'name': ('Payment Type Name')}
 
+
+

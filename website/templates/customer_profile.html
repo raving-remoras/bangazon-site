@@ -52,7 +52,7 @@
                         <form class="list-group-item d-flex" method="post" action="{% url 'website:closed_order' %}">
                         {% csrf_token %}
                         <label class="align-self-center mb-0">BA14793NG-{{order.id}}</label>
-                        <div class="align-self-center mb-0">&nbsp;&nbsp;(processed: {{order.payment_date}})</div>
+                        <div class="align-self-center mb-0">&nbsp;&nbsp;(processed: {{order.payment_date}} UTC)</div>
                         <input type="hidden" name="order_id" value = "{{ order.id }}">
                         <input type="hidden" name="payment_date" value = "{{ order.payment_date }}">
                         <input class="ml-auto btn btn-primary"  type="submit" value="View Order">

@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.db import connection
 from django.urls import reverse
+from django.core.files.storage import FileSystemStorage
 
 from website.forms import ProductForm
 from website.models import *
@@ -28,6 +29,11 @@ def sell_product(request):
         form_data = request.POST
         product_form = ProductForm(form_data)
 
+        photo = request.FILES["photo"]
+        fs = FileSystemStorage()
+        photo_name = fs.save(photo.name, photo)
+        uploaded_file_url = fs.url(photo_name)
+
         if product_form.is_valid():
 
             seller = request.user.customer.id
@@ -46,7 +52,7 @@ def sell_product(request):
                 delivery_state = ""
 
             data = [
-                seller, title, description, product_type, price, quantity, local_delivery, delivery_city, delivery_state
+                seller, title, description, product_type, price, quantity, local_delivery, delivery_city, delivery_state, uploaded_file_url
             ]
 
             with connection.cursor() as cursor:
@@ -61,10 +67,11 @@ def sell_product(request):
                         quantity,
                         local_delivery,
                         delivery_city,
-                        delivery_state
+                        delivery_state,
+                        photo_url
                     )
                     VALUES(
-                        %s, %s, %s, %s, %s, %s, %s, %s, %s
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
                     )
                 """, data)
                 new_product = cursor.lastrowid

@@ -6,8 +6,9 @@
 
     <h1>Sell Product</h1>
 
-    <form action="{% url 'website:sell' %}" method="post">
+    <form action="{% url 'website:sell' %}" method="post" enctype="multipart/form-data" >
       {% csrf_token %}
+      <input type="file" name="photo">
       {{ product_form|crispy }}
       <input class="btn btn-primary" type="submit" value="Sell It" />
     </form>

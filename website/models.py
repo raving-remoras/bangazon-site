@@ -140,6 +140,7 @@ class Order(models.Model):
 
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT)
     payment_type = models.ForeignKey(PaymentType, on_delete=models.PROTECT, default=None, null=True, blank=True)
+    payment_date = models.DateTimeField(default=None, null=True, blank=True)
 
     def __str__(self):
         return f"Order: {self.id}, Customer Name: {self.customer.user.first_name} {self.customer.user.last_name}, Payment Type: {self.payment_type.name if self.payment_type else None}"

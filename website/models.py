@@ -154,6 +154,7 @@ class OrderProduct(models.Model):
     # cascade used here because open orders are hard deleted, so we want to remove join tables also
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(default=None, null=True, blank=True)
 
     def __str__(self):
         return f"Product: {self.product} Order:{self.order}"

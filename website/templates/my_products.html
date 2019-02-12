@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2>My Products</h2>
+<h2 class="my-4">My Products</h2>
 <div class="list-group">
 
 {% if products %}
@@ -17,6 +17,8 @@
   <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
   {% if product.get_ratings %}
   <span class="badge badge-warning">Avg Rating: {{product.get_ratings.average}} / 5 from {{product.get_ratings.count}} customers</span>
+  {% else %}
+  <span class="badge badge-secondary">No ratings yet.</span>
   {% endif %}
 
 

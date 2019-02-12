@@ -122,7 +122,6 @@ class Product(models.Model):
         """
 
         product_ratings = OrderProduct.objects.raw(sql, [self.id])
-        print("Product Ratings", product_ratings)
         if len(product_ratings):
             return product_ratings[0]
         else:

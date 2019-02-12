@@ -294,10 +294,21 @@ def favorites(request):
         sql = f"""SELECT *
             FROM website_product
             JOIN website_favoriteseller ON website_favoriteseller.seller_id = website_product.seller_id
-            WHERE website_favoriteseller.user_id = {request.user.id}
+            JOIN auth_user ON auth_user.id = website_favoriteseller.seller_id
+            WHERE website_favoriteseller.user_id = {request.user.id} AND website_product.delete_date IS NULL
+            ORDER BY website_product.seller_id
         """
 
         products = Product.objects.raw(sql)
+        products_by_seller = dict()
 
-        context = {"products": products}
+        for product in products:
+            if product.get_available_count != 0:
+                try:
+                    products_by_seller[product.username].append(product)
+                except KeyError:
+                    products_by_seller[product.username] = list()
+                    products_by_seller[product.username].append(product)
+
+        context = {"products_by_seller": products_by_seller}
         return render(request, "favorites.html", context)

@@ -18,7 +18,7 @@ def add_payment(request):
 
     Returns:
         render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
-        HttpResponseRedirect -- TODO: loads the customer profile if add was successful
+        HttpResponseRedirect -- loads the customer profile if add was successful
     """
 
     customer = request.user.customer

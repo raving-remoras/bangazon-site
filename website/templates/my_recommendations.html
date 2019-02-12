@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2>My Products</h2>
+<h2>My Recommendations</h2>
 
 
 {% if products %}
@@ -15,21 +15,22 @@
         </a>
 
         <p class="mb-1">{{ product.description }}</p>
-            <span class="badge badge-success">Sold: {{product.get_purchased_count}}</span>
-            <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
+        <span class="badge badge-success ">Recommended by: {{product.from_username}}</span>
 
-            {% if product.get_available_count > 0 %}
+
             <small>
-                <a href="{% url 'website:delete_product' product.id %}" class="btn btn-danger float-right" value="Delete">Delete</a>
+                <form method="POST">
+                    <input type="submit" class="btn-sm btn-danger float-right" value="Remove">
+                </form>
             </small>
-            {% endif %}
+
 
 </div>
 {% endfor %}
 </div>
 {% else %}
 
-<h4>You haven't listed any Products yet</h4>
+<h5>You don't have any recommendations yet</h5>
 
 {% endif %}
 

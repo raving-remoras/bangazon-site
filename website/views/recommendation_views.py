@@ -13,8 +13,8 @@ def recommend_product(request, product_id):
     Author: Rachel Daniel
 
     Returns:
-        render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
-        HttpResponseRedirect -- TODO: loads the customer profile if add was successful
+        render -- loads the recommend_product.html template using the PaymentForm class in forms.py when originally navigating to the page
+        HttpResponseRedirect -- sends the user back to login if not authenticated, back to the same form page if entered user is not in the database, and back to the detail page they came from if post is successful
     """
 
     if not request.user.is_authenticated:
@@ -56,6 +56,20 @@ def recommend_product(request, product_id):
                 messages.warning(request, f"Oops, couldn't locate a user named {recommendee_name}")
 
                 return HttpResponseRedirect(reverse("website:recommend_product", args=(product_id, )))
+
+
+def my_recommendations(request):
+    if request.method == "GET":
+        sql = f"""
+            SELECT P.*, R.*, C.id as from_cust_id, U.username as from_username FROM website_product P
+            JOIN website_recommendedproduct R on R.product_id = P.id
+            JOIN website_customer C on C.id = R.recommended_by_id
+            JOIN auth_user U on U.id = C.user_id
+            WHERE R.recommended_to_id = {request.user.customer.id}
+    """
+
+        products = Product.objects.raw(sql)
+        return render(request, "my_recommendations.html", {"products": products})
 
 
 

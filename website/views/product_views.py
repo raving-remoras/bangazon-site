@@ -17,7 +17,7 @@ def list_products(request):
     """
     if not request.user.is_authenticated:
         if request.method == "POST":
-            context = list_local_results(request)
+            context = list_search_results(request)
 
         else:
             all_products = Product.objects.raw(f"""
@@ -29,7 +29,7 @@ def list_products(request):
     else:
 
         if request.method == "POST":
-            context = list_local_results(request)
+            context = list_search_results(request)
 
         elif request.method == "GET":
 
@@ -47,7 +47,7 @@ def list_products(request):
     return render(request, template_name, context)
 
 
-def list_local_results(request):
+def list_search_results(request):
     """Process the POST request to list_products to display search results.
 
         Author: Sebastian Civarolo
@@ -57,7 +57,37 @@ def list_local_results(request):
     """
     search_data = request.POST
 
-    if "city" in search_data:
+    if "product_query" in search_data:
+        product_query = "%" + search_data["product_query"] + "%"
+
+        if request.user.is_authenticated:
+            seller_id = request.user.customer.id
+            sql = """
+                SELECT * FROM website_product
+                WHERE website_product.seller_id IS NOT %s
+                AND website_product.title LIKE %s
+                AND website_product.delete_date IS NULL
+            """
+            params = [seller_id, product_query]
+
+        else:
+            sql = """
+                SELECT * FROM website_product
+                WHERE website_product.title LIKE %s
+                AND website_product.delete_date IS NULL
+            """
+            params = [product_query]
+
+        search_results = Product.objects.raw(sql, params)
+        search_query = search_data["product_query"]
+
+        context = {
+            "products": search_results,
+            "product_query": search_query
+        }
+
+
+    elif "city" in search_data:
         city = "%" + search_data["city"] + "%"
 
         if request.user.is_authenticated:

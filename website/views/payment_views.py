@@ -14,11 +14,12 @@ from website.forms import *
 def add_payment(request):
     """This method gets customer from user in cookies, renders payment_form.html, and adds a new payment method to the database for the current customer upon submit
 
-    Author: Rachel Daniel
+    Author: Rachel Daniel, Kelly Morin
 
     Returns:
         render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
-        HttpResponseRedirect -- loads the customer profile if add was successful
+        HttpResponseRedirect -- loads the cart payment page if the user gets to add payment from the cart
+        HttpResponseRedirect -- loads the customer profile if the user gets to add payment from the user profile page and if add was successful
     """
 
     customer = request.user.customer

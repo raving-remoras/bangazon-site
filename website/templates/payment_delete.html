@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+  <h1 class="mb-3">Delete Payment Type</h1>
+  <h4>Are you sure you want to delete {{payment_type.name}}?</h4>
+  <h6 class="text-muted">Last 4 digits: {{payment_type.account_number|make_list|slice:"-4:"|join:""}}</h6>
+  <div class="input-group mt-4">
+    <form action="{% url 'website:delete_payment_type' payment_type.id %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    </form>
+    <a href="{% url 'website:customer_profile' %}" class="ml-2 btn btn-primary">Cancel</a>
+  </div>
+
+{% endblock content %}

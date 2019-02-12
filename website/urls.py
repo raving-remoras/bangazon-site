@@ -23,6 +23,7 @@ urlpatterns = [
     path("cart/payment", views.payment, name='payment'),
     # ex. /website/customer/add_payment
     path("customer/add_payment", views.add_payment, name="add_payment"),
+    path("customer/payment/<int:payment_id>/delete", views.delete_payment_type, name="delete_payment_type"),
     # ex. /website/products
     path("products/", views.list_products, name='products'),
     # ex. /website/products/5

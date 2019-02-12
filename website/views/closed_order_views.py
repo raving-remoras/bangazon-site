@@ -4,7 +4,7 @@ from website.forms import *
 from django.db import connection
 
 
-@login_required(login_url="/website/login")
+@login_required
 def closed_order(request):
     """Renders a page using an order id to display a closed order.
 

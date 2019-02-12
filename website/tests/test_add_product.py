@@ -101,3 +101,48 @@ class AddProductTests(TestCase):
 
         self.assertEqual(new_product, 1)
 
+    def test_add_photo(self):
+        # tests that a photo uploads
+
+        user = User.objects.create_user(username="test_user", password="password")
+        customer = Customer.objects.create(
+            user=user,
+            street_address="123 Street St",
+            city="Nashville",
+            state="TN",
+            zipcode="37209",
+            phone_number="5555555555"
+        )
+        product_type = ProductType.objects.create(name="Test Product Type")
+
+        form_data = {
+            "seller": customer.id,
+            "title": "Test Product",
+            "description": "Test description",
+            "product_type": "1",
+            "price": "123",
+            "local_delivery": "on",
+            "quantity": "123",
+            "photo": "media_test/small_photo.jpg"
+        }
+
+        response= self.client.post(reverse('website:customer_profile'), form_data)
+        self.assertEqual(response.status_code, 302)
+
+        form_data2 = {
+            "seller": customer.id,
+            "title": "Test Product",
+            "description": "Test description",
+            "product_type": "1",
+            "price": "123",
+            "local_delivery": "on",
+            "quantity": "123",
+            "photo": "media_test/large_photo.jpg"
+        }
+
+        response2= self.client.post(reverse('website:customer_profile'), form_data2)
+        print("HERE", response2.status_code)
+        self.assertEqual(response2.status_code, 302)
+        self.assertIn('<p class="text-danger">Photo m'.encode(), response.content)
+
+

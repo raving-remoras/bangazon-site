@@ -15,7 +15,7 @@ from website.models import *
 def sell_product(request):
     """Loads the view for creating a product to sell and saves it to the database.
 
-        Author: Sebastian Civarolo
+        Author: Sebastian Civarolo, Jase Hackman
 
     """
     if request.method == "GET":

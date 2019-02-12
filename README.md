@@ -24,6 +24,13 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - If you try to add a product to your cart and are not currently logged in, you will be redirected to the login page with a message encouraging you to login to proceed
 - If you select <em>Product Categories</em> from the navbar, you will be taken to a list of product categories, the number of products in each category and a list of up to three of the products that are currently available for that category
 
+## Search
+- Some items are available for local delivery, and users can search by city to see what is available.
+
 ## Sell a Product
 - When a user is logged in, there is an affordance in the navbar to Add a Product.
 - User can add the details for their product and add it to the market place.
+
+## Payment Types
+- From the User Settings page, Users can add payment types to their account so they can complete their order.
+- Users can also delete payment types they no longer want to use at Bangazon.

@@ -17,7 +17,7 @@
           <p>Qty: {{product_details.get_available_count}}</p>
           <p>Price: ${{product_details.price|intcomma}}</p>
         <p>{{product_details.description}}</p>
-        {% if product_details.get_available_count == 0 %}
+        {% if product_details.get_available_count == 0 or user_cart_count == product_details.get_available_count %}
           <button class="btn btn-primary btn-block mb-4" disabled>
               <i class="fas fa-cart-plus"></i>
               Add to Cart
@@ -28,16 +28,16 @@
               Add to Cart
           </a>
         {% endif %}
-        {% if product_details.get_cart_count > 0 %}
-          {% if product_details.get_cart_count == 1 %}
+        {% if other_cart_count > 0 %}
+          {% if other_cart_count == 1 %}
             <div>
               <i class="fas fa-shopping-cart"></i>
-              <strong>Other people want this.</strong> {{product_details.get_cart_count}} person has this in their cart right now.
+              <strong>Other people want this.</strong> {{other_cart_count}} person has this in their cart right now.
             </div>
-          {% elif product_details.get_cart_count > 1 %}
+          {% elif other_cart_count > 1 %}
             <div>
               <i class="fas fa-shopping-cart"></i>
-              <strong>Other people want this.</strong> {{product_details.get_cart_count}} people have this in their cart right now.
+              <strong>Other people want this.</strong> {{other_cart_count}} people have this in their cart right now.
             </div>
           {% endif %}
 

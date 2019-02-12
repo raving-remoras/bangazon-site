@@ -4,6 +4,15 @@
 
 {% block content %}
 
+{% if messages %}
+
+<div class="messages" >
+       {% for message in messages %}
+       <div class="{{ message.tags }} alert alert-danger" role="alert">{{ message }}</div>
+       {% endfor %}
+   </div>
+{% endif %}
+
 <h4>Recommend the {{product.title}} to a friend</h4>
 
     <form action="{% url 'website:recommend_product' product.id%}" method="POST">

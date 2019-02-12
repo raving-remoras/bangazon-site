@@ -8,6 +8,15 @@ from website.models import *
 from website.forms import *
 
 def recommend_product(request, product_id):
+    """This method gets product information from url and renders recommend_product.html if the request is a GET. When the form is submitted, a new recommendation is inserted into the db
+
+    Author: Rachel Daniel
+
+    Returns:
+        render -- loads the payment_form.html template using the PaymentForm class in forms.py when originally navigating to the page
+        HttpResponseRedirect -- TODO: loads the customer profile if add was successful
+    """
+
     if not request.user.is_authenticated:
         messages.error(request, "Please log in to continue")
         return HttpResponseRedirect(reverse('website:login'))
@@ -43,5 +52,11 @@ def recommend_product(request, product_id):
 
                 return HttpResponseRedirect(reverse("website:product_details", args=(product_id, )))
 
-            # else:
+            else:
+                messages.warning(request, f"Oops, couldn't locate a user named {recommendee_name}")
+
+                return HttpResponseRedirect(reverse("website:recommend_product", args=(product_id, )))
+
+
+
 

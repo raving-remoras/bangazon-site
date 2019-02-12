@@ -9,10 +9,11 @@
     }
 
 </style>
+
     <div class="row">
       <div class="col-sm-6 my-4">
         {% if product_details.photo_url %}
-        <img class="mx-auto d-block photo" src="{{ product_details.photo_url }}" alt="Placeholder for product image"/>
+        <img class="mx-auto d-block photo" src="{{ product_details.photo_url }}" alt="{{product_details.title }}"/>
         {% else %}
         <img class="mx-auto d-block" src="https://via.placeholder.com/350" alt="Placeholder for product image"/>
         {% endif %}

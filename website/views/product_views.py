@@ -125,6 +125,8 @@ def product_details(request, product_id):
         WHERE website_product.id == {product_id}
     """)[0]
 
+    seller_is_favorited = None
+
     context = {
         "product_details": product_details
     }

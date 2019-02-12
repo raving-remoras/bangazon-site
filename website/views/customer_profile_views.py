@@ -14,7 +14,7 @@ from website.models import Product
 
 @login_required
 def customer_profile(request):
-    """This function is responsalble for the user profile page. Inital render, editing info and updating database with edited info.
+    """This function is responsible for the user profile page. Inital render, editing info and updating database with edited info.
 
         Models: User, Customer
 

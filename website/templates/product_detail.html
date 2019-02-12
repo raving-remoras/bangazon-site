@@ -9,6 +9,7 @@
       </div>
       <div class="col-sm-6 my-4">
         <h3>{{product_details.title}}</h3>
+        <p>Sold by: {{product_details.username}}</p>
         {% if product_details.get_available_count == 0 %}
         <p class="badge badge-secondary">Sold out!</p>
         {% elif product_details.get_available_count < 5 %}

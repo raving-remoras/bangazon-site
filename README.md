@@ -25,7 +25,8 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - If you select <em>Product Categories</em> from the navbar, you will be taken to a list of product categories, the number of products in each category and a list of up to three of the products that are currently available for that category
 
 ## Search
-- Some items are available for local delivery, and users can search by city to see what is available.
+- From the navbar, users can search for products by title.
+- Some items are available for local delivery, and users can search by city from the products page to see what is available.
 
 ## Sell a Product
 - When a user is logged in, there is an affordance in the navbar to Add a Product.

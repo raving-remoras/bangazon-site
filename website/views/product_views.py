@@ -36,7 +36,7 @@ def list_products(request):
             user_id = request.user.customer.id
             all_products = Product.objects.raw(f"""
                 SELECT * FROM website_product
-                WHERE website_product.seller_id IS NOT {user_id}
+                WHERE website_product.seller_id IS NOT {user_id} AND website_product.delete_date IS null
             """)
 
             context = {
@@ -144,10 +144,18 @@ def product_details(request, product_id):
             LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
             WHERE website_order.payment_type_id IS null
             AND website_orderproduct.product_id = {product_id}
+            AND website_order.customer_id IS NOT {user_id}
         """)
 
+        cart_detail = list()
+        for order in cart_qty:
+            cart_detail.append(order.order_id)
+
+        cart_count = len(set(cart_detail))
+
     context = {
-        "product_details": product_details
+        "product_details": product_details,
+        "cart_count": cart_count
     }
     return render(request, "product_detail.html", context)
 

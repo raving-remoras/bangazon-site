@@ -28,16 +28,16 @@
               Add to Cart
           </a>
         {% endif %}
-        {% if product_details.get_cart_count > 0 %}
-          {% if product_details.get_cart_count == 1 %}
+        {% if cart_count > 0 %}
+          {% if cart_count == 1 %}
             <div>
               <i class="fas fa-shopping-cart"></i>
-              <strong>Other people want this.</strong> {{product_details.get_cart_count}} person has this in their cart right now.
+              <strong>Other people want this.</strong> {{cart_count}} person has this in their cart right now.
             </div>
-          {% elif product_details.get_cart_count > 1 %}
+          {% elif cart_count > 1 %}
             <div>
               <i class="fas fa-shopping-cart"></i>
-              <strong>Other people want this.</strong> {{product_details.get_cart_count}} people have this in their cart right now.
+              <strong>Other people want this.</strong> {{cart_count}} people have this in their cart right now.
             </div>
           {% endif %}
 

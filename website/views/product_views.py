@@ -124,17 +124,17 @@ def product_details(request, product_id):
             WHERE website_product.id == {product_id}
         """)[0]
 
-        cart_qty = OrderProduct.objects.raw(f"""
+        other_cart_qty = OrderProduct.objects.raw(f"""
             SELECT * FROM website_orderproduct
             LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
             WHERE website_order.payment_type_id IS null
             AND website_orderproduct.product_id = {product_id}
         """)
 
-        cart_detail = list()
-        for order in cart_qty:
-            cart_detail.append(order.order_id)
-        cart_count = len(set(cart_detail))
+        other_cart_detail = list()
+        for order in other_cart_qty:
+            other_cart_detail.append(order.order_id)
+        other_cart_count = len(set(other_cart_detail))
 
         context = {
             "product_details": product_details,
@@ -185,6 +185,7 @@ def product_details(request, product_id):
     return render(request, "product_detail.html", context)
 
 
+@login_required
 def add_to_cart(request, product_id):
     """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
 
@@ -193,7 +194,6 @@ def add_to_cart(request, product_id):
     Returns:
         render -- renders the product_list.html template
     """
-    # TODO: Set up redirect to login page if user is not currently logged in, with next parameter passed through to login page so the user is automatically redirected to the product detail page they were previously on
     if not request.user.is_authenticated:
         messages.error(request, "Please log in to continue")
         return HttpResponseRedirect(reverse('website:login'))

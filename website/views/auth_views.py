@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.template import RequestContext
 
-from website.forms import UserForm
+from website.forms import UserForm, UserCustomerFormB
 
 def register(request):
     '''Handles the creation of a new user for authentication
@@ -21,8 +21,9 @@ def register(request):
     # on Django's built-in User model
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
+        customer_form = UserCustomerFormB(data=request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid() and customer_form.is_valid():
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -31,6 +32,10 @@ def register(request):
             user.set_password(user.password)
             user.save()
 
+            customer = customer_form.save(commit=False)
+            customer.user = user
+            customer.save()
+
             # Update our variable to tell the template registration was successful.
             registered = True
 
@@ -38,9 +43,13 @@ def register(request):
 
     elif request.method == 'GET':
         user_form = UserForm()
+        customer_form = UserCustomerFormB()
         template_name = 'register.html'
-        return render(request, template_name, {'user_form': user_form})
+        context = {'user_form': user_form, 'next': request.GET.get('next', '/'), 'customer_form': customer_form}
+        return render(request, template_name, context)
 
+# which would capture the next pass to registration form
+# Upon submit grab the next value in the form on the post that will be passed down to login
 
 def login_user(request):
     '''Handles the creation of a new user for authentication
@@ -50,7 +59,7 @@ def login_user(request):
     '''
 
     # Obtain the context for the user's request.
-    context = RequestContext(request)
+    context = {'next': request.GET.get('next', '/')}
 
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
@@ -63,7 +72,7 @@ def login_user(request):
         # If authentication was successful, log the user in
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
-            return HttpResponseRedirect('/website/')
+            return HttpResponseRedirect(request.POST.get('next', '/'))
 
         else:
             # Bad login details were provided. So we can't log the user in.
@@ -71,7 +80,7 @@ def login_user(request):
             return HttpResponse("Invalid login details supplied.")
 
 
-    return render(request, 'login.html', {}, context)
+    return render(request, 'login.html', context)
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required

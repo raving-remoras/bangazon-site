@@ -10,7 +10,7 @@
         <h1>Products</h1>
       </div>
       <div class="col-md-4 align-self-center">
-        <form action"{% url "website:products" %}" method="POST">
+        <form action"{% url 'website:products' %}" method="POST">
           {% csrf_token %}
           <div class="input-group">
             <input class="form-control" type="text" name="city" id="city" placeholder="Search by City">

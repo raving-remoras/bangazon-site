@@ -118,6 +118,10 @@ def list_search_results(request):
 
 
 def product_details(request, product_id):
+    """This function loads a specific product's detail page. Most of the code is in place to address whether the user has favorited the seller. The correct context is passed to the template, based on the (un)favorited condition
+
+    Authors: Brendan McCray, Kelly Morin
+    """
 
     # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
     product_details = Product.objects.raw(f"""
@@ -146,7 +150,7 @@ def product_details(request, product_id):
         foo = FavoriteSeller.objects.raw(f"""
             SELECT * FROM website_favoriteseller
             WHERE user_id = {request.user.id} AND seller_id = {product_details.seller_id}
-        """)[0]
+        """)[0] # [0] is important to trigger except clause
         context = {
             "product_details": product_details,
             "seller_is_favorited": True
@@ -283,3 +287,17 @@ def delete_product(request, product_id):
         with connection.cursor() as cursor:
             cursor.execute(delete_joins_sql, [product_id])
         return HttpResponseRedirect(reverse("website:my_products"))
+
+@login_required(login_url="/website/login")
+def favorites(request):
+
+        sql = f"""SELECT *
+            FROM website_product
+            JOIN website_favoriteseller ON website_favoriteseller.seller_id = website_product.seller_id
+            WHERE website_favoriteseller.user_id = {request.user.id}
+        """
+
+        products = Product.objects.raw(sql)
+
+        context = {"products": products}
+        return render(request, "favorites.html", context)

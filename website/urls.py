@@ -36,4 +36,6 @@ urlpatterns = [
     path("my_products", views.my_products, name="my_products"),
     # ex. /website/my_products/5
     path("my_products/<int:product_id>", views.delete_product, name="delete_product"),
+    # ex. /website/favorites
+    path("favorites", views.favorites, name="favorites")
 ]

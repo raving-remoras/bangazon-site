@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% load humanize %}
+
+{% block content %}
+
+  {% for product in products %}
+    <div>{{product.title}}</div>
+  {% endfor %}
+
+{% endblock content %}

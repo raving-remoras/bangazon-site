@@ -20,7 +20,9 @@
 
             <small>
                 <form method="POST">
-                    <input type="submit" class="btn-sm btn-danger float-right" value="Remove">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{product.rec_id}}" name="Delete">
+                    <input type="submit" class="btn-sm btn-danger float-right" value="Remove" >
                 </form>
             </small>
 
@@ -30,7 +32,7 @@
 </div>
 {% else %}
 
-<h5>You don't have any recommendations yet</h5>
+<h5>You don't have any recommendations</h5>
 
 {% endif %}
 

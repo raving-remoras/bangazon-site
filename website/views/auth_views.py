@@ -73,7 +73,7 @@ def login_user(request):
         if authenticated_user is not None:
             login(request=request, user=authenticated_user)
             if request.POST.get('next') == '/':
-                return HttpResponseRedirect('/website/')
+                return HttpResponseRedirect('/')
             else:
                 return HttpResponseRedirect(request.POST.get('next', '/'))
 
@@ -93,4 +93,4 @@ def user_logout(request):
 
     # Take the user back to the homepage. Is there a way to not hard code
     # in the URL in redirects?????
-    return HttpResponseRedirect('/website/')
+    return HttpResponseRedirect('/')

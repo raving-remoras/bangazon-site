@@ -13,7 +13,7 @@ def recommend_product(request, product_id):
     Author: Rachel Daniel
 
     Returns:
-        render -- loads the recommend_product.html template using the PaymentForm class in forms.py when originally navigating to the page
+        render -- loads the recommend_product.html template when originally navigating to the page
         HttpResponseRedirect -- sends the user back to login if not authenticated, back to the same form page if entered user is not in the database, and back to the detail page they came from if post is successful
     """
 
@@ -59,6 +59,14 @@ def recommend_product(request, product_id):
 
 
 def my_recommendations(request):
+    """This method gets recommended products and their details for the active user, renders the my_recommendations.html template, and handles delete of recommendations
+
+    Author: Rachel Daniel
+
+    Returns:
+        render -- loads the my_recommendations.html template using the PaymentForm class in forms.py when originally navigating to the page
+        HttpResponseRedirect -- sends the user back to login if not authenticated, back to the same form page if entered user is not in the database, and back to the detail page they came from if post is successful
+    """
     if request.method == "GET":
         sql = f"""
             SELECT P.*, R.id as rec_id, C.id as from_cust_id, U.username as from_username FROM website_product P

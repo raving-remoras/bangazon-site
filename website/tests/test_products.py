@@ -94,7 +94,7 @@ class ProductTest(TestCase):
         # Product title appears in HTML response content
         self.assertIn(new_product.title.encode(), response.content)
 
-    def product_category_view(self):
+    def test_product_category_view(self):
         """Test case verifies that all product categories and their associated products are rendered when the product category affordance is selected from the navbar"""
         new_seller = Customer.objects.create(
             user = User.objects.create_user(
@@ -143,12 +143,6 @@ class ProductTest(TestCase):
 
         # Check that the rendered context contains 2 product types
         self.assertEqual(len(response.context['product_categories']),2)
-
-        # Check that the product type is in the HTML response content
-        self.assertEqual(response.context['product_categories'], new_product_type)
-        self.assertEqual(response.context['product_categories'], new_product_type_2)
-        self.assertEqual(response.context['product_categories'], new_product)
-        self.assertEqual(response.context['product_categories'], new_product_2)
 
         # Product title appears in HTML response content
         self.assertIn(new_product.title.encode(), response.content)
@@ -214,7 +208,7 @@ class ProductTest(TestCase):
         response = self.client.get(reverse("website:add_to_cart", args=(1,)))
         self.assertEqual(response.status_code, 302)
 
-    def product_by_category(self):
+    def test_product_by_category(self):
         """Test case verifies that all products associated with a specific category display when the product category is requested"""
 
         new_seller = Customer.objects.create(
@@ -283,10 +277,6 @@ class ProductTest(TestCase):
         self.assertIn(new_product.title.encode(), response.content)
         self.assertNotIn(new_product_2.title.encode(), response.content)
 
-        # Check that the quantity is in the HTML response content
-        self.assertEqual(response.context['product_by_category'], new_product)
-        self.assertNotEqual(response.context['product_by_category'], new_product_2)
-
         # Log In user that is not the seller, check that the products not created by the user do show up
         self.client.login(username="someuser", password="password")
         # Search for product category 1
@@ -297,7 +287,7 @@ class ProductTest(TestCase):
         # Search for product category 2
         response_non_seller_2 = self.client.get(reverse('website:product_by_category', args=(2,)))
         self.assertIn(new_product_2.title.encode(), response_non_seller_2.content)
-        self.assertNotIn(new_product_2.title.encode(), response_non_seller_2.content)
+        self.assertNotIn(new_product.title.encode(), response_non_seller_2.content)
 
         # Check that user's own product does not show up
         self.client.login(username="testuser", password="password")

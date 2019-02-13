@@ -16,7 +16,7 @@ from django.contrib.staticfiles import finders
 class AddProductTests(TestCase):
     """ Test the Add Product view and user interactions related to it.
 
-        Author: Sebastian Civarolo, Jase Hackman
+        Author: Sebastian Civarolo, Jase Hackman, Kelly Morin
 
         Methods:
     """
@@ -105,25 +105,26 @@ class AddProductTests(TestCase):
 
         self.assertEqual(new_product, 1)
 
+
     def test_add_photo(self):
         """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
 
         user = User.objects.create_user(username="test_user", password="password")
         customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
+                user=user,
+                street_address="123 Street St",
+                city="Nashville",
+                state="TN",
+                zipcode="37209",
+                phone_number="5555555555"
+            )
         product_type = ProductType.objects.create(name="Test Product Type")
 
         self.client.login(username="test_user", password="password")
 
         # test that a small photo url will post to the database
         with open("media_test/small_photo.jpg", "rb") as np:
-            print("np", np)
+
             form_data3 = {
                 "seller": customer.id,
                 "title": "Test Product",
@@ -139,8 +140,6 @@ class AddProductTests(TestCase):
 
         # test that a large photo will not be in the data base and will have a redirect
         with open("media_test/large_photo.jpg", "rb") as fp:
-
-            print("Fp", fp)
 
             form_data2 = {
                 "seller": customer.id,
@@ -158,6 +157,92 @@ class AddProductTests(TestCase):
                 product2 = Product.objects.get(pk=2)
 
 
+    def test_add_negative_quantity(self):
+        """Test that negative quantites cannot be submitted"""
 
 
+        user = User.objects.create_user(username="test_user", password="password")
+        customer = Customer.objects.create(
+            user=user,
+            street_address="123 Street St",
+            city="Nashville",
+            state="TN",
+            zipcode="37209",
+            phone_number="5555555555"
+        )
+
+        self.client.login(username="test_user", password="password")
+
+        # Load the view is user is logged in.
+        response = self.client.get(reverse("website:sell"))
+        self.assertEqual(response.status_code, 200)
+
+        product_type = ProductType.objects.create(name="Test Product Type")
+
+        form_data = {
+            "seller": customer.id,
+            "title": "Test Product",
+            "description": "Test description",
+            "product_type": product_type,
+            "price": "123",
+            "local_delivery": "on",
+            "quantity": "-12"
+        }
+
+        product_form = ProductForm(form_data)
+
+        seller = user.customer.id
+        title = form_data["title"]
+        description = form_data["description"]
+        product_type = form_data["product_type"]
+        price = form_data["price"]
+        quantity = form_data["quantity"]
+        local_delivery = form_data["local_delivery"]
+
+        self.assertFalse(product_form.is_valid())
+        self.assertEquals(product_form.errors['quantity'], ['Ensure this value is greater than or equal to 0.'])
+
+    def test_add_excessive_price(self):
+        """Test that prices over 10,000 cannot be submitted"""
+
+        user = User.objects.create_user(username="test_user", password="password")
+        customer = Customer.objects.create(
+            user=user,
+            street_address="123 Street St",
+            city="Nashville",
+            state="TN",
+            zipcode="37209",
+            phone_number="5555555555"
+        )
+
+        self.client.login(username="test_user", password="password")
+
+        # Load the view is user is logged in.
+        response = self.client.get(reverse("website:sell"))
+        self.assertEqual(response.status_code, 200)
+
+        product_type = ProductType.objects.create(name="Test Product Type")
+
+        form_data = {
+            "seller": customer.id,
+            "title": "Test Product",
+            "description": "Test description",
+            "product_type": product_type,
+            "price": "1230000",
+            "local_delivery": "on",
+            "quantity": "12"
+        }
+
+        product_form = ProductForm(form_data)
+
+        seller = user.customer.id
+        title = form_data["title"]
+        description = form_data["description"]
+        product_type = form_data["product_type"]
+        price = form_data["price"]
+        quantity = form_data["quantity"]
+        local_delivery = form_data["local_delivery"]
+
+        self.assertFalse(product_form.is_valid())
+        self.assertEquals(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
 

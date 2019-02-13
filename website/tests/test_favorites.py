@@ -140,6 +140,17 @@ class FavoritesTest(TestCase):
     def test_favorites_page_shows_seller_and_products(self):
         """Tests that product detail page shows 'sold by: {{seller username}}"""
 
+        # confirm that a logged out user cannot view the favorites page
+        response = self.client.get(reverse("website:favorites"))
+        self.assertNotEqual(response.status_code, 200)
+
         # log in user
         self.client.login(username="test_user", password="secret")
 
+        # confirm that logged in user can see favorited content on favorites page
+        response = self.client.get(reverse("website:favorites"))
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIn('<h4 class="card-title">test_seller'.encode(), response.content) # seller name
+        self.assertIn('<a href="/products/1"'.encode(), response.content) # link to product 1 detail
+        self.assertIn('<a href="/products/2"'.encode(), response.content) # link to product 2 detail

@@ -101,6 +101,32 @@ class Product(models.Model):
 
         return cart_count
 
+    @property
+    def get_ratings(self):
+        """Gets the ratings users have given to this product.
+
+        Author: Sebastian Civarolo
+
+        Returns:
+            rating [dict] -- {
+                "ratings_count" -- number of ratings
+                "average_rating" -- average of all the ratings
+            }
+        """
+        sql = """
+            SELECT website_product.id, website_orderproduct.product_id, round(avg(website_orderproduct.rating), 1) as "average", count(website_orderproduct.rating) as "count" FROM website_orderproduct
+            JOIN website_product ON website_product.id = website_orderproduct.product_id
+            WHERE website_orderproduct.rating IS NOT NULL
+			AND website_orderproduct.product_id = %s
+			GROUP BY website_orderproduct.product_id
+        """
+
+        product_ratings = OrderProduct.objects.raw(sql, [self.id])
+        if len(product_ratings):
+            return product_ratings[0]
+        else:
+            return None
+
     seller = models.ForeignKey(Customer, on_delete=models.PROTECT)
     product_type = models.ForeignKey(ProductType, on_delete=models.PROTECT)
     title = models.CharField(max_length=255)
@@ -155,6 +181,7 @@ class OrderProduct(models.Model):
     # cascade used here because open orders are hard deleted, so we want to remove join tables also
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(default=None, null=True, blank=True)
 
     def __str__(self):
         return f"Product: {self.product} Order:{self.order}"

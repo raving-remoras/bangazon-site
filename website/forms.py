@@ -7,14 +7,15 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'first_name', 'last_name',)
+        fields = ("username", "email", "password", "first_name", "last_name",)
+
 
 class ProductForm(forms.ModelForm):
     price = forms.IntegerField(max_value=10000)
 
     class Meta:
         model = Product
-        fields = ('title', 'description', 'product_type', 'price', 'quantity', 'local_delivery', 'delivery_city', 'delivery_state')
+        fields = ("title", "description", "product_type", "price", "quantity", "local_delivery", "delivery_city", "delivery_state")
 
 
 class UserCustomerFormA(forms.ModelForm):
@@ -23,15 +24,16 @@ class UserCustomerFormA(forms.ModelForm):
         model = User
         fields = ("last_name",)
 
+
 class UserCustomerFormB(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ("phone_number", "street_address", "city", "state", "zipcode", )
 
+
 class PaymentForm(forms.ModelForm):
 
     class Meta:
         model = PaymentType
-        fields = ('name', 'account_number')
-        labels = {'name': ('Payment Type Name')}
-
+        fields = ("name", "account_number")
+        labels = {"name": ("Payment Type Name")}

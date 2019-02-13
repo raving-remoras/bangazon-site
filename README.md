@@ -24,6 +24,11 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - If you try to add a product to your cart and are not currently logged in, you will be redirected to the login page with a message encouraging you to login to proceed
 - If you select <em>Product Categories</em> from the navbar, you will be taken to a list of product categories, the number of products in each category and a list of up to three of the products that are currently available for that category
 
+## Product Ratings
+- After a customer has completed an order, they are able to rate the products they purchased through their order history views.
+- Sellers can see all of their product ratings in their "My Products" view.
+- Shoppers can see product ratings on product detail pages.
+
 ## Search
 - From the navbar, users can search for products by title.
 - Some items are available for local delivery, and users can search by city from the products page to see what is available.

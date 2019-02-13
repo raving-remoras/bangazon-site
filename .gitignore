@@ -57,3 +57,5 @@ Pipfile*
 migrations
 db.sqlite3-journal
 django_data.sh
+
+/media

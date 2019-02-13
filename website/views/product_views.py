@@ -6,7 +6,7 @@ from django.db import connection
 from django.urls import reverse
 import datetime
 from django.shortcuts import get_object_or_404, render
-from website.models import Product, OrderProduct, Order, ProductType
+from website.models import Product, OrderProduct, Order, ProductType, FavoriteSeller
 
 
 def list_products(request):
@@ -118,11 +118,35 @@ def list_search_results(request):
 
 
 def product_details(request, product_id):
+    """This function loads a specific product's detail page. Most of the code is in place to address whether the user has favorited the seller. The correct context is passed to the template, based on the (un)favorited condition
+
+    Authors: Brendan McCray, Kelly Morin
+    """
+
+    # this query is used to... 1. identify whether seller of the product is favorited by the current user. 2. show the sold by: {{username}} on the product detail for both authenticated and unauthenticated users 3. determine the seller_id for use with the favorite/unfavorite POST logic
+    product_details = Product.objects.raw(f"""
+        SELECT * FROM website_product
+        JOIN website_customer ON website_customer.id == website_product.seller_id
+        JOIN auth_user ON auth_user.id == website_customer.user_id
+        WHERE website_product.id == {product_id}
+    """)[0]
+
+    # if favorite/unfavorite seller button is clicked, handle the action accordingly
+    if request.method == "POST":
+        try:
+            foo = request.POST["current_favorite"] # if this doesn't exist in the post, then the seller isn't favorited, so -> except
+            sql = "DELETE FROM website_favoriteseller WHERE user_id == %s AND seller_id == %s"
+            with connection.cursor() as cursor:
+                cursor.execute(sql, [request.user.id, product_details.seller_id])
+
+        except: # favorite the seller in the except clause
+            sql = """INSERT INTO website_favoriteseller (user_id, seller_id) VALUES (%s, %s)"""
+            with connection.cursor() as cursor:
+                cursor.execute(sql, [request.user.id, product_details.seller_id])
+
+        return HttpResponseRedirect(reverse("website:product_details", args=(product_details.id,)))
+
     if not request.user.is_authenticated:
-        product_details = Product.objects.raw(f"""
-            SELECT * FROM website_product
-            WHERE website_product.id == {product_id}
-        """)[0]
 
         other_cart_qty = OrderProduct.objects.raw(f"""
             SELECT * FROM website_orderproduct
@@ -139,15 +163,12 @@ def product_details(request, product_id):
         context = {
             "product_details": product_details,
             "other_cart_count": other_cart_count,
-            "user_cart_count": 0
+            "user_cart_count": 0,
+            "seller_is_favorited": ""
         }
 
     else:
         user_id = request.user.customer.id
-        product_details = Product.objects.raw(f"""
-            SELECT * FROM website_product
-            WHERE website_product.id == {product_id}
-        """)[0]
 
         other_cart_qty = OrderProduct.objects.raw(f"""
             SELECT * FROM website_orderproduct
@@ -182,6 +203,19 @@ def product_details(request, product_id):
             "other_cart_count": other_cart_count,
             "user_cart_count": user_cart_count
         }
+
+        # when loading product detail page, check to see if seller is favorited by the current user (foo sql attempt)
+        try:
+            foo = FavoriteSeller.objects.raw(f"""
+                SELECT * FROM website_favoriteseller
+                WHERE user_id = {request.user.id} AND seller_id = {product_details.seller_id}
+            """)[0] # [0] is important to trigger except clause
+
+            context["seller_is_favorited"] = True
+
+        except:
+            context["seller_is_favorited"] = False
+
     return render(request, "product_detail.html", context)
 
 
@@ -309,3 +343,29 @@ def delete_product(request, product_id):
         with connection.cursor() as cursor:
             cursor.execute(delete_joins_sql, [product_id])
         return HttpResponseRedirect(reverse("website:my_products"))
+
+@login_required
+def favorites(request):
+
+        sql = f"""SELECT *
+            FROM website_product
+            JOIN website_favoriteseller ON website_favoriteseller.seller_id = website_product.seller_id
+            JOIN website_customer ON website_customer.id == website_product.seller_id
+            JOIN auth_user ON auth_user.id == website_customer.user_id
+            WHERE website_favoriteseller.user_id = {request.user.id} AND website_product.delete_date IS NULL
+            ORDER BY website_product.seller_id
+        """
+
+        products = Product.objects.raw(sql)
+        products_by_seller = dict()
+
+        for product in products:
+            if product.get_available_count != 0:
+                try:
+                    products_by_seller[product.username].append(product)
+                except KeyError:
+                    products_by_seller[product.username] = list()
+                    products_by_seller[product.username].append(product)
+
+        context = {"products_by_seller": products_by_seller}
+        return render(request, "favorites.html", context)

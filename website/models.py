@@ -187,6 +187,19 @@ class OrderProduct(models.Model):
     def __str__(self):
         return f"Product: {self.product} Order:{self.order}"
 
+class FavoriteSeller(models.Model):
+    """Defines the join table model for a user and their favorited sller (other user)
+
+        Author: Brendan McCray
+        Returns: __str__ userId and sellerId
+
+    """
+    user = models.ForeignKey(User, related_name="user", on_delete=models.PROTECT)
+    seller = models.ForeignKey(User, related_name="seller", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"User: {self.user} Seller:{self.seller}"
+
 class RecommendedProduct(models.Model):
     """Defines the join table model for a product that is recommended to a user
 

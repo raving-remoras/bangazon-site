@@ -6,9 +6,6 @@ from website.forms import ProductForm
 from website.models import Product, ProductType
 
 def index(request):
-    product_categories = ProductType.objects.raw(f"""
-        SELECT * FROM website_producttype
-    """)
-    context = {"product_categories": product_categories}
+    context={}
     template_name = 'index.html'
     return render(request, template_name, context)

@@ -12,7 +12,10 @@
       <input class="btn btn-primary" type="submit" value="Sell It" />
     </form>
 
-    <script type="text/javascript">
+{% endblock content %}
+
+{% block javascript %}
+  <script type="text/javascript">
       $(document).ready(function() {
 
         if ($('#id_local_delivery').is(':checked')) {
@@ -37,7 +40,4 @@
 
       })
     </script>
-
-{% endblock content %}
-
-
+{% endblock javascript %}

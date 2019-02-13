@@ -38,4 +38,6 @@ urlpatterns = [
     path("my_products", views.my_products, name="my_products"),
     # ex. /my_products/5
     path("my_products/<int:product_id>", views.delete_product, name="delete_product"),
+    path("products/<int:product_id>/recommend", views.recommend_product, name="recommend_product"),
+    path("my_recommendations", views.my_recommendations, name="my_recommendations")
 ]

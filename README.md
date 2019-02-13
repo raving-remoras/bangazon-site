@@ -43,11 +43,21 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - The user can select the edit affordance which will direct the user to form to update their information and save the changes.
 
 ## Order History
-- From the User Settings Page, a user can view their past orders. 
-- If a use clicks on a past order they are taken to a page to view the details of that specific order. 
+- From the User Settings Page, a user can view their past orders.
+- If a use clicks on a past order they are taken to a page to view the details of that specific order.
 
 ## Payment Types
 - From the User Settings page, Users can add payment types to their account so they can complete their order.
 - Users can also delete payment types they no longer want to use at Bangazon.
 
+## My Products
+- When a user is logged in, there is an affordance in the navbar to see My Products. This view displays all products a user has added for sale.
+- The items in My Products show how many of that product have been sold and how many are remaining, as well as how purchasing users have rated the product.
+- If there are still items remaining to be sold, the user will have the option to delete the item
+- The titles of all list items link back to the product's detail page
 
+## Recommendations
+- When a user is logged in, they have the ability to recommend a product to another user from that product's detail page
+- The user must enter a correct username for recommendation, and can enter a comment to go with the recommendation if they so choose
+- If a user has had something recommended to them, the My Recommendations item in the navbar will have a notification indicating how many items have been recommended.
+- On the My Recommendations page, the user can see the product(s) recommended, a message if there was one entered, and can remove a recommendation if they wish. The product's title links back to the product detail page

@@ -8,7 +8,7 @@ class FavoritesTest(TestCase):
             2. a user can be favorited/unfavorited by a logged in user from the product detail page
             3. the favorites page shows a favorited seller's username with their products
 
-                Model: FavoriteSeller
+                Model: FavoriteSeller, Product, ProductType, Customer, User
 
                 Templates: product_detail.html, favorites.html
 
@@ -84,25 +84,62 @@ class FavoritesTest(TestCase):
         )
 
     def test_view_product_detail_seller_username_while_logged_out(self):
-        """Tests that product detail page shows 'sold by: {{seller username}} when user is logged in"""
+        """Tests that product detail page shows 'sold by: {{seller username}} when user is logged out, and there is no 'Unfavorite this seller' button visible on the page (note that the FavoriteSeller join table created in @classMethod indicates that new_user2 is already favorited by new_user)."""
 
         response = self.client.get(reverse("website:product_details", args=(1,)))
+        # check status code of get response
+        self.assertEqual(response.status_code, 200)
+        # verify that seller's username appears on page
         self.assertIn('<p>Sold by: test_seller</p>'.encode(), response.content)
+        # verify that unfavorite button does not appear on page
+        self.assertNotIn('<button class="btn btn-danger btn-sm">Unfavorite this Seller</button>'.encode(), response.content)
 
     def test_view_product_detail_username_logged_in(self):
-        """Tests that product detail page shows 'sold by: {{seller username}} when user is not logged in"""
+        """Tests that product detail page shows 'sold by: {{seller username}} when user is not logged in, and that there is an 'Unfavorite this seller' button visible."""
 
         # log in user
         self.client.login(username="test_user", password="secret")
 
         response = self.client.get(reverse("website:product_details", args=(1,)))
+        # check status code of get response
+        self.assertEqual(response.status_code, 200)
+        # verify that seller's username appears on page
         self.assertIn('<p>Sold by: test_seller</p>'.encode(), response.content)
+        # verify that unfavorite button appears on page
+        self.assertIn('<button class="btn btn-danger btn-sm">Unfavorite this Seller</button>'.encode(), response.content)
 
-    # def test_favorite_user(self):
-    #     """Tests that product detail page shows 'sold by: {{seller username}}"""
+    def test_unfavorite_user_and_then_favorite_again(self):
+        """Tests that
+            1. clicking the 'Unfavorite this seller' button performs the desired action of deleting the join table,
+            2. that the user then can see a 'Favorite this seller' button, and...
+            3. that clicking the 'Favorite this seller' button performs the desired action of creating the join table (i.e. the user will be redirected to the same product detail page, and they will see the 'Unfavorite this seller' button once again).
+        """
 
-    # def test_unfavorite_user(self):
-    #     """Tests that product detail page shows 'sold by: {{seller username}}"""
+        # log in user
+        self.client.login(username="test_user", password="secret")
 
-    # def test_favorites_page(self):
-    #     """Tests that product detail page shows 'sold by: {{seller username}}"""
+        # response indicates user clicks 'unfavorite this seller' button
+        response = self.client.post(reverse("website:product_details", args=(1,)), {"current_favorite":True})
+        # check status code of post response
+        self.assertEqual(response.status_code, 302)
+
+        # verify that the user now sees the 'favorite this seller' button
+        response = self.client.get(reverse("website:product_details", args=(1,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('<button class="btn btn-success btn-sm">Favorite this Seller</button>'.encode(), response.content)
+
+        # response indicates user clicks 'favorite this seller' button
+        response = self.client.post(reverse("website:product_details", args=(1,)))
+        self.assertEqual(response.status_code, 302)
+
+        # verify that the user now sees the 'unfavorite this seller' button
+        response = self.client.get(reverse("website:product_details", args=(1,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('<button class="btn btn-danger btn-sm">Unfavorite this Seller</button>'.encode(), response.content)
+
+    def test_favorites_page_shows_seller_and_products(self):
+        """Tests that product detail page shows 'sold by: {{seller username}}"""
+
+        # log in user
+        self.client.login(username="test_user", password="secret")
+

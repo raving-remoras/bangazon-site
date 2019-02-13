@@ -82,7 +82,11 @@
         <div class="row">
           <div class="col-12 col-md-4">
             <h5><a class="" href="{% url 'website:index' %}">Bangazon</a></h5>
-            <p><a class="" href="{% url 'website:logout' %}">Log Out</a></p>
+            {% if user.is_authenticated %}
+              <p><a class="" href="{% url 'website:logout' %}">Log Out</a></p>
+            {% else %}
+              <p><a class="" href="{% url 'website:login' %}">Log In</a></p>
+            {% endif %}
           </div>
           <div class="col-6 col-md-8">
             <h5>Categories</h5>

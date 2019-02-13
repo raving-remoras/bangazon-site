@@ -19,6 +19,9 @@
                 making everything look neater. -->
         {{ user_form.as_p }}
 
+        {{ customer_form.as_p }}
+
+        <input type="hidden" value="{{next}}" name="next"/>
         <!-- Provide a button to click to submit the form. -->
         <input class="btn btn-primary" type="submit" name="submit" value="Register" />
     </form>

@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'website.context_processors.categories_processor',
             ],
         },
     },
@@ -122,7 +123,7 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-LOGIN_URL='/website/login'
+LOGIN_URL='/login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MEDIA_URL = '/media/'

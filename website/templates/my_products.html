@@ -5,13 +5,14 @@
 <div class="list-group">
 
 {% if products %}
+<div class="list-group">
 {% for product in products %}
-<div href="{% url 'website:product_details' product.id %}" class="list-group-item list-group-item-action">
-  <a>
-    <div class="d-flex w-100 justify-content-between">
-      <h5 class="mb-1">{{ product.title }}</h5>
-    </div>
-  </a>
+<div class="list-group-item list-group-item-action">
+    <a href="{% url 'website:product_details' product.id %}">
+        <div class="d-flex w-100 justify-content-between flex-column align-items-start">
+            <h5 class="mb-1">{{ product.title }}</h5>
+        </div>
+    </a>
   <p class="mb-1">{{ product.description }}</p>
   <span class="badge badge-success">Sold: {{product.get_purchased_count}}</span>
   <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
@@ -28,6 +29,7 @@
   {% endif %}
 </div>
 {% endfor %}
+</div>
 {% else %}
 
 <h4>You haven't listed any Products yet</h4>
@@ -35,6 +37,5 @@
 {% endif %}
 
 
-</div>
 
 {% endblock content %}

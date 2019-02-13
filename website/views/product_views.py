@@ -17,7 +17,7 @@ def list_products(request):
     """
     if not request.user.is_authenticated:
         if request.method == "POST":
-            context = list_local_results(request)
+            context = list_search_results(request)
 
         else:
             all_products = Product.objects.raw(f"""
@@ -29,14 +29,14 @@ def list_products(request):
     else:
 
         if request.method == "POST":
-            context = list_local_results(request)
+            context = list_search_results(request)
 
         elif request.method == "GET":
 
             user_id = request.user.customer.id
             all_products = Product.objects.raw(f"""
                 SELECT * FROM website_product
-                WHERE website_product.seller_id IS NOT {user_id}
+                WHERE website_product.seller_id IS NOT {user_id} AND website_product.delete_date IS null
             """)
 
             context = {
@@ -47,7 +47,7 @@ def list_products(request):
     return render(request, template_name, context)
 
 
-def list_local_results(request):
+def list_search_results(request):
     """Process the POST request to list_products to display search results.
 
         Author: Sebastian Civarolo
@@ -57,7 +57,37 @@ def list_local_results(request):
     """
     search_data = request.POST
 
-    if "city" in search_data:
+    if "product_query" in search_data:
+        product_query = "%" + search_data["product_query"] + "%"
+
+        if request.user.is_authenticated:
+            seller_id = request.user.customer.id
+            sql = """
+                SELECT * FROM website_product
+                WHERE website_product.seller_id IS NOT %s
+                AND website_product.title LIKE %s
+                AND website_product.delete_date IS NULL
+            """
+            params = [seller_id, product_query]
+
+        else:
+            sql = """
+                SELECT * FROM website_product
+                WHERE website_product.title LIKE %s
+                AND website_product.delete_date IS NULL
+            """
+            params = [product_query]
+
+        search_results = Product.objects.raw(sql, params)
+        search_query = search_data["product_query"]
+
+        context = {
+            "products": search_results,
+            "product_query": search_query
+        }
+
+
+    elif "city" in search_data:
         city = "%" + search_data["city"] + "%"
 
         if request.user.is_authenticated:
@@ -88,18 +118,74 @@ def list_local_results(request):
 
 
 def product_details(request, product_id):
-    # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
-    product_details = Product.objects.raw(f"""
-        SELECT * FROM website_product
-        WHERE website_product.id == {product_id}
-    """)[0]
+    if not request.user.is_authenticated:
+        product_details = Product.objects.raw(f"""
+            SELECT * FROM website_product
+            WHERE website_product.id == {product_id}
+        """)[0]
 
-    context = {
-        "product_details": product_details
-    }
+        other_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+        """)
+
+        other_cart_detail = list()
+        for order in other_cart_qty:
+            other_cart_detail.append(order.order_id)
+        other_cart_count = len(set(other_cart_detail))
+
+        context = {
+            "product_details": product_details,
+            "other_cart_count": other_cart_count,
+            "user_cart_count": 0
+        }
+
+    else:
+        user_id = request.user.customer.id
+        product_details = Product.objects.raw(f"""
+            SELECT * FROM website_product
+            WHERE website_product.id == {product_id}
+        """)[0]
+
+        other_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+            AND website_order.customer_id IS NOT {user_id}
+        """)
+
+        user_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+            AND website_order.customer_id IS {user_id}
+        """)
+
+        other_cart_detail = list()
+        for order in other_cart_qty:
+            other_cart_detail.append(order.order_id)
+
+        other_cart_count = len(set(other_cart_detail))
+
+        user_cart_detail = list()
+        for order in user_cart_qty:
+            user_cart_detail.append(order.order_id)
+
+        user_cart_count = len(user_cart_detail)
+
+        context = {
+            "product_details": product_details,
+            "other_cart_count": other_cart_count,
+            "user_cart_count": user_cart_count
+        }
     return render(request, "product_detail.html", context)
 
 
+@login_required
 def add_to_cart(request, product_id):
     """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
 
@@ -108,7 +194,6 @@ def add_to_cart(request, product_id):
     Returns:
         render -- renders the product_list.html template
     """
-    # TODO: Set up redirect to login page if user is not currently logged in, with next parameter passed through to login page so the user is automatically redirected to the product detail page they were previously on
     if not request.user.is_authenticated:
         messages.error(request, "Please log in to continue")
         return HttpResponseRedirect(reverse('website:login'))
@@ -167,7 +252,7 @@ def add_to_cart(request, product_id):
             return HttpResponseRedirect(reverse('website:products'))
 
 
-@login_required(login_url="/website/login")
+@login_required
 def my_products(request):
     """This method gets customer from user in cookies and renders my_products.html
 
@@ -189,7 +274,7 @@ def my_products(request):
     return render(request, "my_products.html", {'products': my_products})
 
 
-@login_required(login_url="/website/login")
+@login_required
 def delete_product(request, product_id):
     """This method gets product from the id passed into the url and renders the delete_product.html template
 

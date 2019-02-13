@@ -5,8 +5,9 @@ from django.urls import reverse
 from django.contrib import messages
 from website.models import *
 from django.db import connection
+import datetime
 
-@login_required(login_url="/website/login")
+@login_required
 def payment(request):
     """Gets information about the user's payment types and renders a template with a select dropdown. If user specifies "Done" in template, the POST will close the logged in user's open order in the database.
 
@@ -49,9 +50,10 @@ def payment(request):
     if request.method == "POST":
         # Update payment_type_id in Order table to "close" the open order
         payment_id = request.POST["payment_method"]
-        sql = "UPDATE website_order SET payment_type_id = %s WHERE customer_id = %s AND payment_type_id IS NULL"
+        payment_date = datetime.datetime.now()
+        sql = "UPDATE website_order SET payment_type_id = %s, payment_date = %s WHERE customer_id = %s AND payment_type_id IS NULL"
         with connection.cursor() as cursor:
-            cursor.execute(sql, [payment_id, customer_id])
+            cursor.execute(sql, [payment_id, payment_date, customer_id])
         # provide confirmation to user on redirect
         messages.success(request,"Thank you for placing your order!")
         return HttpResponseRedirect(reverse('website:products'))

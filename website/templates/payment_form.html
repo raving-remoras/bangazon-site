@@ -14,6 +14,7 @@ Author: Rachel Daniel
     <form action="{% url 'website:add_payment' %}" method="POST">
     {% csrf_token %}
         {{ form|crispy }}
+    <input type="hidden" value="{{next}}" name="next" />
     <input class="btn btn-primary" type="submit" value="submit">
   </form>
 {% endblock form %}

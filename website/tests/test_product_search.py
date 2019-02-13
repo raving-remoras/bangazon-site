@@ -5,6 +5,74 @@ from django.contrib.auth.models import User
 from django.db import connection
 from ..models import Customer, ProductType, Product
 
+
+class TestProductSearch(TestCase):
+    """Test class for search by product title
+
+        Author: Sebastian Civarolo
+    """
+
+    def test_product_search(self):
+        """Creates a product and search for it"""
+
+        user = User.objects.create_user(username="test_user", password="password")
+        customer = Customer.objects.create(
+            user=user,
+            street_address="123 Street St",
+            city="Nashville",
+            state="TN",
+            zipcode="37209",
+            phone_number="5555555555"
+        )
+        product_type = ProductType.objects.create(name="Test Product Type")
+
+        seller = user.customer.id
+        title = "Test Product"
+        description = "test description"
+        product_type = "1"
+        price = "123"
+        quantity = "12"
+        local_delivery = "0"
+
+        data = [
+            seller, title, description, product_type, price, quantity, local_delivery
+        ]
+
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                INSERT INTO website_product
+                (
+                    seller_id,
+                    title,
+                    description,
+                    product_type_id,
+                    price,
+                    quantity,
+                    local_delivery
+                )
+                VALUES(
+                    %s, %s, %s, %s, %s, %s, %s
+                )
+            """, data)
+
+        response = self.client.post(reverse("website:products"), {"product_query": ["Test"]})
+
+        # check that the product shows up on the results page
+        self.assertIn("Showing search results for".encode(), response.content)
+        self.assertIn("Test Product".encode(), response.content)
+
+        # check that the product does not show up when not searching "Test Product"
+        response_no_result = self.client.post(reverse("website:products"), {"product_query": ["Houston"]})
+        self.assertIn("Showing search results for".encode(), response_no_result.content)
+        self.assertNotIn("Test Product".encode(), response_no_result.content)
+
+        # check that user's own product does not show up
+        self.client.login(username="test_user", password="password")
+        response_logged_in = self.client.post(reverse("website:products"), {"product_query": ["Test"]})
+        self.assertIn("Showing search results for".encode(), response_logged_in.content)
+        self.assertNotIn("Test Product".encode(), response_logged_in.content)
+
+
 class TestLocalSearch(TestCase):
     """Test class for local delivery search functionality
 

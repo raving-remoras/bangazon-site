@@ -24,7 +24,12 @@
 
     {% if city_query %}
     <div class="row mb-4">
-      <div class="col">Showing Local Delivery results for "{{city_query}}" <a href="{% url "website:products" %}" class="ml-2 btn btn-sm btn-light">Clear Search</a></div>
+      <div class="col">Showing Local Delivery results for "{{city_query}}" <a href="{% url "website:products" %}" class="ml-2 btn btn-sm btn-outline-primary">Clear Search</a></div>
+    </div>
+    {% endif %}
+    {% if product_query %}
+    <div class="row mb-4">
+      <div class="col">Showing search results for "{{product_query}}" <a href="{% url "website:products" %}" class="ml-2 btn btn-sm btn-outline-primary">Clear Search</a></div>
     </div>
     {% endif %}
 

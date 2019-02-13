@@ -123,5 +123,5 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-LOGIN_URL='/website/login'
+LOGIN_URL='/login'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

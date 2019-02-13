@@ -10,6 +10,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name', 'last_name',)
 
 class ProductForm(forms.ModelForm):
+    price = forms.IntegerField(max_value=10000)
 
     class Meta:
         model = Product

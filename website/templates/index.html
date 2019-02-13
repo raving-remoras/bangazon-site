@@ -9,10 +9,26 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <style>
+      html,body{
+        height: 100%;
+      }
+      body{
+        display:flex;
+        flex-direction: column;
+      }
+      .content{
+        flex: 1 0 auto;
+      }
+      .footer{
+        flex-shrink: 0;
+      }
+    </style>
 
 
   </head>
   <body>
+    <div class="content">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <a class="navbar-brand" href="{% url 'website:index' %}">Bangazon</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_collapse_content" aria-controls="navbar_collapse_content" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +57,7 @@
       </div>
     </nav>
     <br />
-    <div class="container pb-5">
+    <div class="container body-content pb-5">
     {% block content %}
 
       <h1>Welcome to Bangazon!</h1>
@@ -59,18 +75,20 @@
 
     {% endblock content %}
     </div>
+  </div>
 
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <footer class="pt-4 mt-md-5 py-md-5 border-top bg-light footer">
       <div class="container">
         <div class="row">
-          <div class="col-12 col-md">
+          <div class="col-12 col-md-4">
             <h5><a class="" href="{% url 'website:index' %}">Bangazon</a></h5>
+            <p><a class="" href="{% url 'website:logout' %}">Log Out</a></p>
           </div>
-          <div class="col-6 col-md">
+          <div class="col-6 col-md-8">
             <h5>Categories</h5>
-            <ul class="list-unstyled text-small">
+            <ul class="list-unstyled text-small d-md-flex">
               {% for category in product_categories %}
-                <li><a href="{% url 'website:product_by_category' category.id %}">{{category.name}}</a></li>
+                <li class="mr-3"><a href="{% url 'website:product_by_category' category.id %}">{{category.name}}</a></li>
               {% endfor%}
             </ul>
           </div>

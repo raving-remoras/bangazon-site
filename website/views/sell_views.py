@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.db import connection
 from django.urls import reverse
+from django.core.files.storage import FileSystemStorage
+from django.core.exceptions import ValidationError
 
 from website.forms import ProductForm
 from website.models import *
@@ -13,20 +15,35 @@ from website.models import *
 def sell_product(request):
     """Loads the view for creating a product to sell and saves it to the database.
 
-        Author: Sebastian Civarolo
+        Author: Sebastian Civarolo, Jase Hackman
 
     """
     if request.method == "GET":
         product_form = ProductForm()
         template_name = "product/create.html"
         context = {
-            "product_form": product_form
+            "product_form": product_form,
+            "file_Error": False
         }
         return render(request, template_name, context)
 
     elif request.method == "POST":
         form_data = request.POST
         product_form = ProductForm(form_data)
+        uploaded_file_url = ""
+        if "photo" in request.FILES:
+            photo = request.FILES["photo"]
+            if photo.size > 5000000:
+                template_name = "product/create.html"
+                context = {
+                    "product_form": product_form,
+                    "file_Error": True
+                }
+                return render(request, template_name, context)
+                # raise ValidationError("The maximum file size that can be uploaded is 5MB")
+            fs = FileSystemStorage()
+            photo_name = fs.save(photo.name, photo)
+            uploaded_file_url = fs.url(photo_name)
 
         if product_form.is_valid():
 
@@ -36,6 +53,7 @@ def sell_product(request):
             product_type = form_data["product_type"]
             price = form_data["price"]
             quantity = form_data["quantity"]
+            photo = uploaded_file_url
             if "local_delivery" in form_data:
                 local_delivery = 1
                 delivery_city = form_data["delivery_city"]
@@ -46,7 +64,7 @@ def sell_product(request):
                 delivery_state = ""
 
             data = [
-                seller, title, description, product_type, price, quantity, local_delivery, delivery_city, delivery_state
+                seller, title, description, product_type, price, quantity, local_delivery, delivery_city, delivery_state, photo
             ]
 
             with connection.cursor() as cursor:
@@ -61,10 +79,11 @@ def sell_product(request):
                         quantity,
                         local_delivery,
                         delivery_city,
-                        delivery_state
+                        delivery_state,
+                        photo_url
                     )
                     VALUES(
-                        %s, %s, %s, %s, %s, %s, %s, %s, %s
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
                     )
                 """, data)
                 new_product = cursor.lastrowid

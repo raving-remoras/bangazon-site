@@ -137,6 +137,7 @@ class Product(models.Model):
     local_delivery = models.BooleanField(default=False)
     delivery_city = models.CharField(max_length=30, blank=True, null=True, default=None)
     delivery_state = models.CharField(max_length=2, blank=True, null=True, default=None)
+    photo_url = models.CharField(max_length=100, blank=True, null=True, default=None)
 
     def __str__(self):
         return f"Title: {self.title} Description:{self.description} Price:{self.price} Qty:{self.quantity}"

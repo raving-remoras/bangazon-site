@@ -1,6 +1,14 @@
 {% extends 'index.html' %}
 {% block content %}
 
+<style>
+.photo{
+    max-height: 75px;
+    max-width: 75px
+}
+
+</style>
+
     {% for message in messages %}
     <div class="{{ messages.tags }} alert alert-success" role="alert">{{ message }}</div>
     {% endfor %}
@@ -10,7 +18,7 @@
         <h1>Products</h1>
       </div>
       <div class="col-md-4 align-self-center">
-        <form action"{% url 'website:products' %}" method="POST">
+        <form action="{% url 'website:products' %}" method="POST">
           {% csrf_token %}
           <div class="input-group">
             <input class="form-control" type="text" name="city" id="city" placeholder="Search by City">
@@ -41,11 +49,18 @@
           <div class="card-header">
             <h5 class="card-title mb-0">{{product.title}}</h5>
           </div>
+          <div class="d-flex">
+          {% if product.photo_url %}
+
+                <img class="ml-4 my-3 d-block photo" src="{{ product.photo_url }}" alt="{{product_details.title }}"/>
+
+          {% endif %}
           <div class="card-body">
             {% if product.local_delivery %}
               <h6 class="card-subtitle mb-2 text-muted">Local Delivery: {{product.delivery_city}}, {{product.delivery_state}}</h6>
             {% endif %}
             <a href="{% url 'website:product_details' product.id %}" class="btn btn-primary">View Details</a>
+          </div>
           </div>
         </div>
       </div>

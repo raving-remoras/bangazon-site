@@ -37,6 +37,15 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - When a user is logged in, there is an affordance in the navbar to Add a Product.
 - User can add the details for their product and add it to the market place.
 
+## User Settings
+- When a user is logged in, there is an affordance in the navbar to access User Settings.
+- From the User Settings page, the user can view their personal information, Payment Types and Order History.
+- The user can select the edit affordance which will direct the user to form to update their information and save the changes.
+
+## Order History
+- From the User Settings Page, a user can view their past orders.
+- If a use clicks on a past order they are taken to a page to view the details of that specific order.
+
 ## Payment Types
 - From the User Settings page, Users can add payment types to their account so they can complete their order.
 - Users can also delete payment types they no longer want to use at Bangazon.

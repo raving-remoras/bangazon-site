@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.template import RequestContext
+from django.urls import reverse
+from django.contrib import messages
+
 
 from website.forms import UserForm, UserCustomerFormB
 
@@ -63,7 +66,6 @@ def login_user(request):
 
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
-
         # Use the built-in authenticate method to verify
         username=request.POST['username']
         password=request.POST['password']
@@ -79,9 +81,7 @@ def login_user(request):
 
         else:
             # Bad login details were provided. So we can't log the user in.
-            print("Invalid login details: {}, {}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-
+            messages.error(request, "Login failed. Your username or password is incorrect.")
 
     return render(request, 'login.html', context)
 

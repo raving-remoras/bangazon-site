@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-from website.models import RecommendedProduct
+from .models import RecommendedProduct, ProductType
 
 def recommendation_count(request):
     count = 0
@@ -16,12 +15,9 @@ def recommendation_count(request):
 
 
     return {"rec_count": count}
-=======
-from .models import ProductType
 
 def categories_processor(request):
     product_categories = ProductType.objects.raw(f"""
         SELECT * FROM website_producttype
     """)
     return{"product_categories": product_categories}
->>>>>>> master

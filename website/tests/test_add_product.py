@@ -7,12 +7,16 @@ from django.db import connection
 
 from website.models import *
 from website.forms import ProductForm
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files.base import ContentFile
+from django.contrib.staticfiles import finders
+
 
 
 class AddProductTests(TestCase):
     """ Test the Add Product view and user interactions related to it.
 
-        Author: Sebastian Civarolo
+        Author: Sebastian Civarolo, Jase Hackman
 
         Methods:
     """
@@ -102,7 +106,7 @@ class AddProductTests(TestCase):
         self.assertEqual(new_product, 1)
 
     def test_add_photo(self):
-        # tests that a photo uploads
+        """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
 
         user = User.objects.create_user(username="test_user", password="password")
         customer = Customer.objects.create(
@@ -115,34 +119,45 @@ class AddProductTests(TestCase):
         )
         product_type = ProductType.objects.create(name="Test Product Type")
 
-        form_data = {
-            "seller": customer.id,
-            "title": "Test Product",
-            "description": "Test description",
-            "product_type": "1",
-            "price": "123",
-            "local_delivery": "on",
-            "quantity": "123",
-            "photo": "media_test/small_photo.jpg"
-        }
+        self.client.login(username="test_user", password="password")
 
-        response= self.client.post(reverse('website:customer_profile'), form_data)
-        self.assertEqual(response.status_code, 302)
+        # test that a small photo url will post to the database
+        with open("media_test/small_photo.jpg", "rb") as np:
+            print("np", np)
+            form_data3 = {
+                "seller": customer.id,
+                "title": "Test Product",
+                "description": "Test description",
+                "product_type": "1",
+                "price": "123",
+                "quantity": "123",
+                "photo": np
+            }
+            response = self.client.post(reverse('website:sell'), form_data3)
+            product = Product.objects.get(pk=1)
+            self.assertEqual(response.status_code, 302)
 
-        form_data2 = {
-            "seller": customer.id,
-            "title": "Test Product",
-            "description": "Test description",
-            "product_type": "1",
-            "price": "123",
-            "local_delivery": "on",
-            "quantity": "123",
-            "photo": "media_test/large_photo.jpg"
-        }
+        # test that a large photo will not be in the data base and will have a redirect
+        with open("media_test/large_photo.jpg", "rb") as fp:
 
-        response2= self.client.post(reverse('website:customer_profile'), form_data2)
-        print("HERE", response2.status_code)
-        self.assertEqual(response2.status_code, 302)
-        self.assertIn('<p class="text-danger">Photo m'.encode(), response.content)
+            print("Fp", fp)
+
+            form_data2 = {
+                "seller": customer.id,
+                "title": "Test Product",
+                "description": "Test description",
+                "product_type": "1",
+                "price": "123",
+                "quantity": "123",
+                "photo": fp
+            }
+
+            response3= self.client.post(reverse('website:sell'), form_data2)
+            self.assertEqual(response3.status_code, 200)
+            with self.assertRaises(Product.DoesNotExist):
+                product2 = Product.objects.get(pk=2)
+
+
+
 
 

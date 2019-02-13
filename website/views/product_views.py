@@ -36,7 +36,7 @@ def list_products(request):
             user_id = request.user.customer.id
             all_products = Product.objects.raw(f"""
                 SELECT * FROM website_product
-                WHERE website_product.seller_id IS NOT {user_id}
+                WHERE website_product.seller_id IS NOT {user_id} AND website_product.delete_date IS null
             """)
 
             context = {
@@ -123,14 +123,15 @@ def product_details(request, product_id):
     Authors: Brendan McCray, Kelly Morin
     """
 
-    # TODO: Update cart feature so it only shows the number of people that have an item in their cart if the user is not the active user
+    # this query is used to... 1. identify whether seller of the product is favorited by the current user. 2. show the sold by: {{username}} on the product detail for both authenticated and unauthenticated users 3. determine the seller_id for use with the favorite/unfavorite POST logic
     product_details = Product.objects.raw(f"""
         SELECT * FROM website_product
-        JOIN auth_user ON auth_user.id == website_product.seller_id
+        JOIN website_customer ON website_customer.id == website_product.seller_id
+        JOIN auth_user ON auth_user.id == website_customer.user_id
         WHERE website_product.id == {product_id}
     """)[0]
 
-    # if favorite/unfavorite seller button is clicked, handle the result accordingly
+    # if favorite/unfavorite seller button is clicked, handle the action accordingly
     if request.method == "POST":
         try:
             foo = request.POST["current_favorite"] # if this doesn't exist in the post, then the seller isn't favorited, so -> except
@@ -145,24 +146,80 @@ def product_details(request, product_id):
 
         return HttpResponseRedirect(reverse("website:product_details", args=(product_details.id,)))
 
-    # when loading product detail page, check to see if seller is favorited (foo sql attempt) by the logged-in user
-    try:
-        foo = FavoriteSeller.objects.raw(f"""
-            SELECT * FROM website_favoriteseller
-            WHERE user_id = {request.user.id} AND seller_id = {product_details.seller_id}
-        """)[0] # [0] is important to trigger except clause
+    if not request.user.is_authenticated:
+
+        other_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+        """)
+
+        other_cart_detail = list()
+        for order in other_cart_qty:
+            other_cart_detail.append(order.order_id)
+        other_cart_count = len(set(other_cart_detail))
+
         context = {
             "product_details": product_details,
-            "seller_is_favorited": True
+            "other_cart_count": other_cart_count,
+            "user_cart_count": 0,
+            "seller_is_favorited": ""
         }
-    except:
+
+    else:
+        user_id = request.user.customer.id
+
+        other_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+            AND website_order.customer_id IS NOT {user_id}
+        """)
+
+        user_cart_qty = OrderProduct.objects.raw(f"""
+            SELECT * FROM website_orderproduct
+            LEFT JOIN website_order ON website_order.id = website_orderproduct.order_id
+            WHERE website_order.payment_type_id IS null
+            AND website_orderproduct.product_id = {product_id}
+            AND website_order.customer_id IS {user_id}
+        """)
+
+        other_cart_detail = list()
+        for order in other_cart_qty:
+            other_cart_detail.append(order.order_id)
+
+        other_cart_count = len(set(other_cart_detail))
+
+        user_cart_detail = list()
+        for order in user_cart_qty:
+            user_cart_detail.append(order.order_id)
+
+        user_cart_count = len(user_cart_detail)
+
         context = {
             "product_details": product_details,
-            "seller_is_favorited": False
+            "other_cart_count": other_cart_count,
+            "user_cart_count": user_cart_count
         }
+
+        # when loading product detail page, check to see if seller is favorited by the current user (foo sql attempt)
+        try:
+            foo = FavoriteSeller.objects.raw(f"""
+                SELECT * FROM website_favoriteseller
+                WHERE user_id = {request.user.id} AND seller_id = {product_details.seller_id}
+            """)[0] # [0] is important to trigger except clause
+
+            context["seller_is_favorited"] = True
+
+        except:
+            context["seller_is_favorited"] = False
+
     return render(request, "product_detail.html", context)
 
 
+@login_required
 def add_to_cart(request, product_id):
     """Allows logged in user to add an item to their cart. If they do not have an existing order, this will create the order for them and then add the item to their cart.
 
@@ -171,7 +228,6 @@ def add_to_cart(request, product_id):
     Returns:
         render -- renders the product_list.html template
     """
-    # TODO: Set up redirect to login page if user is not currently logged in, with next parameter passed through to login page so the user is automatically redirected to the product detail page they were previously on
     if not request.user.is_authenticated:
         messages.error(request, "Please log in to continue")
         return HttpResponseRedirect(reverse('website:login'))
@@ -230,7 +286,7 @@ def add_to_cart(request, product_id):
             return HttpResponseRedirect(reverse('website:products'))
 
 
-@login_required(login_url="/website/login")
+@login_required
 def my_products(request):
     """This method gets customer from user in cookies and renders my_products.html
 
@@ -252,7 +308,7 @@ def my_products(request):
     return render(request, "my_products.html", {'products': my_products})
 
 
-@login_required(login_url="/website/login")
+@login_required
 def delete_product(request, product_id):
     """This method gets product from the id passed into the url and renders the delete_product.html template
 
@@ -288,13 +344,14 @@ def delete_product(request, product_id):
             cursor.execute(delete_joins_sql, [product_id])
         return HttpResponseRedirect(reverse("website:my_products"))
 
-@login_required(login_url="/website/login")
+@login_required
 def favorites(request):
 
         sql = f"""SELECT *
             FROM website_product
             JOIN website_favoriteseller ON website_favoriteseller.seller_id = website_product.seller_id
-            JOIN auth_user ON auth_user.id = website_favoriteseller.seller_id
+            JOIN website_customer ON website_customer.id == website_product.seller_id
+            JOIN auth_user ON auth_user.id == website_customer.user_id
             WHERE website_favoriteseller.user_id = {request.user.id} AND website_product.delete_date IS NULL
             ORDER BY website_product.seller_id
         """

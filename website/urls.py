@@ -3,38 +3,38 @@ from . import views
 
 app_name = "website"
 urlpatterns = [
-    # ex. /website
+    # ex. /
     path("", views.index, name='index'),
-    # ex. /website/login
+    # ex. /login
     path("login", views.login_user, name='login'),
-    # ex. /website/logout
+    # ex. /logout
     path("logout", views.user_logout, name='logout'),
-    # ex. /website/register
+    # ex. /register
     path("register", views.register, name='register'),
-    # ex. /website/sell
+    # ex. /sell
     path("sell", views.sell_product, name='sell'),
-    # ex. /website/customer
+    # ex. /customer
     path("customer", views.customer_profile, name='customer_profile'),
-    # ex. /website/order
+    # ex. /order
     path("order", views.closed_order, name="closed_order"),
-    # ex. /website/cart
+    # ex. /cart
     path("cart", views.cart, name='cart'),
-    # ex. /website/customer/payment
+    # ex. /customer/payment
     path("cart/payment", views.payment, name='payment'),
-    # ex. /website/customer/add_payment
+    # ex. /customer/add_payment
     path("customer/add_payment", views.add_payment, name="add_payment"),
     path("customer/payment/<int:payment_id>/delete", views.delete_payment_type, name="delete_payment_type"),
-    # ex. /website/products
+    # ex. /products
     path("products/", views.list_products, name='products'),
-    # ex. /website/products/5
+    # ex. /products/5
     path("products/<int:product_id>", views.product_details, name="product_details"),
-    # ex. /website/product-categories
+    # ex. /product-categories
     path("product-categories", views.product_categories, name="product_categories"),
-    # ex. /website/products/5/add
+    # ex. /products/5/add
     path("products/<int:product_id>/add", views.add_to_cart, name="add_to_cart"),
-    # ex. /website/my_products
+    # ex. /my_products
     path("my_products", views.my_products, name="my_products"),
-    # ex. /website/my_products/5
+    # ex. /my_products/5
     path("my_products/<int:product_id>", views.delete_product, name="delete_product"),
     # ex. /website/favorites
     path("favorites", views.favorites, name="favorites")

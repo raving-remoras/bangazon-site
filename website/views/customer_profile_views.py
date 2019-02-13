@@ -12,7 +12,7 @@ from django.db import connection
 from website.forms import UserForm, ProductForm
 from website.models import Product
 
-@login_required(login_url="/website/login")
+@login_required
 def customer_profile(request):
     """This function is responsible for the user profile page. Inital render, editing info and updating database with edited info.
 

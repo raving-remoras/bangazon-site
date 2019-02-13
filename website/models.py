@@ -187,3 +187,18 @@ class OrderProduct(models.Model):
     def __str__(self):
         return f"Product: {self.product} Order:{self.order}"
 
+class RecommendedProduct(models.Model):
+    """Defines the join table model for a product that is recommended to a user
+
+        Author: Rachel Daniel
+        Returns: __str__
+
+    """
+
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    recommended_to = models.ForeignKey(Customer, related_name="recommended_to", on_delete=models.PROTECT)
+    recommended_by = models.ForeignKey(Customer, related_name="recommended_by", on_delete=models.CASCADE)
+    comment = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f"Product: {self.product} Recommended To:{self.recommended_to} Recommended By: {self.recommended_by} Comment:{self.comment}"

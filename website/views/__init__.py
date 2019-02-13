@@ -8,3 +8,4 @@ from .sell_views import *
 from .auth_views import *
 from .product_category_views import *
 from .closed_order_views import *
+from .recommendation_views import *

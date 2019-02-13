@@ -10,6 +10,15 @@
 
 </style>
 
+{% if messages %}
+
+<div class="messages" >
+       {% for message in messages %}
+       <div class="{{ message.tags }} alert alert-success" role="alert">{{ message }}</div>
+       {% endfor %}
+   </div>
+{% endif %}
+
     <div class="row">
       <div class="col-sm-6 my-4">
         {% if product_details.photo_url %}
@@ -51,6 +60,10 @@
               Add to Cart
           </a>
         {% endif %}
+        <a href="{% url 'website:recommend_product' product_details.id %}" class="btn btn-info btn-block mb-4">
+                <i class="fas fa-user-friends" aria-hidden="true"></i>
+                Recommend to a Friend
+        </a>
         {% if other_cart_count > 0 %}
           {% if other_cart_count == 1 %}
             <div>
@@ -69,3 +82,4 @@
     </div>
 
 {% endblock content %}
+

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 
 from website.forms import ProductForm
-from website.models import Product, ProductType
+from website.models import Product, ProductType, RecommendedProduct
 
 def index(request):
     context={}

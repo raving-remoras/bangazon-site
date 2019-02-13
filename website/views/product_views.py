@@ -6,7 +6,7 @@ from django.db import connection
 from django.urls import reverse
 import datetime
 from django.shortcuts import get_object_or_404, render
-from website.models import Product, OrderProduct, Order, FavoriteSeller
+from website.models import Product, OrderProduct, Order, ProductType, FavoriteSeller
 
 
 def list_products(request):
@@ -40,7 +40,7 @@ def list_products(request):
             """)
 
             context = {
-                "products": all_products
+                "products": all_products,
             }
 
     template_name = "product_list.html"

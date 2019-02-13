@@ -28,6 +28,8 @@ urlpatterns = [
     path("products/", views.list_products, name='products'),
     # ex. /products/5
     path("products/<int:product_id>", views.product_details, name="product_details"),
+    # ex. /product-categories/5
+    path("product-categories/<int:category_id>", views.product_by_category, name="product_by_category"),
     # ex. /product-categories
     path("product-categories", views.product_categories, name="product_categories"),
     # ex. /products/5/add
@@ -37,5 +39,7 @@ urlpatterns = [
     # ex. /my_products/5
     path("my_products/<int:product_id>", views.delete_product, name="delete_product"),
     # ex. /website/favorites
-    path("favorites", views.favorites, name="favorites")
+    path("favorites", views.favorites, name="favorites"),
+    path("products/<int:product_id>/recommend", views.recommend_product, name="recommend_product"),
+    path("my_recommendations", views.my_recommendations, name="my_recommendations")
 ]

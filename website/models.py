@@ -101,12 +101,38 @@ class Product(models.Model):
 
         return cart_count
 
+    @property
+    def get_ratings(self):
+        """Gets the ratings users have given to this product.
+
+        Author: Sebastian Civarolo
+
+        Returns:
+            rating [dict] -- {
+                "ratings_count" -- number of ratings
+                "average_rating" -- average of all the ratings
+            }
+        """
+        sql = """
+            SELECT website_product.id, website_orderproduct.product_id, round(avg(website_orderproduct.rating), 1) as "average", count(website_orderproduct.rating) as "count" FROM website_orderproduct
+            JOIN website_product ON website_product.id = website_orderproduct.product_id
+            WHERE website_orderproduct.rating IS NOT NULL
+			AND website_orderproduct.product_id = %s
+			GROUP BY website_orderproduct.product_id
+        """
+
+        product_ratings = OrderProduct.objects.raw(sql, [self.id])
+        if len(product_ratings):
+            return product_ratings[0]
+        else:
+            return None
+
     seller = models.ForeignKey(Customer, on_delete=models.PROTECT)
     product_type = models.ForeignKey(ProductType, on_delete=models.PROTECT)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.PositiveIntegerField()
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     delete_date = models.DateTimeField(default=None, null=True, blank=True)
     local_delivery = models.BooleanField(default=False)
     delivery_city = models.CharField(max_length=30, blank=True, null=True, default=None)
@@ -155,6 +181,7 @@ class OrderProduct(models.Model):
     # cascade used here because open orders are hard deleted, so we want to remove join tables also
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(default=None, null=True, blank=True)
 
     def __str__(self):
         return f"Product: {self.product} Order:{self.order}"
@@ -172,3 +199,18 @@ class FavoriteSeller(models.Model):
     def __str__(self):
         return f"User: {self.user} Seller:{self.seller}"
 
+class RecommendedProduct(models.Model):
+    """Defines the join table model for a product that is recommended to a user
+
+        Author: Rachel Daniel
+        Returns: __str__
+
+    """
+
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    recommended_to = models.ForeignKey(Customer, related_name="recommended_to", on_delete=models.PROTECT)
+    recommended_by = models.ForeignKey(Customer, related_name="recommended_by", on_delete=models.CASCADE)
+    comment = models.CharField(max_length=300, blank=True)
+
+    def __str__(self):
+        return f"Product: {self.product} Recommended To:{self.recommended_to} Recommended By: {self.recommended_by} Comment:{self.comment}"

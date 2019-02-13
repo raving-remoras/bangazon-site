@@ -1,26 +1,35 @@
 {% extends "index.html" %}
 
 {% block content %}
-<h2>My Products</h2>
+<h2 class="my-4">My Products</h2>
 <div class="list-group">
 
 {% if products %}
+<div class="list-group">
 {% for product in products %}
-<a href="{% url 'website:product_details' product.id %}" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ product.title }}</h5>
+<div class="list-group-item list-group-item-action">
+    <a href="{% url 'website:product_details' product.id %}">
+        <div class="d-flex w-100 justify-content-between flex-column align-items-start">
+            <h5 class="mb-1">{{ product.title }}</h5>
         </div>
-        <p class="mb-1">{{ product.description }}</p>
-        <span class="badge badge-success">Sold: {{product.get_purchased_count}}</span>
-        <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
+    </a>
+  <p class="mb-1">{{ product.description }}</p>
+  <span class="badge badge-success">Sold: {{product.get_purchased_count}}</span>
+  <span class="badge badge-primary">Remaining: {{product.get_available_count}}</span>
+  {% if product.get_ratings %}
+  <span class="badge badge-warning">Avg Rating: {{product.get_ratings.average}} / 5 from {{product.get_ratings.count}} customers</span>
+  {% else %}
+  <span class="badge badge-secondary">No ratings yet.</span>
+  {% endif %}
 
 
-        {% if product.get_available_count > 0 %}
-            <a href="{% url 'website:delete_product' product.id %}" class="btn btn-danger float-right" value="Delete">Delete</a>
+  {% if product.get_available_count > 0 %}
+      <a href="{% url 'website:delete_product' product.id %}" class="btn btn-danger float-right" value="Delete">Delete</a>
 
-        {% endif %}
-      </a>
+  {% endif %}
+</div>
 {% endfor %}
+</div>
 {% else %}
 
 <h4>You haven't listed any Products yet</h4>
@@ -28,6 +37,5 @@
 {% endif %}
 
 
-</div>
 
 {% endblock content %}

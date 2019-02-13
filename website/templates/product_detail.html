@@ -3,12 +3,21 @@
 
 {% block content %}
 
+{% if messages %}
+
+<div class="messages" >
+       {% for message in messages %}
+       <div class="{{ message.tags }} alert alert-success" role="alert">{{ message }}</div>
+       {% endfor %}
+   </div>
+{% endif %}
+
     <div class="row">
       <div class="col-sm-6 my-4">
         <img class="mx-auto d-block" src="https://via.placeholder.com/350" alt="Placeholder for product image"/>
       </div>
       <div class="col-sm-6 my-4">
-        <h3>{{product_details.title}}</h3>
+        <h1>{{product_details.title}}</h1>
         <p>Sold by: {{product_details.username}}</p>
         {% if seller_is_favorited %}
           <form action="{% url 'website:product_details' product_details.id %}" method="POST">
@@ -22,14 +31,25 @@
             <button class="btn btn-success btn-sm">Favorite this Seller</button>
           </form>
         {% endif %}
-        <hr />
-        {% if product_details.get_available_count == 0 %}
-        <p class="badge badge-secondary">Sold out!</p>
-        {% elif product_details.get_available_count < 5 %}
-        <p class="badge badge-secondary">Almost sold out!</p>
-        {% endif %}
-          <p>Qty: {{product_details.get_available_count}}</p>
-          <p>Price: ${{product_details.price|intcomma}}</p>
+        <hr>
+        <div class="mb-3">
+          {% if product_details.get_available_count == 0 %}
+          <h5 class="d-inline"><span class="badge badge-danger">Sold out!</span></h5>
+          {% elif product_details.get_available_count < 5 %}
+          <h5 class="d-inline"><span class="badge badge-warning">Almost sold out!</span></h5>
+          {% endif %}
+          {% if product_details.get_ratings %}
+            {% if product_details.get_ratings.average > 2 %}
+              <h5 class="d-inline"><span class="badge badge-success">Avg Rating: {{product_details.get_ratings.average}} / 5 from {{product_details.get_ratings.count}} customers</span></h5>
+            {% else %}
+              <h5 class="d-inline"><span class="badge badge-danger">Avg Rating: {{product_details.get_ratings.average}} / 5 from {{product_details.get_ratings.count}} customers</span></h5>
+            {% endif %}
+          {% else %}
+            <h5 class="d-inline"><span class="badge badge-secondary">No ratings yet.</span></h5>
+          {% endif %}
+        </div>
+        <p>Qty: {{product_details.get_available_count}}</p>
+        <p>Price: ${{product_details.price|intcomma}}</p>
         <p>{{product_details.description}}</p>
         {% if product_details.get_available_count == 0 or user_cart_count == product_details.get_available_count %}
           <button class="btn btn-primary btn-block mb-4" disabled>
@@ -42,6 +62,10 @@
               Add to Cart
           </a>
         {% endif %}
+        <a href="{% url 'website:recommend_product' product_details.id %}" class="btn btn-info btn-block mb-4">
+                <i class="fas fa-user-friends" aria-hidden="true"></i>
+                Recommend to a Friend
+        </a>
         {% if other_cart_count > 0 %}
           {% if other_cart_count == 1 %}
             <div>
@@ -60,3 +84,4 @@
     </div>
 
 {% endblock content %}
+

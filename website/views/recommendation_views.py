@@ -69,7 +69,7 @@ def my_recommendations(request):
     """
     if request.method == "GET":
         sql = f"""
-            SELECT P.*, R.id as rec_id, C.id as from_cust_id, U.username as from_username FROM website_product P
+            SELECT P.*, R.id as rec_id, R.comment, C.id as from_cust_id, U.username as from_username FROM website_product P
             JOIN website_recommendedproduct R on R.product_id = P.id
             JOIN website_customer C on C.id = R.recommended_by_id
             JOIN auth_user U on U.id = C.user_id

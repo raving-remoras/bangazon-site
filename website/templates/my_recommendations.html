@@ -13,18 +13,20 @@
                 <h5 class="mb-1">{{ product.title }}</h5>
             </div>
         </a>
-
+        <small>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{product.rec_id}}" name="Delete">
+                <input type="submit" class="btn-sm btn-danger float-right" value="Remove" >
+            </form>
+        </small>
         <p class="mb-1">{{ product.description }}</p>
-        <span class="badge badge-success ">Recommended by: {{product.from_username}}</span>
+
+        <hr>
+        <span class="badge badge-info  ">Recommended by {{product.from_username}} </span>
+        {% if product.comment %}<p class="my-1 font-weight-light">"{{product.comment}}"</p>{% endif %}
 
 
-            <small>
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" value="{{product.rec_id}}" name="Delete">
-                    <input type="submit" class="btn-sm btn-danger float-right" value="Remove" >
-                </form>
-            </small>
 
 
 </div>

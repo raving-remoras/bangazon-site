@@ -132,7 +132,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.PositiveIntegerField()
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField()
     delete_date = models.DateTimeField(default=None, null=True, blank=True)
     local_delivery = models.BooleanField(default=False)
     delivery_city = models.CharField(max_length=30, blank=True, null=True, default=None)

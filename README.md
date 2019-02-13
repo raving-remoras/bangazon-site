@@ -15,7 +15,7 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - Run `python manage.py migrate`
 - If you want some data to play with, run `python manage.py loaddata db.json`
 - Initialize the project using the command line by typing `python manage.py runserver` in the main directory.
-- Access the application in a browser at `http://localhost:8000/website`.
+- Access the application in a browser at `http://localhost:8000`.
 
 ## Products
 - From the homepage, if you select <em>Shop</em> you will be taken to a list of all products
@@ -23,6 +23,8 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - If you add a product to your cart and are logged in, you will be redirected to the view all products page with a success message to confirm that the product was added to your cart
 - If you try to add a product to your cart and are not currently logged in, you will be redirected to the login page with a message encouraging you to login to proceed
 - If you select <em>Product Categories</em> from the navbar, you will be taken to a list of product categories, the number of products in each category and a list of up to three of the products that are currently available for that category
+- Clicking <em>Favorite this seller</em> will add the vendor to the favorites tab in the navbar.
+- An already-favorited seller can be removed from the favorites tab by clicking <em>Unfavorite this seller</em>
 
 ## Product Ratings
 - After a customer has completed an order, they are able to rate the products they purchased through their order history views.
@@ -36,6 +38,14 @@ This web application is the source code for the Bangazon e-commerce web site. It
 ## Sell a Product
 - When a user is logged in, there is an affordance in the navbar to Add a Product.
 - User can add the details for their product and add it to the market place.
+
+## Cart and Checkout
+- When a user is logged in, there is an affordance in the navbar to view the Cart
+- Items added from the product detail section are visible in a list.
+- Individual items can be deleted instantly by clicking <em>Delete</em>
+- The order can be cancelled completely (with a second confirmation screen) by clicking <em>Cancel Order</em>
+- Clicking <em>Complete Order</em> will prompt the user to select a payment type
+- Clicking <em>Done</em> after selecting a payment type will complete the order, thus clearing the cart of products
 
 ## User Settings
 - When a user is logged in, there is an affordance in the navbar to access User Settings.
@@ -55,6 +65,11 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - The items in My Products show how many of that product have been sold and how many are remaining, as well as how purchasing users have rated the product.
 - If there are still items remaining to be sold, the user will have the option to delete the item
 - The titles of all list items link back to the product's detail page
+
+## Favorites
+- Favorited vendors are shown in the favorites tab, in addition to all of their available products.
+- Clicking a product will direct the user to the product detail page for that specific item.
+- A vendor can be removed from the favorites page by clicking <em>Unfavorite this seller</em> on any of that vendor's product detail pages.
 
 ## Recommendations
 - When a user is logged in, they have the ability to recommend a product to another user from that product's detail page

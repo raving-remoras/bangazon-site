@@ -23,7 +23,7 @@
       <a href="{% url 'website:products' %}" class="btn btn-outline-secondary">View More Products</a>
     </form>
   {% else %}
-      <a href="{}" class="btn btn-primary">Add a Payment Method to Complete this Order</a>
+      <a href="{% url 'website:add_payment' %}?returnUrl={{request.path}}" class="btn btn-primary">Add a Payment Method to Complete this Order</a>
   {% endif %}
 {% else %}
   <div>

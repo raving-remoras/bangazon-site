@@ -5,7 +5,7 @@ from django.urls import reverse
 from website.models import *
 from django.db import connection
 
-@login_required(login_url="/website/login")
+@login_required
 def cart(request):
     """1. Gets user's open order and then displays the order with list of its products. If no order exists, the template suggests that the user visit the shopping page.
     2. Handles deletion of products from the user's cart using a nested if--try/except--try/except. Comments included in file

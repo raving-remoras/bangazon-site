@@ -213,3 +213,100 @@ class ProductTest(TestCase):
         # Confirm that the post returns a response of 302
         response = self.client.get(reverse("website:add_to_cart", args=(1,)))
         self.assertEqual(response.status_code, 302)
+
+    def product_by_category(self):
+        """Test case verifies that all products associated with a specific category display when the product category is requested"""
+
+        new_seller = Customer.objects.create(
+            user = User.objects.create_user(
+            username = "testuser",
+            first_name = "Test",
+            last_name = "User",
+            email = "test@test.com",
+            password="password"
+            ),
+            street_address = "1112 Some Dr.",
+            city = "City",
+            state = "TN",
+            zipcode = "1122334",
+            phone_number = 1112233
+        )
+
+        new_customer = Customer.objects.create(
+            user = User.objects.create_user(
+            username = "someuser",
+            first_name = "Some",
+            last_name = "User",
+            email = "user@test.com",
+            password="password1"
+            ),
+            street_address = "1234 Some Dr.",
+            city = "City",
+            state = "TN",
+            zipcode = "1122334",
+            phone_number = 1112233
+        )
+
+        new_product_type = ProductType.objects.create(
+            name = "Product Type 1",
+        )
+
+        new_product_type_2 = ProductType.objects.create(
+            name = "Product Type 2",
+        )
+
+        new_product = Product.objects.create(
+            seller = new_seller,
+            product_type = new_product_type,
+            title = "New Product 1",
+            description = "This is a product that should make your life better",
+            price = 11,
+            quantity = 15
+        )
+
+        new_product_2 = Product.objects.create(
+            seller = new_seller,
+            product_type = new_product_type_2,
+            title = "A Product Name",
+            description = "This is a product that should make your life better",
+            price = 11,
+            quantity = 15
+        )
+
+        # Guest user, searching for product category 1
+        response = self.client.get(reverse('website:product_by_category', args=(1,)))
+
+        # Check that the response is 200 ok
+        self.assertEqual(response.status_code, 200)
+
+        # Check that new_product is the only product that shows in the query
+        self.assertIn(new_product.title.encode(), response.content)
+        self.assertNotIn(new_product_2.title.encode(), response.content)
+
+        # Check that the quantity is in the HTML response content
+        self.assertEqual(response.context['product_by_category'], new_product)
+        self.assertNotEqual(response.context['product_by_category'], new_product_2)
+
+        # Log In user that is not the seller, check that the products not created by the user do show up
+        self.client.login(username="someuser", password="password")
+        # Search for product category 1
+        response_non_seller = self.client.get(reverse('website:product_by_category', args=(1,)))
+        self.assertEqual(response_non_seller.status_code, 200)
+        self.assertIn(new_product.title.encode(), response_non_seller.content)
+        self.assertNotIn(new_product_2.title.encode(), response_non_seller.content)
+        # Search for product category 2
+        response_non_seller_2 = self.client.get(reverse('website:product_by_category', args=(2,)))
+        self.assertIn(new_product_2.title.encode(), response_non_seller_2.content)
+        self.assertNotIn(new_product_2.title.encode(), response_non_seller_2.content)
+
+        # Check that user's own product does not show up
+        self.client.login(username="testuser", password="password")
+        # Search for product category 1
+        response_logged_in = self.client.get(reverse('website:product_by_category', args=(1,)))
+        self.assertEqual(response_logged_in.status_code, 200)
+        self.assertNotIn(new_product.title.encode(), response_logged_in.content)
+        self.assertNotIn(new_product_2.title.encode(), response_logged_in.content)
+        # Search for product category 2
+        response_logged_in_2 = self.client.get(reverse('website:product_by_category', args=(2,)))
+        self.assertNotIn(new_product.title.encode(), response_logged_in_2.content)
+        self.assertNotIn(new_product_2.title.encode(), response_logged_in_2.content)

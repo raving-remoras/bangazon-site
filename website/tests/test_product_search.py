@@ -24,7 +24,7 @@ class TestProductSearch(TestCase):
             zipcode="37209",
             phone_number="5555555555"
         )
-        product_type = ProductType.objects.create(name="Test Product Type")
+        product_type = ProductType.objects.create(name=" Product Category 1")
 
         seller = user.customer.id
         title = "Test Product"
@@ -91,7 +91,7 @@ class TestLocalSearch(TestCase):
             zipcode="37209",
             phone_number="5555555555"
         )
-        product_type = ProductType.objects.create(name="Test Product Type")
+        product_type = ProductType.objects.create(name="Product Category 1")
 
         seller = user.customer.id
         title = "Test Product"

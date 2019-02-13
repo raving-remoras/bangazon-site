@@ -7,12 +7,16 @@ from django.db import connection
 
 from website.models import *
 from website.forms import ProductForm
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.files.base import ContentFile
+from django.contrib.staticfiles import finders
+
 
 
 class AddProductTests(TestCase):
     """ Test the Add Product view and user interactions related to it.
 
-        Author: Sebastian Civarolo, Kelly Morin
+        Author: Sebastian Civarolo, Jase Hackman, Kelly Morin
 
         Methods:
     """
@@ -101,8 +105,61 @@ class AddProductTests(TestCase):
 
         self.assertEqual(new_product, 1)
 
+
+    def test_add_photo(self):
+        """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
+
+        user = User.objects.create_user(username="test_user", password="password")
+        customer = Customer.objects.create(
+                user=user,
+                street_address="123 Street St",
+                city="Nashville",
+                state="TN",
+                zipcode="37209",
+                phone_number="5555555555"
+            )
+        product_type = ProductType.objects.create(name="Test Product Type")
+
+        self.client.login(username="test_user", password="password")
+
+        # test that a small photo url will post to the database
+        with open("media_test/small_photo.jpg", "rb") as np:
+
+            form_data3 = {
+                "seller": customer.id,
+                "title": "Test Product",
+                "description": "Test description",
+                "product_type": "1",
+                "price": "123",
+                "quantity": "123",
+                "photo": np
+            }
+            response = self.client.post(reverse('website:sell'), form_data3)
+            product = Product.objects.get(pk=1)
+            self.assertEqual(response.status_code, 302)
+
+        # test that a large photo will not be in the data base and will have a redirect
+        with open("media_test/large_photo.jpg", "rb") as fp:
+
+            form_data2 = {
+                "seller": customer.id,
+                "title": "Test Product",
+                "description": "Test description",
+                "product_type": "1",
+                "price": "123",
+                "quantity": "123",
+                "photo": fp
+            }
+
+            response3= self.client.post(reverse('website:sell'), form_data2)
+            self.assertEqual(response3.status_code, 200)
+            with self.assertRaises(Product.DoesNotExist):
+                product2 = Product.objects.get(pk=2)
+
+
     def test_add_negative_quantity(self):
         """Test that negative quantites cannot be submitted"""
+
 
         user = User.objects.create_user(username="test_user", password="password")
         customer = Customer.objects.create(
@@ -188,3 +245,4 @@ class AddProductTests(TestCase):
 
         self.assertFalse(product_form.is_valid())
         self.assertEquals(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
+

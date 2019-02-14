@@ -79,7 +79,7 @@ class AddProductTests(TestCase):
 
         # Create product type
         product_type = ProductType.objects.create(
-            name="Test Product Type"
+            name = "Test Product Type",
         )
 
     def test_add_view(self):
@@ -98,22 +98,11 @@ class AddProductTests(TestCase):
     def test_add_product(self):
         """Test that products are successfully added to the database."""
 
-        user = User.objects.create_user(username="test_user2", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
-        product_type = ProductType.objects.create(name="Test Product Type")
-
         form_data = {
-            "seller": customer.id,
+            "seller_id": 2,
             "title": "Test Product",
             "description": "Test description",
-            "product_type": "1",
+            "product_type_id": 1,
             "price": "123",
             "local_delivery": "on",
             "quantity": "123"
@@ -123,10 +112,10 @@ class AddProductTests(TestCase):
 
         if product_form.is_valid():
 
-            seller = user.customer.id
+            seller_id = form_data["seller_id"]
             title = form_data["title"]
             description = form_data["description"]
-            product_type = form_data["product_type"]
+            product_type = form_data["product_type_id"]
             price = form_data["price"]
             quantity = form_data["quantity"]
             local_delivery = form_data["local_delivery"]
@@ -153,8 +142,7 @@ class AddProductTests(TestCase):
                 """, data)
                 new_product = cursor.lastrowid
 
-        self.assertEqual(new_product, 1)
-
+                self.assertEqual(new_product, 1)
 
     def test_add_photo(self):
         """Tests that a small photo will be uploaded and a large photo will not be uploaded"""

@@ -43,7 +43,7 @@ class ProductTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Creates instances of database objects before running each testin in this class"""
+        """Creates instances of database objects before running each test in in this class"""
 
         super(ProductTest, cls).setUpClass()
 

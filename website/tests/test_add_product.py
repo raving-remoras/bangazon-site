@@ -14,19 +14,23 @@ from django.contrib.staticfiles import finders
 
 
 class AddProductTests(TestCase):
-    """Tests that:
-            1. add product view and user interactions related to it
+    """Tests add product view and user interactions related to it
+            Model:
+                Product
+                ProductType
+                Customer
 
-                Model:
+            Templates:
+                product/create.html
+                product_details.html
 
-                Templates:
+            Views:
+                sell_views.py -> sell_product
 
-                Views:
-
-                Author:
-                    Sebastian Civarolo
-                    Jase Hackman
-                    Kelly Morin
+            Author:
+                Sebastian Civarolo
+                Jase Hackman
+                Kelly Morin
 
     """
     @classmethod
@@ -213,7 +217,6 @@ class AddProductTests(TestCase):
             self.assertEqual(response3.status_code, 200)
             with self.assertRaises(Product.DoesNotExist):
                 product2 = Product.objects.get(pk=2)
-
 
     def test_add_negative_quantity(self):
         """Test that negative quantites cannot be submitted"""

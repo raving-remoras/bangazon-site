@@ -18,7 +18,6 @@ class ProductTest(TestCase):
                     Customer
                     Product
                     ProductType
-                    Product
                     Order
                     OrderProduct
                     PaymentType
@@ -38,7 +37,9 @@ class ProductTest(TestCase):
                     product_views.py -> add_to_cart
                     cart.py -> cart
 
-                Author: Kelly Morin, Brendan McCray
+                Author:
+                    Kelly Morin
+                    Brendan McCray
     """
 
     @classmethod

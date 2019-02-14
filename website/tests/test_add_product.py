@@ -12,7 +12,6 @@ from django.core.files.base import ContentFile
 from django.contrib.staticfiles import finders
 
 
-
 class AddProductTests(TestCase):
     """Tests add product view and user interactions related to it
             Model:

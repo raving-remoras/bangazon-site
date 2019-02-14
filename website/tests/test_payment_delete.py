@@ -5,6 +5,7 @@ from ..models import PaymentType, User, Customer, Order
 
 
 class TestDeletePayment(TestCase):
+    # TODO: Update docstring
     """[summary]
 
     Model:
@@ -103,8 +104,6 @@ class TestDeletePayment(TestCase):
 
     def test_hard_delete_payment(self):
         """ Creates user and a payment, and it should hard delete because it has not been used to complete an order.
-
-            Author: Sebastian Civarolo
         """
 
         self.client.login(username="test_user", password="secret")
@@ -123,8 +122,6 @@ class TestDeletePayment(TestCase):
 
     def test_soft_delete_payment(self):
         """ Creates a user, payment type, and an order that uses the payment type. Should soft delete the payment type.
-
-            Author: Sebastian Civarolo
         """
 
         self.client.login(username="test_user", password="secret")
@@ -143,8 +140,6 @@ class TestDeletePayment(TestCase):
 
     def test_delete_payment_as_another_user(self):
         """ Creates two users, and user 2 tries to delete user 1's payment type and should be redirected.
-
-            Author: Sebastian Civarolo
         """
         self.client.login(username="customer2", password="secret")
 

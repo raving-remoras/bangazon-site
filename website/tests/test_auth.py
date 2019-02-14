@@ -6,15 +6,30 @@ from django.contrib.auth.models import User
 from django.db import connection
 
 class TestAuthViews(TestCase):
+    # TODO: Update docstring
     """ Test login, register and logout views.
 
         Author: Sebastian Civarolo
     """
 
+    @classmethod
+    def setUpClass(cls):
+        """Creates instances of database objects before running each of the tests in this class"""
+
+        super(TestAuthViews, cls).setUpClass()
+
+        # Create user
+        new_user = User.objects.create_user(
+            username="test_user",
+            first_name="Test",
+            last_name="User",
+            email="test@test.com",
+            password="secret"
+        )
+
+
     def test_login(self):
         """Test login redirects for correct and incorrect logins."""
-
-        user = User.objects.create_user(username="test_user", password="secret")
 
 
         response = self.client.post(reverse("website:login"), {"username": ["test_user"], "password": ["secret"]})

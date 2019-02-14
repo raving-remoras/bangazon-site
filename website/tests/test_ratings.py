@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from ..models import Customer, ProductType, Product, Order, OrderProduct, PaymentType
 
 class TestRatingSystem(TestCase):
+    # TODO: Update docstring
     """ Tests adding ratings and displaying ratings around the site.
 
         Author: Sebastian Civarolo
@@ -88,7 +89,7 @@ class TestRatingSystem(TestCase):
         )
 
     def test_add_rating(self):
-
+        # TODO: Add docstring
         # Tests that a closed order displays properly on the page
 
         self.client.login(username="test_user", password="secret")

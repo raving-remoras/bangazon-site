@@ -144,6 +144,7 @@ class AddProductTests(TestCase):
                 self.assertEqual(new_product, 1)
 
     def test_add_photo(self):
+        # TODO: Refactor test, Jase approved
         """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
 
         user = User.objects.create_user(username="test_user2", password="password")

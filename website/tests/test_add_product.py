@@ -14,12 +14,70 @@ from django.contrib.staticfiles import finders
 
 
 class AddProductTests(TestCase):
-    """ Test the Add Product view and user interactions related to it.
+    """Tests that:
+            1. add product view and user interactions related to it
 
-        Author: Sebastian Civarolo, Jase Hackman, Kelly Morin
+                Model:
 
-        Methods:
+                Templates:
+
+                Views:
+
+                Author:
+                    Sebastian Civarolo
+                    Jase Hackman
+                    Kelly Morin
+
     """
+    @classmethod
+    def setUpClass(cls):
+        """Creates instances of database objects before running each test in this class"""
+
+        super(AddProductTests, cls).setUpClass()
+
+        # create user
+        new_user = User.objects.create_user(
+            username="test user",
+            first_name="Test",
+            last_name="User",
+            email="test@test.com",
+            password="secret"
+        )
+
+        # create second user who will act as the seller of products
+        new_user2 = User.objects.create_user(
+            username="test_seller",
+            first_name="Testx",
+            last_name="Userx",
+            email="test@testx.com",
+            password="secret"
+        )
+
+        # Create customer
+        customer = Customer.objects.create(
+            user= new_user,
+            street_address="123 Street St",
+            city="Nashville",
+            state="TN",
+            zipcode="37209",
+            phone_number="5555555555"
+        )
+
+        # Create Customer (seller)
+        customer2 = Customer.objects.create(
+            street_address="123 Test LN",
+            city="Testas",
+            state="TS",
+            zipcode="11111",
+            phone_number="1111111111",
+            user=new_user2
+        )
+
+        # Create product type
+        product_type = ProductType.objects.create(
+            name="Test Product Type"
+        )
+
 
     def test_add_view(self):
         """ Test loading the add product view with and without a logged in user. """
@@ -160,30 +218,21 @@ class AddProductTests(TestCase):
     def test_add_negative_quantity(self):
         """Test that negative quantites cannot be submitted"""
 
+        # Log in seller
+        self.client.login(username="test_seller", password="secret")
 
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
-
-        self.client.login(username="test_user", password="password")
-
-        # Load the view is user is logged in.
+        # Issue a GET request
         response = self.client.get(reverse("website:sell"))
+
+        # Check that the response is 200
         self.assertEqual(response.status_code, 200)
 
-        product_type = ProductType.objects.create(name="Test Product Type")
-
+        # Submit fake form with negative quantity
         form_data = {
-            "seller": customer.id,
+            "seller_id": 2,
             "title": "Test Product",
             "description": "Test description",
-            "product_type": product_type,
+            "product_type_id": 1,
             "price": "123",
             "local_delivery": "on",
             "quantity": "-12"
@@ -191,43 +240,30 @@ class AddProductTests(TestCase):
 
         product_form = ProductForm(form_data)
 
-        seller = user.customer.id
-        title = form_data["title"]
-        description = form_data["description"]
-        product_type = form_data["product_type"]
-        price = form_data["price"]
-        quantity = form_data["quantity"]
-        local_delivery = form_data["local_delivery"]
-
+        # Check that form validation throws an error
         self.assertFalse(product_form.is_valid())
+
+        # Check that the form validation specifically throws an error on quantity and provides the correct error message
         self.assertEquals(product_form.errors['quantity'], ['Ensure this value is greater than or equal to 0.'])
 
     def test_add_excessive_price(self):
         """Test that prices over 10,000 cannot be submitted"""
 
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
+        # Log in seller
+        self.client.login(username="test_seller", password="secret")
 
-        self.client.login(username="test_user", password="password")
-
-        # Load the view is user is logged in.
+        # Issue a GET request
         response = self.client.get(reverse("website:sell"))
+
+        # Check that the response is 200
         self.assertEqual(response.status_code, 200)
 
-        product_type = ProductType.objects.create(name="Test Product Type")
-
+        # Submit fake form with price greater than 10,000
         form_data = {
-            "seller": customer.id,
+            "seller_id": 2,
             "title": "Test Product",
             "description": "Test description",
-            "product_type": product_type,
+            "product_type_id": 1,
             "price": "1230000",
             "local_delivery": "on",
             "quantity": "12"
@@ -235,14 +271,9 @@ class AddProductTests(TestCase):
 
         product_form = ProductForm(form_data)
 
-        seller = user.customer.id
-        title = form_data["title"]
-        description = form_data["description"]
-        product_type = form_data["product_type"]
-        price = form_data["price"]
-        quantity = form_data["quantity"]
-        local_delivery = form_data["local_delivery"]
-
+        # Check that form validation throws an error
         self.assertFalse(product_form.is_valid())
+
+        # Check that the form validation specifically throws an error on quantity and provides the correct error message
         self.assertEquals(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
 

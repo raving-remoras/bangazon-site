@@ -41,7 +41,7 @@ class AddProductTests(TestCase):
 
         # create user
         new_user = User.objects.create_user(
-            username="test user",
+            username="test_user",
             first_name="Test",
             last_name="User",
             email="test@test.com",
@@ -82,35 +82,23 @@ class AddProductTests(TestCase):
             name="Test Product Type"
         )
 
-
     def test_add_view(self):
         """ Test loading the add product view with and without a logged in user. """
-
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
 
         # Redirect to login if not logged in.
         not_logged_in_response = self.client.get(reverse("website:sell"))
         self.assertEqual(not_logged_in_response.status_code, 302)
 
-        self.client.login(username="test_user", password="password")
+        self.client.login(username="test_user", password="secret")
 
         # Load the view is user is logged in.
         response = self.client.get(reverse("website:sell"))
         self.assertEqual(response.status_code, 200)
 
-
     def test_add_product(self):
         """Test that products are successfully added to the database."""
 
-        user = User.objects.create_user(username="test_user", password="password")
+        user = User.objects.create_user(username="test_user2", password="password")
         customer = Customer.objects.create(
             user=user,
             street_address="123 Street St",
@@ -171,7 +159,7 @@ class AddProductTests(TestCase):
     def test_add_photo(self):
         """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
 
-        user = User.objects.create_user(username="test_user", password="password")
+        user = User.objects.create_user(username="test_user2", password="password")
         customer = Customer.objects.create(
                 user=user,
                 street_address="123 Street St",
@@ -182,7 +170,7 @@ class AddProductTests(TestCase):
             )
         product_type = ProductType.objects.create(name="Test Product Type")
 
-        self.client.login(username="test_user", password="password")
+        self.client.login(username="test_user2", password="password")
 
         # test that a small photo url will post to the database
         with open("media_test/small_photo.jpg", "rb") as np:

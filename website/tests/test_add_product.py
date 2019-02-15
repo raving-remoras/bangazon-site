@@ -12,58 +12,104 @@ from django.core.files.base import ContentFile
 from django.contrib.staticfiles import finders
 
 
-
 class AddProductTests(TestCase):
-    """ Test the Add Product view and user interactions related to it.
+    """Tests add product view and user interactions related to it
+            Model:
+                Product
+                ProductType
+                Customer
 
-        Author: Sebastian Civarolo, Jase Hackman, Kelly Morin
+            Templates:
+                product/create.html
+                product_details.html
 
-        Methods:
+            Views:
+                sell_views.py -> sell_product
+
+            Methods:
+                setUpClass
+                test_add_view
+                test_add_product
+                test_add_photo
+                test_add_negative_quantity
+                test_add_excessive_price
+
+            Author:
+                Sebastian Civarolo
+                Jase Hackman
+                Kelly Morin
+
     """
+    @classmethod
+    def setUpClass(cls):
+        """Creates instances of database objects before running each test in this class"""
 
-    def test_add_view(self):
-        """ Test loading the add product view with and without a logged in user. """
+        super(AddProductTests, cls).setUpClass()
 
-        user = User.objects.create_user(username="test_user", password="password")
+        # create user
+        new_user = User.objects.create_user(
+            username="test_user",
+            first_name="Test",
+            last_name="User",
+            email="test@test.com",
+            password="secret"
+        )
+
+        # create second user who will act as the seller of products
+        new_user2 = User.objects.create_user(
+            username="test_seller",
+            first_name="Testx",
+            last_name="Userx",
+            email="test@testx.com",
+            password="secret"
+        )
+
+        # Create customer
         customer = Customer.objects.create(
-            user=user,
+            user= new_user,
             street_address="123 Street St",
             city="Nashville",
             state="TN",
             zipcode="37209",
             phone_number="5555555555"
         )
+
+        # Create Customer (seller)
+        customer2 = Customer.objects.create(
+            street_address="123 Test LN",
+            city="Testas",
+            state="TS",
+            zipcode="11111",
+            phone_number="1111111111",
+            user=new_user2
+        )
+
+        # Create product type
+        product_type = ProductType.objects.create(
+            name = "Test Product Type",
+        )
+
+    def test_add_view(self):
+        """ Test loading the add product view with and without a logged in user. """
 
         # Redirect to login if not logged in.
         not_logged_in_response = self.client.get(reverse("website:sell"))
         self.assertEqual(not_logged_in_response.status_code, 302)
 
-        self.client.login(username="test_user", password="password")
+        self.client.login(username="test_user", password="secret")
 
         # Load the view is user is logged in.
         response = self.client.get(reverse("website:sell"))
         self.assertEqual(response.status_code, 200)
 
-
     def test_add_product(self):
         """Test that products are successfully added to the database."""
 
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
-        product_type = ProductType.objects.create(name="Test Product Type")
-
         form_data = {
-            "seller": customer.id,
+            "seller_id": 2,
             "title": "Test Product",
             "description": "Test description",
-            "product_type": "1",
+            "product_type_id": 1,
             "price": "123",
             "local_delivery": "on",
             "quantity": "123"
@@ -73,10 +119,10 @@ class AddProductTests(TestCase):
 
         if product_form.is_valid():
 
-            seller = user.customer.id
+            seller = form_data["seller_id"]
             title = form_data["title"]
             description = form_data["description"]
-            product_type = form_data["product_type"]
+            product_type = form_data["product_type_id"]
             price = form_data["price"]
             quantity = form_data["quantity"]
             local_delivery = form_data["local_delivery"]
@@ -103,37 +149,26 @@ class AddProductTests(TestCase):
                 """, data)
                 new_product = cursor.lastrowid
 
-        self.assertEqual(new_product, 1)
-
+                self.assertEqual(new_product, 1)
 
     def test_add_photo(self):
         """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
 
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-                user=user,
-                street_address="123 Street St",
-                city="Nashville",
-                state="TN",
-                zipcode="37209",
-                phone_number="5555555555"
-            )
-        product_type = ProductType.objects.create(name="Test Product Type")
-
-        self.client.login(username="test_user", password="password")
+        self.client.login(username="test_seller", password="secret")
 
         # test that a small photo url will post to the database
         with open("media_test/small_photo.jpg", "rb") as np:
 
             form_data3 = {
-                "seller": customer.id,
+                "seller": 2,
                 "title": "Test Product",
                 "description": "Test description",
-                "product_type": "1",
+                "product_type": 1,
                 "price": "123",
                 "quantity": "123",
                 "photo": np
             }
+
             response = self.client.post(reverse('website:sell'), form_data3)
             product = Product.objects.get(pk=1)
             self.assertEqual(response.status_code, 302)
@@ -142,10 +177,10 @@ class AddProductTests(TestCase):
         with open("media_test/large_photo.jpg", "rb") as fp:
 
             form_data2 = {
-                "seller": customer.id,
+                "seller": 2,
                 "title": "Test Product",
                 "description": "Test description",
-                "product_type": "1",
+                "product_type": 1,
                 "price": "123",
                 "quantity": "123",
                 "photo": fp
@@ -156,34 +191,24 @@ class AddProductTests(TestCase):
             with self.assertRaises(Product.DoesNotExist):
                 product2 = Product.objects.get(pk=2)
 
-
     def test_add_negative_quantity(self):
         """Test that negative quantites cannot be submitted"""
 
+        # Log in seller
+        self.client.login(username="test_seller", password="secret")
 
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
-
-        self.client.login(username="test_user", password="password")
-
-        # Load the view is user is logged in.
+        # Issue a GET request
         response = self.client.get(reverse("website:sell"))
+
+        # Check that the response is 200
         self.assertEqual(response.status_code, 200)
 
-        product_type = ProductType.objects.create(name="Test Product Type")
-
+        # Submit fake form with negative quantity
         form_data = {
-            "seller": customer.id,
+            "seller_id": 2,
             "title": "Test Product",
             "description": "Test description",
-            "product_type": product_type,
+            "product_type_id": 1,
             "price": "123",
             "local_delivery": "on",
             "quantity": "-12"
@@ -191,43 +216,30 @@ class AddProductTests(TestCase):
 
         product_form = ProductForm(form_data)
 
-        seller = user.customer.id
-        title = form_data["title"]
-        description = form_data["description"]
-        product_type = form_data["product_type"]
-        price = form_data["price"]
-        quantity = form_data["quantity"]
-        local_delivery = form_data["local_delivery"]
-
+        # Check that form validation throws an error
         self.assertFalse(product_form.is_valid())
-        self.assertEquals(product_form.errors['quantity'], ['Ensure this value is greater than or equal to 0.'])
+
+        # Check that the form validation specifically throws an error on quantity and provides the correct error message
+        self.assertEqual(product_form.errors['quantity'], ['Ensure this value is greater than or equal to 0.'])
 
     def test_add_excessive_price(self):
         """Test that prices over 10,000 cannot be submitted"""
 
-        user = User.objects.create_user(username="test_user", password="password")
-        customer = Customer.objects.create(
-            user=user,
-            street_address="123 Street St",
-            city="Nashville",
-            state="TN",
-            zipcode="37209",
-            phone_number="5555555555"
-        )
+        # Log in seller
+        self.client.login(username="test_seller", password="secret")
 
-        self.client.login(username="test_user", password="password")
-
-        # Load the view is user is logged in.
+        # Issue a GET request
         response = self.client.get(reverse("website:sell"))
+
+        # Check that the response is 200
         self.assertEqual(response.status_code, 200)
 
-        product_type = ProductType.objects.create(name="Test Product Type")
-
+        # Submit fake form with price greater than 10,000
         form_data = {
-            "seller": customer.id,
+            "seller_id": 2,
             "title": "Test Product",
             "description": "Test description",
-            "product_type": product_type,
+            "product_type_id": 1,
             "price": "1230000",
             "local_delivery": "on",
             "quantity": "12"
@@ -235,14 +247,9 @@ class AddProductTests(TestCase):
 
         product_form = ProductForm(form_data)
 
-        seller = user.customer.id
-        title = form_data["title"]
-        description = form_data["description"]
-        product_type = form_data["product_type"]
-        price = form_data["price"]
-        quantity = form_data["quantity"]
-        local_delivery = form_data["local_delivery"]
-
+        # Check that form validation throws an error
         self.assertFalse(product_form.is_valid())
-        self.assertEquals(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
+
+        # Check that the form validation specifically throws an error on quantity and provides the correct error message
+        self.assertEqual(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
 

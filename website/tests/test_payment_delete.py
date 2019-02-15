@@ -5,8 +5,7 @@ from ..models import PaymentType, User, Customer, Order
 
 
 class TestDeletePayment(TestCase):
-    # TODO: Update docstring
-    """[summary]
+    """Tests the ability to delete a payment type from a customer profile, if the payment type has been used on a closed order, it is soft deleted, otherwise it is hard deleted
 
     Model:
         PaymentType

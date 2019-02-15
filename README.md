@@ -76,3 +76,29 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - The user must enter a correct username for recommendation, and can enter a comment to go with the recommendation if they so choose
 - If a user has had something recommended to them, the My Recommendations item in the navbar will have a notification indicating how many items have been recommended.
 - On the My Recommendations page, the user can see the product(s) recommended, a message if there was one entered, and can remove a recommendation if they wish. The product's title links back to the product detail page
+
+
+## Viewing all products, searching the products and searching by local delivery city.
+![searching](gifs/searching.gif)
+
+## Viewing and editing User Settings, adding and deleteing a payment type, and viewing completed orders.
+![user_settings](gifs/user_settings.gif)
+
+## Rating a product a user has previously purchased.
+![rating](gifs/rating.gif)
+
+## Favoriting and unfavoriting a seller.
+![favorite](gifs/favorite.gif)
+
+## Recommending products to another user.
+![recommendations](gifs/recommendations.gif)
+
+## Adding a product for sale.
+![new_product](gifs/new_product.gif)
+
+## Product Categories
+![footer_categories](gifs/footer_categories.gif)
+
+
+
+

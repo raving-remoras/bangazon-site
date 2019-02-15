@@ -220,7 +220,7 @@ class AddProductTests(TestCase):
         self.assertFalse(product_form.is_valid())
 
         # Check that the form validation specifically throws an error on quantity and provides the correct error message
-        self.assertEquals(product_form.errors['quantity'], ['Ensure this value is greater than or equal to 0.'])
+        self.assertEqual(product_form.errors['quantity'], ['Ensure this value is greater than or equal to 0.'])
 
     def test_add_excessive_price(self):
         """Test that prices over 10,000 cannot be submitted"""
@@ -251,5 +251,5 @@ class AddProductTests(TestCase):
         self.assertFalse(product_form.is_valid())
 
         # Check that the form validation specifically throws an error on quantity and provides the correct error message
-        self.assertEquals(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
+        self.assertEqual(product_form.errors['price'], ['Ensure this value is less than or equal to 10000.'])
 

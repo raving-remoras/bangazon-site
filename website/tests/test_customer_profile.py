@@ -6,7 +6,6 @@ from django.urls import reverse
 
 
 class CustomerUserModelTest(TestCase):
-    # TODO: Refactor
     """Tests that the user and Customer models post to the database
 
         Model:

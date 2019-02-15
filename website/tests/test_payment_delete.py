@@ -7,28 +7,28 @@ from ..models import PaymentType, User, Customer, Order
 class TestDeletePayment(TestCase):
     """Tests the ability to delete a payment type from a customer profile, if the payment type has been used on a closed order, it is soft deleted, otherwise it is hard deleted
 
-    Model:
-        PaymentType
-        User
-        Customer
-        Order
+        Model:
+            PaymentType
+            User
+            Customer
+            Order
 
-    Templates:
-        payment_delete.html
-        customer_profile.html
+        Templates:
+            payment_delete.html
+            customer_profile.html
 
-    Views:
-        payment_views.py -> delete_payment_type
+        Views:
+            payment_views.py -> delete_payment_type
 
-    Methods:
-        setUpClass
-        test_hard_delete_payment
-        test_soft_delete_payment
-        test_delete_payment_as_another_user
+        Methods:
+            setUpClass
+            test_hard_delete_payment
+            test_soft_delete_payment
+            test_delete_payment_as_another_user
 
-    Author:
-        Sebastian Civarolo
-        refactored by Kelly Morin
+        Author:
+            Sebastian Civarolo
+            refactored by Kelly Morin
     """
 
     @classmethod

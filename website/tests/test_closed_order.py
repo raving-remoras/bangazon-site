@@ -5,22 +5,26 @@ from django.urls import reverse
 class ClosedOrderTest(TestCase):
     """Tests that a closed order displays correctly on the page.
 
-                Model:
-                    Order
-                    Customer
-                    Product
-                    Order_Product
-                    PaymentType
+            Model:
+                Order
+                Customer
+                Product
+                Order_Product
+                PaymentType
 
-                Template:
-                    closed_order.html
+            Template:
+                closed_order.html
 
-                Views:
-                    closed_order_views.py -> closed_order
+            Views:
+                closed_order_views.py -> closed_order
 
-                Author:
-                    Jase Hackman
-                    refactored by Kelly Morin
+            Methods:
+                setUpClass
+                test_closed_order_render
+
+            Author:
+                Jase Hackman
+                refactored by Kelly Morin
     """
 
     @classmethod

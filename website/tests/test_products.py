@@ -14,32 +14,44 @@ class ProductTest(TestCase):
             6. When selecting a specific product category the associated products are displayed for both guest and logged in non-sellers
             7. When selecting a specific product category, the non-owned associated products are displayed for logged in sellers
 
-                Model:
-                    Customer
-                    Product
-                    ProductType
-                    Order
-                    OrderProduct
-                    PaymentType
+            Model:
+                Customer
+                Product
+                ProductType
+                Order
+                OrderProduct
+                PaymentType
 
-                Templates:
-                    product_list.html
-                    product_detail.html
-                    product_category.html
-                    product_by_category.html
-                    cart.html
+            Templates:
+                product_list.html
+                product_detail.html
+                product_category.html
+                product_by_category.html
+                cart.html
 
-                Views:
-                    product_category_views.py -> product_categories
-                    product_category_views.py -> product_by_category
-                    product_views.py -> list_products
-                    product_views.py -> product_details
-                    product_views.py -> add_to_cart
-                    cart.py -> cart
+            Views:
+                product_category_views.py -> product_categories
+                product_category_views.py -> product_by_category
+                product_views.py -> list_products
+                product_views.py -> product_details
+                product_views.py -> add_to_cart
+                cart.py -> cart
 
-                Author:
-                    Kelly Morin
-                    Brendan McCray
+            Methods:
+                setUpClass
+                test_list_products
+                test_list_products_logged_in
+                test_get_product_detail
+                test_product_category_view
+                test_add_to_cart
+                test_product_by_category_guest
+                test_product_by_category_logged_in_user
+                test_product_by_category_logged_in_seller
+
+
+            Author:
+                Kelly Morin
+                Brendan McCray
     """
 
     @classmethod

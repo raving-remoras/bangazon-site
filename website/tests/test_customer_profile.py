@@ -18,6 +18,13 @@ class CustomerUserModelTest(TestCase):
         Views:
             customer_profile_views.py -> customer_profile
 
+        Methods:
+            setUpClass
+            test_customer_user_model
+            test_customer_user_profile
+            test_forms
+            test_edit
+
         Author:
             Jase Hackman
             refactored by Kelly Morin

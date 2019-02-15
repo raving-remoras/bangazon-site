@@ -6,10 +6,26 @@ from django.contrib.auth.models import User
 from django.db import connection
 
 class TestAuthViews(TestCase):
-    # TODO: Update docstring
-    """ Test login, register and logout views.
+    """ Test login and logout views.
 
-        Author: Sebastian Civarolo
+        Model:
+            Customer
+            User
+
+        Templates:
+            login.html
+
+        Views:
+            auth_views.py -> login_user
+            auth_views.py -> user_logout
+
+        Methods:
+            setUpClass
+            test_login
+
+        Author:
+            Sebastian Civarolo
+            refactored by Kelly Morin
     """
 
     @classmethod

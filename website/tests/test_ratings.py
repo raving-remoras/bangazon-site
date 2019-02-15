@@ -5,11 +5,34 @@ from django.contrib.auth.models import User
 from ..models import Customer, ProductType, Product, Order, OrderProduct, PaymentType
 
 class TestRatingSystem(TestCase):
-    # TODO: Update docstring
     """ Tests adding ratings and displaying ratings around the site.
 
-        Author: Sebastian Civarolo
+            Model:
+                Customer
+                User
+                ProductType
+                Product
+                Order
+                OrderProduct
+                PaymentType
 
+            Templates:
+                product_detail.html
+                closed_order.html
+                my_products.html
+
+            Views:
+                product_views.py -> product_details
+                closed_order_views.py -> closed_order
+                product_views.py -> my_products
+
+            Methods:
+                setUpClass
+                test_add_rating
+
+            Author:
+                Sebastian Civarolo
+                refactored by Kelly Morin
     """
 
     @classmethod
@@ -89,8 +112,7 @@ class TestRatingSystem(TestCase):
         )
 
     def test_add_rating(self):
-        # TODO: Add docstring
-        # Tests that a closed order displays properly on the page
+        """Tests that a closed order displays properly on the page"""
 
         self.client.login(username="test_user", password="secret")
 

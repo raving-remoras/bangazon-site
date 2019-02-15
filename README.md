@@ -76,3 +76,7 @@ This web application is the source code for the Bangazon e-commerce web site. It
 - The user must enter a correct username for recommendation, and can enter a comment to go with the recommendation if they so choose
 - If a user has had something recommended to them, the My Recommendations item in the navbar will have a notification indicating how many items have been recommended.
 - On the My Recommendations page, the user can see the product(s) recommended, a message if there was one entered, and can remove a recommendation if they wish. The product's title links back to the product detail page
+
+
+## Test
+![searching](gifs/searching.gif)

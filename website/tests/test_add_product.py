@@ -26,6 +26,14 @@ class AddProductTests(TestCase):
             Views:
                 sell_views.py -> sell_product
 
+            Methods:
+                setUpClass
+                test_add_view
+                test_add_product
+                test_add_photo
+                test_add_negative_quantity
+                test_add_excessive_price
+
             Author:
                 Sebastian Civarolo
                 Jase Hackman
@@ -111,7 +119,7 @@ class AddProductTests(TestCase):
 
         if product_form.is_valid():
 
-            seller_id = form_data["seller_id"]
+            seller = form_data["seller_id"]
             title = form_data["title"]
             description = form_data["description"]
             product_type = form_data["product_type_id"]
@@ -144,34 +152,23 @@ class AddProductTests(TestCase):
                 self.assertEqual(new_product, 1)
 
     def test_add_photo(self):
-        # TODO: Refactor test, Jase approved
         """Tests that a small photo will be uploaded and a large photo will not be uploaded"""
 
-        user = User.objects.create_user(username="test_user2", password="password")
-        customer = Customer.objects.create(
-                user=user,
-                street_address="123 Street St",
-                city="Nashville",
-                state="TN",
-                zipcode="37209",
-                phone_number="5555555555"
-            )
-        product_type = ProductType.objects.create(name="Test Product Type")
-
-        self.client.login(username="test_user2", password="password")
+        self.client.login(username="test_seller", password="secret")
 
         # test that a small photo url will post to the database
         with open("media_test/small_photo.jpg", "rb") as np:
 
             form_data3 = {
-                "seller": customer.id,
+                "seller": 2,
                 "title": "Test Product",
                 "description": "Test description",
-                "product_type": "1",
+                "product_type": 1,
                 "price": "123",
                 "quantity": "123",
                 "photo": np
             }
+
             response = self.client.post(reverse('website:sell'), form_data3)
             product = Product.objects.get(pk=1)
             self.assertEqual(response.status_code, 302)
@@ -180,10 +177,10 @@ class AddProductTests(TestCase):
         with open("media_test/large_photo.jpg", "rb") as fp:
 
             form_data2 = {
-                "seller": customer.id,
+                "seller": 2,
                 "title": "Test Product",
                 "description": "Test description",
-                "product_type": "1",
+                "product_type": 1,
                 "price": "123",
                 "quantity": "123",
                 "photo": fp

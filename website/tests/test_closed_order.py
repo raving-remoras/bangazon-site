@@ -3,16 +3,24 @@ from ..models import *
 from django.urls import reverse
 
 class ClosedOrderTest(TestCase):
-    # TODO: Update docstring
     """Tests that a closed order displays correctly on the page.
 
-                Model: Order, Customer, Product, Order_Product, PaymentType
+                Model:
+                    Order
+                    Customer
+                    Product
+                    Order_Product
+                    PaymentType
 
-                Template: closed_order.html
+                Template:
+                    closed_order.html
 
-                Views: closed_order
+                Views:
+                    closed_order_views.py -> closed_order
 
-                Author: Jase Hackman
+                Author:
+                    Jase Hackman
+                    refactored by Kelly Morin
     """
 
     @classmethod
